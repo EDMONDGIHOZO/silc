@@ -44,6 +44,7 @@
               :rules="commonRules"
               outlined
               dense
+              type="number"
               rounded
               background-color="white"
               label="credit maximal"
@@ -112,21 +113,20 @@
                   readonly
                   v-bind="attrs"
                   v-on="on"
+                  type="date"
                 ></v-text-field>
               </template>
               <v-date-picker
                 ref="picker"
                 v-model="startDate"
-                :max="new Date().toISOString().substr(0, 10)"
-                min="1950-01-01"
                 @change="save"
               ></v-date-picker>
             </v-menu>
           </v-col>
           <v-col cols="12" md="6">
             <v-menu
-              ref="menu"
-              v-model="menu"
+              ref="endMenu"
+              v-model="enMenu"
               :close-on-content-click="false"
               transition="scale-transition"
               offset-y
@@ -147,10 +147,8 @@
                 ></v-text-field>
               </template>
               <v-date-picker
-                ref="picker"
+                ref="endPicker"
                 v-model="endDate"
-                :max="new Date().toISOString().substr(0, 10)"
-                min="1950-01-01"
                 @change="save"
               ></v-date-picker>
             </v-menu>
@@ -189,6 +187,9 @@ export default {
   watch: {
     menu(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
+    },
+    endMenu(val) {
+      val && setTimeout(() => (this.$refs.endPicker.activePicker = "YEAR"));
     },
   },
   methods: {
