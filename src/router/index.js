@@ -11,7 +11,7 @@ const routes = [
     {
         path: '/',
         component: Home,
-        redirect: '/home',
+        redirect: '/auth',
         children: [
             /** dashboarders */
             {
@@ -92,6 +92,19 @@ const routes = [
                     '../components/login.vue'
                 ),
         }, ],
+    },
+    // 404 page
+    {
+        path: '*',
+        name: 'notFound',
+        component: () =>
+            import (
+                /* webpackChunkName: "notfound" */
+                '../views/dashboard/404.vue'
+            ),
+        meta: {
+            title: 'Page not found ',
+        },
     },
 ]
 
