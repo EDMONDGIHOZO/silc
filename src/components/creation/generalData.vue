@@ -27,8 +27,6 @@
           <v-date-picker
             ref="picker"
             v-model="collectionDate"
-            :max="new Date().toISOString().substr(0, 10)"
-            min="2000-01-01"
             @change="save"
           ></v-date-picker>
         </v-menu>
