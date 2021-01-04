@@ -8,8 +8,11 @@ export default new Vuex.Store({
         logo: require('@/assets/logo.png'),
         sidelogo: require('@/assets/sidelogo.png'),
         drawer: true,
-        userName: "Niyongabo",
-        userRole: "Data Collector"
+        currentUser: {
+            userName: 'Niyongabo',
+            userRole: 'Data Collector',
+        },
+        datacol: 1,
     },
     mutations: {
         drawer(state) {

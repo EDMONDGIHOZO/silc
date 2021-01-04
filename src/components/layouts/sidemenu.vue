@@ -8,7 +8,12 @@
         </p>
       </v-sheet>
       <v-list>
-        <v-list-item v-for="[icon, text] in links" :key="icon" link>
+        <v-list-item
+          v-for="[icon, text, route] in links"
+          :key="icon"
+          link
+          @click="goTo(route)"
+        >
           <v-list-item-icon>
             <v-icon>{{ icon }}</v-icon>
           </v-list-item-icon>
@@ -19,7 +24,9 @@
         </v-list-item>
       </v-list>
 
-      <v-btn color="primary" class="logout" depressed min-width="180" rounded>Logout</v-btn>
+      <v-btn color="primary" class="logout" depressed min-width="180" rounded
+        >Logout</v-btn
+      >
     </div>
   </v-navigation-drawer>
 </template>
@@ -31,15 +38,20 @@ export default {
   name: "sideMenu",
   data: () => ({
     links: [
-        ["mdi-view-dashboard", "DASHBOARD"],
-      ["mdi-church", "DIOCESES"],
-      ["mdi-christianity-outline", "PAROISSES"],
-      ["mdi-account-group", "GROUPES"],
-      ["mdi-google-analytics", "RAPPORTS"],
-      ["mdi-account-supervisor-circle", "USERS"],
+      ["mdi-view-dashboard", "DASHBOARD", "home"],
+      ["mdi-church", "DIOCESES", "dioceses"],
+      ["mdi-christianity-outline", "PAROISSES", "paroisse"],
+      ["mdi-account-group", "GROUPES", "groupes"],
+      ["mdi-google-analytics", "RAPPORTS", "rapports"],
+      ["mdi-account-supervisor-circle", "USERS", "users"],
     ],
   }),
   computed: mapState(["sidelogo", "drawer"]),
+  methods: {
+    goTo(route) {
+      return this.$router.push({ name: route });
+    },
+  },
 };
 </script>
 
@@ -53,8 +65,8 @@ export default {
 }
 
 .logout {
-    position: absolute;
-    bottom: 0;
-    margin: 24px;
+  position: absolute;
+  bottom: 0;
+  margin: 24px;
 }
 </style>

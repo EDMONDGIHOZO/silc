@@ -162,7 +162,7 @@
               class="mr-4"
               @click="validate"
             >
-              SAVE GROUP
+              enregistrer le groupe
             </v-btn>
           </v-col>
         </v-row>
@@ -200,3 +200,4 @@ export default {
   },
 };
 </script>
+
