@@ -1,6 +1,6 @@
 <template>
   <div class="create-container">
-    <v-row wrap full-width>
+    <v-row wrap>
       <v-col cols="12">
         <div class="create-title">
           <p>collecte les donnees</p>
@@ -84,7 +84,6 @@ export default {
 
 <style lang="scss" scoped>
 #stepper {
-  min-width: 800px;
   box-shadow: 0;
   border-radius: 15px;
   background: #f3f2f2dc;
