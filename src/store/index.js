@@ -9,7 +9,7 @@ export default new Vuex.Store({
         sidelogo: require('@/assets/sidelogo.png'),
         drawer: true,
         currentUser: {
-            userName: 'Niyongabo',
+            userName: 'Niyongabo Jules',
             userRole: 'Data Collector',
         },
         datacol: 1,

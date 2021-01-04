@@ -24,7 +24,7 @@
         </v-list-item>
       </v-list>
 
-      <v-btn color="primary" class="logout" depressed min-width="180" rounded
+      <v-btn color="primary" class="logout" depressed min-width="180" @click="logout" rounded
         >Logout</v-btn
       >
     </div>
@@ -51,6 +51,9 @@ export default {
     goTo(route) {
       return this.$router.push({ name: route });
     },
+    logout (){
+        this.$router.push ({name: "login"})
+    }
   },
 };
 </script>

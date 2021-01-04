@@ -27,8 +27,8 @@
                 <span class="white--text strong">{{avatarLetter}}</span>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ userName }}</v-list-item-title>
-              <v-list-item-subtitle>{{userRole}}</v-list-item-subtitle>
+              <v-list-item-title>{{ currentUser.userName }}</v-list-item-title>
+              <v-list-item-subtitle>{{currentUser.userRole}}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -65,10 +65,10 @@ export default {
     avatarLetter: "",
   }),
 
-  computed: mapState(["userName", "userRole"]),
+  computed: mapState(["currentUser", "userRole"]),
   created() {
     /// get profile avatar
-    this.avatarLetter = this.userName.charAt(0);
+    this.avatarLetter = this.currentUser.userName.charAt(0);
   },
 };
 </script>

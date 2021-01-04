@@ -112,7 +112,7 @@ export default {
         // setTimeout(() => {
         //   this.status = "OK";
         // }, 5000);
-        this.$router.push({name: 'main-holder'})
+        this.$router.push({name: 'home'})
       }
     },
   },

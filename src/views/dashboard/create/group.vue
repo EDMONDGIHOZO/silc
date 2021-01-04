@@ -161,6 +161,8 @@
               color="success"
               class="mr-4"
               @click="validate"
+              depressed
+              rounded
             >
               enregistrer le groupe
             </v-btn>

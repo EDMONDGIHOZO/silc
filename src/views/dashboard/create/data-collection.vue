@@ -11,7 +11,7 @@
     <v-stepper v-model="e1" id="stepper">
       <v-stepper-header>
         <v-stepper-step :complete="e1 > 1" step="1">
-         Collecte de données générales
+          Collecte de données générales
         </v-stepper-step>
 
         <v-divider></v-divider>
@@ -25,23 +25,18 @@
         <v-stepper-step step="3">
           Relation avec Institution financiel
         </v-stepper-step>
-        <v-stepper-step step="4">
-          terminé
-        </v-stepper-step>
+        <v-stepper-step step="4"> terminé </v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items>
         <v-stepper-content step="1">
           <GeneralData />
-          <v-btn color="primary" rounded @click="e1 = 2"> Continue </v-btn>
+          <v-btn color="primary" depressed rounded @click="e1 = 2"> Continue </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="2">
-          <v-card class="mb-12" color="grey lighten-1" height="200px"></v-card>
-
-          <v-btn color="primary" @click="e1 = 3"> Continue </v-btn>
-
-          <v-btn text> Cancel </v-btn>
+          <FinancialData />
+          <v-btn color="primary" depressed rounded @click="e1 = 3"> Continue </v-btn>
         </v-stepper-content>
 
         <v-stepper-content step="3">
@@ -53,9 +48,9 @@
         </v-stepper-content>
         <v-stepper-content step="4">
           <v-card class="mb-12" color="grey lighten-1" height="200px">
-              <v-card-text>
-                  <h3>felicitations , data are collected succesfully!</h3>
-              </v-card-text>
+            <v-card-text>
+              <h3>felicitations , data are collected succesfully!</h3>
+            </v-card-text>
           </v-card>
           <v-btn text @click="close"> Close </v-btn>
         </v-stepper-content>
@@ -66,6 +61,7 @@
 
 <script>
 import GeneralData from "@/components/creation/generalData.vue";
+import FinancialData from "@/components/creation/financialData.vue";
 export default {
   data() {
     return {
@@ -74,13 +70,14 @@ export default {
   },
 
   methods: {
-      close (){
-          return this.$router.push ({name: 'home'})
-      }
+    close() {
+      return this.$router.push({ name: "home" });
+    },
   },
 
   components: {
     GeneralData,
+    FinancialData,
   },
 };
 </script>
