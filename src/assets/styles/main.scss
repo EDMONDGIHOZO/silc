@@ -1,5 +1,6 @@
+@use 'base.scss';
 * {
-    font-family: 'Poppins', sans-serif;
+    font-family: base.$mainFont;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -14,11 +15,12 @@
 }
 
 .forms-container {
-    background-color: #b7f7d0;
+    background-color: base.$lightPrimary;
     border-right: solid 10px #c4f8d8;
     width: 60%;
     padding: 20px;
     height: 100%;
+    border-radius: 20px;
 }
 
 .form-title {

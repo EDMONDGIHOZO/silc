@@ -11,7 +11,7 @@ const routes = [
     {
         path: '/',
         component: Home,
-        redirect: '/auth',
+        redirect: 'home',
         children: [
             /** dashboarders */
             {
@@ -112,6 +112,17 @@ const router = new VueRouter({
     mode: 'history',
     base: process.env.BASE_URL,
     routes,
+})
+
+router.beforeEach((to, from, next) => {
+    const publicPages = ['/auth/login']
+    const authRequired = !publicPages.includes(to.path)
+    const loggedIn = localStorage.getItem('currentUser')
+    if (authRequired && !loggedIn) {
+        next('/auth/login')
+    } else {
+        next()
+    }
 })
 
 export default router

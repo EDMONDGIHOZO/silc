@@ -1,6 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+
+import { auth } from './auth.module'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -12,13 +15,25 @@ export default new Vuex.Store({
             userName: 'Niyongabo Jules',
             userRole: 'Data Collector',
         },
-        datacol: 1,
+        steps: 1,
     },
     mutations: {
         drawer(state) {
             state.drawer = !state.drawer
         },
+
+        updateSteps(state, steps) {
+            state.steps = steps
+        },
+        endSteps(state) {
+            state.steps = 1
+        },
+
     },
-    actions: {},
-    modules: {},
+    actions: {
+
+    },
+    modules: {
+        auth
+    },
 })

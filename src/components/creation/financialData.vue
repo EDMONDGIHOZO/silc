@@ -52,6 +52,7 @@
           v-model="creditedGirls"
           :rules="commonRules"
           outlined
+          :disabled="creditsBtn"
           dense
           rounded
           background-color="white"
@@ -64,6 +65,7 @@
           v-model="creditedBoys"
           :rules="commonRules"
           outlined
+          :disabled="creditsBtn"
           dense
           rounded
           background-color="white"
@@ -76,6 +78,7 @@
           v-model="grantedCredits"
           :rules="commonRules"
           outlined
+          :disabled="creditsBtn"
           dense
           rounded
           background-color="white"
@@ -88,6 +91,7 @@
           v-model="grantedCapital"
           :rules="commonRules"
           outlined
+          :disabled="creditsBtn"
           dense
           rounded
           background-color="white"
@@ -100,6 +104,7 @@
           v-model="interestForGrants"
           :rules="commonRules"
           outlined
+          :disabled="creditsBtn"
           dense
           rounded
           background-color="white"
@@ -111,6 +116,7 @@
         <v-btn
           color="orange"
           class="my-3"
+          :disabled="creditsBtn"
           width="180"
           outlined
           @click="saveCredits"
@@ -135,6 +141,7 @@
           outlined
           dense
           rounded
+          :disabled = "rebursementBtn"
           background-color="white"
           label="credits Rembourses (capital)"
           required
@@ -145,6 +152,7 @@
           v-model="RebursedInterest"
           :rules="commonRules"
           outlined
+          :disabled = "rebursementBtn"
           dense
           rounded
           background-color="white"
@@ -157,26 +165,34 @@
           color="info"
           class="my-3"
           width="180"
-          @click="rebursement"
+          @click="rebursementSave"
           outlined
+          :disabled = "rebursementBtn"
           rounded
           >Save</v-btn
         >
       </div>
     </v-row>
+     <v-btn color="primary" type="submit" :disabled="finished" depressed rounded @click="moveStep(3)">
+      Continue
+    </v-btn>
   </div>
 </template>
 
 <script>
+import store from "@/store/index";
 export default {
   data: () => ({
     amount: null,
     // views
     epargne: true,
     epargneBtn:true,
+    creditsBtn:false,
+    rebursementBtn:false,
     credits: false,
     rebursement: false,
     currency: false,
+    finished: true,
   }),
 
   methods: {
@@ -186,6 +202,15 @@ export default {
     },
     saveCredits() {
       this.rebursement = true;
+      this.creditsBtn = true
+    },
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
+    },
+
+    rebursementSave (){
+        this.rebursementBtn = true;
+        this.finished = false;
     },
 
     showCurrency() {

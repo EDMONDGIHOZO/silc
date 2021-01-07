@@ -34,7 +34,7 @@
               rounded
               depressed
             >
-              enregistrer le diocese
+              enregistrer le paroisse
             </v-btn>
           </v-col>
         </v-row>

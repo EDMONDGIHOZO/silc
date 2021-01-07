@@ -12,17 +12,15 @@
     <div class="form-title">
       <p>LOGIN</p>
     </div>
-    <form class="login-form">
+    <form class="login-form" @submit.prevent>
       <v-text-field
-        v-model="username"
-        :error-messages="usernameErrors"
-        label="Username"
+        v-model="email"
+        label="Email"
+        :rules="emailRules"
         required
         outlined
         rounded
         dense
-        @input="$v.username.$touch()"
-        @blur="$v.username.$touch()"
       ></v-text-field>
       <v-text-field
         v-model="password"
@@ -43,6 +41,7 @@
         color="primary"
         rounded
         depressed
+        type="submit"
       >
         Login
       </v-btn>
@@ -55,6 +54,7 @@
 <script>
 import { validationMixin } from "vuelidate";
 import { required, minLength } from "vuelidate/lib/validators";
+
 export default {
   mixins: [validationMixin],
 
@@ -70,50 +70,54 @@ export default {
   /** end validation */
   /** data management */
   data: () => ({
-    username: "",
+    email: "",
     password: "",
-    status: "",
+    status: [],
     error: false,
     alertColor: "",
     alertType: "",
+    emailRules: [
+      (v) => !!v || "E-mail is required",
+      (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+    ],
   }),
 
   /** computation */
 
+
   computed: {
-    usernameErrors() {
-      const errors = [];
-      if (!this.$v.username.$dirty) return errors;
-      !this.$v.username.required && errors.push("Username is required.");
-      return errors;
-    },
-    passwordErrors() {
+      passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
       !this.$v.password.required && errors.push("Password is required");
       return errors;
     },
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+
+  },
+
+  created() {
+    if (this.loggedIn) {
+      this.$router.push({name: 'home'});
+    }
   },
 
   methods: {
     login() {
-      this.$v.$touch();
-      if (this.$v.$invalid) {
-        this.alertColor = "red";
-        this.alertType = "error";
-        this.error = true;
-        this.status = "username or password is wrong";
-      } else {
-        // do your submit logic here
-        this.alertColor = "primary";
-        this.alertType = "success";
-        this.error = true;
-        this.status = "PENDING";
-        // setTimeout(() => {
-        //   this.status = "OK";
-        // }, 5000);
-        this.$router.push({name: 'home'})
-      }
+        const userInfo = {
+            email: this.email,
+            password: this.password
+        }
+      this.$store.dispatch("auth/login", userInfo).then((res) => {
+            if (res.status === "success") {
+              this.$router.push({name: 'home'});
+            } else {
+                this.error = true;
+              this.status = res.message;
+            }
+          });
     },
   },
 };

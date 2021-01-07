@@ -1,5 +1,5 @@
 <template>
-  <v-form v-model="valid">
+  <v-form v-model="valid" @submit.prevent>
     <v-row class="wrap my-4">
       <v-col cols="12" md="6">
         <v-menu
@@ -131,11 +131,15 @@
         ></v-text-field>
       </v-col>
     </v-row>
+    <v-btn color="primary" type="submit" depressed rounded @click="moveStep(2)">
+      Continue
+    </v-btn>
   </v-form>
 </template>
 
 <script>
 import { mapState } from "vuex";
+import store from "@/store/index";
 export default {
   data: () => ({
     collectionDate: null,
@@ -162,6 +166,10 @@ export default {
   methods: {
     save(collectionDate) {
       this.$refs.menu.save(collectionDate);
+    },
+
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
     },
 
     clear() {
