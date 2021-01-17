@@ -36,7 +36,8 @@
           v-model="collectorName"
           :rules="commonRules"
           append-icon="mdi-feather"
-          :placeholder="currentUser.userName"
+          :placeholder="UserInfo.username"
+          disabled
           background-color="white"
           label="Nom du Collecteur"
           required
@@ -131,7 +132,7 @@
         ></v-text-field>
       </v-col>
     </v-row>
-    <v-btn color="primary" type="submit" depressed rounded @click="moveStep(2)">
+    <v-btn color="primary" type="submit" depressed rounded @click="moveStep(2), saveGenInfo()">
       Continue
     </v-btn>
   </v-form>
@@ -140,20 +141,12 @@
 <script>
 import { mapState } from "vuex";
 import store from "@/store/index";
+import ActionsService from "@/services/actions.service";
 export default {
   data: () => ({
     collectionDate: null,
     menu: false,
-    groups: [
-      {
-        id: 1,
-        name: "abizeye",
-      },
-      {
-        id: 12,
-        name: "abaswa",
-      },
-    ],
+    groups: [],
     groupId: null,
   }),
   watch: {
@@ -162,10 +155,21 @@ export default {
     },
   },
 
-  computed: mapState(["currentUser"]),
+  mounted() {
+    ActionsService.getGroupes().then((response) => {
+      this.groups = response.data.data;
+      this.collectorName = this.UserInfo.username
+    });
+  },
+
+  computed: mapState(["UserInfo"]),
   methods: {
     save(collectionDate) {
       this.$refs.menu.save(collectionDate);
+    },
+
+    saveGenInfo(){
+        alert("saved info")
     },
 
     moveStep(stepy) {

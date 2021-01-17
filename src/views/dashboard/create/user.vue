@@ -7,7 +7,7 @@
         </div>
       </v-col>
     </v-row>
-    <div class="form-container">
+    <div class="form-container" v-if="!alert.status">
       <v-form v-model="valid">
         <v-row class="wrap my-4">
           <v-col cols="12" md="6">
@@ -19,8 +19,6 @@
               rounded
               background-color="white"
               label="Nom"
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
               required
             ></v-text-field>
           </v-col>
@@ -31,6 +29,7 @@
               outlined
               dense
               rounded
+              @input="makeUserName"
               background-color="white"
               label="Prenom"
               required
@@ -49,11 +48,43 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6">
+            <v-text-field
+              v-model="userName"
+              outlined
+              :rules="[rules.required]"
+              dense
+              rounded
+              :value="userName"
+              :placeholder="userName"
+              background-color="white"
+              label="User name"
+              persistent-hint
+              required
+              hint="you can edit suggested username by your own!"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="password"
+              outlined
+              clearable
+              :rules="[rules.required]"
+              dense
+              append-icon="mdi-account-key"
+              rounded
+              background-color="white"
+              label="Mot de passe"
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
             <v-autocomplete
-              ref="userRole"
-              v-model="userRole"
-              :rules="[() => !!userRole || 'This field is required']"
+              ref="role_id"
+              v-model="role_id"
+              :rules="[() => !!role_id || 'This field is required']"
               :items="roles"
+              item-text="name"
+              item-value="id"
               label="sélectionner le role"
               placeholder="Select..."
               background-color="white"
@@ -65,23 +96,46 @@
           </v-col>
 
           <v-col cols="12">
-            <v-btn color="success" class="mr-4" depressed rounded>
+            <v-btn
+              color="success"
+              class="mr-4"
+              :disabled="!valid"
+              depressed
+              rounded
+              @click="registerUser"
+            >
               enregistrer
             </v-btn>
           </v-col>
         </v-row>
       </v-form>
     </div>
+    <v-alert outlined class="ma-3" :type="alert.type" v-else>
+      <span v-for="mess in alert.messages" :key="mess.field">
+          {{mess.message}}
+      </span>
+    </v-alert>
   </div>
 </template>
 
 <script>
+import ActionsService from "@/services/actions.service";
 export default {
   data: () => ({
-    roles: ["Collecteur", "Administrateur"],
-    userRole: "",
-    lastName: "",
+    userName: "",
+    email: "",
     firstName: "",
+    lastName: "",
+    password: "",
+    role_id: null,
+    valid: false,
+    alert: {
+      type: "error",
+      messages: [],
+      status: false,
+    },
+    roles: [],
+    role: {},
     rules: {
       required: (value) => !!value || "Required.",
       email: (value) => {
@@ -90,6 +144,43 @@ export default {
       },
     },
   }),
+
+  mounted() {
+    ActionsService.getRoles().then((response) => {
+      this.roles = response.data.data;
+    });
+  },
+
+  methods: {
+    makeUserName() {
+      this.userName = this.firstName.charAt(0) + this.lastName;
+    },
+
+    registerUser() {
+      const formData = {
+        firstname: this.firstName,
+        lastname: this.lastName,
+        username: this.userName,
+        password: this.password,
+        email: this.email,
+        role_id: this.role_id,
+      };
+
+      ActionsService.createUser(formData).then((response) => {
+        const status = response.data.status;
+
+        if (status == "danger") {
+          this.alert.type = "error";
+          this.alert.status = true
+        } else {
+            this.alert.type = "success"
+            this.alert.messages = [{"message": "bien enregistrer"}];
+            this.alert.status = true
+            setTimeout(() => this.$router.push({ name: "home" }), 4000);
+        }
+      });
+    },
+  },
 
   beforeDestroy() {
     window.onbeforeunload = () => (this.unsavedChanges ? true : null);

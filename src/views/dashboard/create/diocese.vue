@@ -8,26 +8,22 @@
       </v-col>
     </v-row>
     <div class="form-container">
-      <v-form v-model="valid">
+      <v-form v-model="valid" @submit.prevent="register" v-if="!response">
         <v-row class="wrap my-4">
           <v-col cols="12">
             <v-text-field
               label="Nom"
               dense
               rounded
-              :error-messages="nameErrors"
               outlined
               background-color="white"
               v-model="name"
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
               required
             ></v-text-field>
           </v-col>
 
           <v-col cols="12">
             <v-btn
-              :disabled="!valid"
               color="success"
               class="mr-4"
               @click="register"
@@ -39,51 +35,69 @@
           </v-col>
         </v-row>
       </v-form>
+      <div class="responseArea" v-if="response">
+        <v-progress-circular
+          size="70"
+          width="7"
+          centered
+          v-if="showProgress"
+          color="primary"
+          indeterminate
+        ></v-progress-circular>
+        <v-alert :type="alertType" v-if="showAlert">{{ alertMessage }}</v-alert>
+      </div>
     </div>
   </div>
 </template>
 <script>
-import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
+import ActionsService from "@/services/actions.service";
 export default {
-  mixins: [validationMixin],
-  validations: {
-    name: { required, minLength: minLength(4) },
-  },
   data() {
     return {
       name: "",
       valid: false,
+      alertType: "info",
+      showAlert: true,
+      alertMessage: "",
+      showProgress: null,
+      response: false
     };
   },
 
-  computed: {
-    nameErrors() {
-      const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.minLength &&
-        errors.push("Name must be at least 4 characters long.");
-      !this.$v.name.required && errors.push("Name is required.");
-      return errors;
-    },
-  },
   methods: {
-    async register() {
-      this.$v.$touch();
-      this.$store
-        .dispatch("register", {
-          DioName: this.name,
-        })
-        .then(() => {
-          this.$router.push({ name: "home" });
-        })
-        .catch(err => {
-          console.log(err);
+    register() {
+      const formData = { name: this.name.toLowerCase() };
+      this.response = true;
+      this.showProgress = true;
+      try {
+        ActionsService.createDiocese(formData).then((response) => {
+        this.showProgress = false;
+          this.showAlert = true;
+          this.name = "";
+          this.alertType = response.data.status;
+          this.alertMessage = response.data.message;     
+
+          setTimeout(() => (this.$router.push({name: "home"})), 4000)
         });
+      } catch (error) {
+        console.log(error);
+      }
     },
+
     cancel() {
       return this.$router.push({ name: "Home" });
-    }
-  }
+    },
+  },
 };
 </script>
+
+<style lang="scss" scoped>
+.responseArea {
+  padding: 10px;
+  border-radius: 20px;
+  text-align: center;
+}
+.v-progress-circular {
+  margin: 1rem;
+}
+</style>

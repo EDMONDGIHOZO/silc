@@ -1,9 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-
+import ActionsService from '@/services/actions.service'
 import { auth } from './auth.module'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -11,10 +9,7 @@ export default new Vuex.Store({
         logo: require('@/assets/logo.png'),
         sidelogo: require('@/assets/sidelogo.png'),
         drawer: true,
-        currentUser: {
-            userName: 'Niyongabo Jules',
-            userRole: 'Data Collector',
-        },
+        UserInfo: [],
         steps: 1,
     },
     mutations: {
@@ -29,11 +24,23 @@ export default new Vuex.Store({
             state.steps = 1
         },
 
+        saveUserInfo(state, payload) {
+            state.UserInfo = payload
+        },
     },
     actions: {
-
+        getUserInfo({ commit }) {
+            return ActionsService.getUserInfo().then(
+                (response) => {
+                    commit('saveUserInfo', response.data.data)
+                },
+                (error) => {
+                    return Promise.reject(error)
+                },
+            )
+        },
     },
     modules: {
-        auth
+        auth,
     },
 })

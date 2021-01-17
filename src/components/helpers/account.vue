@@ -24,11 +24,13 @@
         <v-list>
           <v-list-item>
             <v-list-item-avatar color="primary">
-                <span class="white--text strong">{{avatarLetter}}</span>
+              <span class="white--text strong">{{ avatarLetter }}</span>
             </v-list-item-avatar>
             <v-list-item-content>
-              <v-list-item-title>{{ currentUser.userName }}</v-list-item-title>
-              <v-list-item-subtitle>{{currentUser.userRole}}</v-list-item-subtitle>
+              <v-list-item-title>{{ UserInfo.username }}</v-list-item-title>
+              <v-list-item-subtitle>{{
+                UserInfo.role.name
+              }}</v-list-item-subtitle>
             </v-list-item-content>
           </v-list-item>
         </v-list>
@@ -65,10 +67,14 @@ export default {
     avatarLetter: "",
   }),
 
-  computed: mapState(["currentUser", "userRole"]),
+  mounted() {
+      this.$store.dispatch("getUserInfo")
+  },
+
+  computed: mapState(["UserInfo"]),
   created() {
     /// get profile avatar
-    this.avatarLetter = this.currentUser.userName.charAt(0);
+    this.avatarLetter = this.UserInfo.username.charAt(0);
   },
 };
 </script>

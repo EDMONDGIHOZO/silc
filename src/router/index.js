@@ -75,6 +75,16 @@ const routes = [
                     },
                 ],
             },
+            //raports
+            {
+                path: '/groupes',
+                name: 'groups',
+                component: () =>
+                    import (
+                        /* webpackChunkName: 'groups' */
+                        '../views/dashboard/raports/groups.vue'
+                    ),
+            },
         ],
     },
     /*** user authentication routes  */
