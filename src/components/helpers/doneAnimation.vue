@@ -25,6 +25,8 @@ export default {
   methods: {
     endCollection() {
       this.$store.commit("endSteps");
+      localStorage.removeItem("collectionId");
+      localStorage.removeItem("step");
       return this.$router.push({ name: "home" });
     },
   },

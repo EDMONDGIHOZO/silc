@@ -10,7 +10,6 @@
       <v-col cols="12" md="6">
         <v-text-field
           v-model="amount"
-          :rules="commonRules"
           outlined
           dense
           rounded
@@ -18,7 +17,7 @@
           background-color="white"
           label="montant"
           required
-          :disabled = "!epargneBtn"
+          :disabled="!epargneBtn"
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="6">
@@ -32,7 +31,7 @@
           outlined
           @click="saveEpargne"
           rounded
-          :disabled = "!epargneBtn"
+          :disabled="!epargneBtn"
           >Save</v-btn
         >
       </div>
@@ -50,7 +49,6 @@
       <v-col cols="12" md="6">
         <v-text-field
           v-model="creditedGirls"
-          :rules="commonRules"
           outlined
           :disabled="creditsBtn"
           dense
@@ -63,7 +61,6 @@
       <v-col cols="12" md="6">
         <v-text-field
           v-model="creditedBoys"
-          :rules="commonRules"
           outlined
           :disabled="creditsBtn"
           dense
@@ -75,8 +72,7 @@
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field
-          v-model="grantedCredits"
-          :rules="commonRules"
+          v-model="creditsActroyes"
           outlined
           :disabled="creditsBtn"
           dense
@@ -84,15 +80,16 @@
           background-color="white"
           label="Credits Actroyes"
           required
+          type="number"
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="4">
         <v-text-field
           v-model="grantedCapital"
-          :rules="commonRules"
           outlined
           :disabled="creditsBtn"
           dense
+          type="number"
           rounded
           background-color="white"
           label="Credits Actroyes (capital)"
@@ -102,7 +99,6 @@
       <v-col cols="12" md="4">
         <v-text-field
           v-model="interestForGrants"
-          :rules="commonRules"
           outlined
           :disabled="creditsBtn"
           dense
@@ -120,6 +116,7 @@
           width="180"
           outlined
           @click="saveCredits"
+          type="number"
           rounded
           >Save</v-btn
         >
@@ -137,11 +134,11 @@
       <v-col cols="12" md="6">
         <v-text-field
           v-model="rebursedCapital"
-          :rules="commonRules"
           outlined
           dense
           rounded
-          :disabled = "rebursementBtn"
+          type="number"
+          :disabled="rebursementBtn"
           background-color="white"
           label="credits Rembourses (capital)"
           required
@@ -149,14 +146,14 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-text-field
-          v-model="RebursedInterest"
-          :rules="commonRules"
+          v-model="rebursedInterest"
           outlined
-          :disabled = "rebursementBtn"
+          :disabled="rebursementBtn"
           dense
           rounded
           background-color="white"
           label="intérêts remboursés"
+          type="number"
           required
         ></v-text-field>
       </v-col>
@@ -165,52 +162,131 @@
           color="info"
           class="my-3"
           width="180"
-          @click="rebursementSave"
+          @click="reburse"
           outlined
-          :disabled = "rebursementBtn"
+          type="number"
+          :disabled="rebursementBtn"
           rounded
           >Save</v-btn
         >
       </div>
     </v-row>
-     <v-btn color="primary" type="submit" :disabled="finished" depressed rounded @click="moveStep(3)">
+    <v-btn
+      color="primary"
+      type="submit"
+      :disabled="finished"
+      depressed
+      rounded
+      @click="moveStep(3)"
+    >
       Continue
     </v-btn>
   </div>
 </template>
 
 <script>
+import ActionsService from "@/services/actions.service";
 import store from "@/store/index";
 export default {
   data: () => ({
-    amount: null,
+    stepy: 3,
     // views
     epargne: true,
-    epargneBtn:true,
-    creditsBtn:false,
-    rebursementBtn:false,
+    epargneBtn: true,
+    creditsBtn: false,
+    rebursementBtn: false,
     credits: false,
     rebursement: false,
     currency: false,
     finished: true,
+    collectionId: null,
+    // les donnees d'epargne
+    amount: null,
+    // donnees de credit interne
+    creditedGirls: "",
+    creditedBoys: "",
+    creditsActroyes: "",
+    grantedCapital: "",
+    interetsSurCredit: "",
+    interestForGrants: "",
+    // donnees de rebursement
+    rebursedCapital: 0,
+    rebursedInterest: 0,
+
+    // views
+    color: "",
+    status: true,
+    message: "",
   }),
 
   methods: {
+    /** ----------------- epargnes ---------------- */
     saveEpargne() {
-      this.credits = true;
-      this.epargneBtn = false
-    },
-    saveCredits() {
-      this.rebursement = true;
-      this.creditsBtn = true
-    },
-    moveStep(stepy) {
-      store.commit("updateSteps", stepy);
+      //save data to the server
+      const formData = {
+        collectionId: localStorage.getItem("collectionId"),
+        amount: this.amount,
+      };
+      ActionsService.SaveEpargne(formData).then((response) => {
+        console.log(response);
+        const payload = response.data;
+        if (response.statusText === "OK") {
+          this.$store.commit("alerter", payload);
+          this.credits = true;
+          this.epargneBtn = false;
+        } else {
+          alert("someting is wrong");
+        }
+      });
     },
 
-    rebursementSave (){
+    /** ----------------- credits ---------------- */
+    saveCredits() {
+      // gather the inputs
+      const formData = {
+        collectionId: localStorage.getItem("collectionId"),
+        creditedGirls: this.creditedGirls,
+        creditedBoys: this.creditedBoys,
+        grantedCredit: this.creditsActroyes,
+        grantedCapital: this.grantedCapital,
+        interestForGrants: this.interestForGrants,
+      };
+      // use the collected data
+      ActionsService.SaveCredits(formData).then((response) => {
+        if (response.statusText === "OK") {
+          const payload = response.data;
+          this.$store.commit("alerter", payload);
+          this.rebursement = true;
+          this.creditsBtn = true;
+          localStorage.setItem("step", JSON.stringify(2));
+        } else {
+          alert("an error occured please try again later");
+        }
+      });
+    },
+
+    /** ----------------- rebursements ---------------- */
+
+    reburse() {
+      // get the inputs
+      const formData = {
+        collectionId: this.collectionId,
+        rebursedInterest: this.rebursedInterest,
+        rebursedCapital: this.rebursedCapital,
+      };
+      // save to the server
+      ActionsService.saveRebursement(formData).then((response) => {
+        const payload = response.data;
+        this.$store.commit("alerter", payload);
+        // return the response and
         this.rebursementBtn = true;
         this.finished = false;
+        localStorage.setItem("step", JSON.stringify(3));
+      });
+    },
+
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
     },
 
     showCurrency() {

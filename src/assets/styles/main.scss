@@ -1,99 +1,149 @@
 @use 'base.scss';
 * {
-    font-family: base.$mainFont;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+  font-family: base.$mainFont;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .container {
-    height: 100%;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .forms-container {
-    background-color: base.$lightPrimary;
-    border-right: solid 10px #c4f8d8;
-    width: 60%;
-    padding: 20px;
-    height: 100%;
-    border-radius: 20px;
+  background-color: base.$lightPrimary;
+  border-right: solid 10px #c4f8d8;
+  width: 60%;
+  padding: 20px;
+  height: 100%;
+  border-radius: 20px;
 }
 
 .form-title {
-    text-align: center;
-    font-size: 30px;
-    line-height: 60px;
-    color: #20db6b;
-    font-weight: bold;
-    text-transform: uppercase;
+  text-align: center;
+  font-size: 30px;
+  line-height: 60px;
+  color: #20db6b;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
 #auth-card {
-    background: #ffffff;
-    box-shadow: 0px 4px 4px 4px rgba(234, 222, 222, 0.25);
-    border-radius: 15px;
-    margin-top: 25%;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px 4px rgba(234, 222, 222, 0.25);
+  border-radius: 15px;
+  margin-top: 25%;
 }
 
 .app-info {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 40%;
-    flex-direction: column;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  flex-direction: column;
 }
 
 .detail-text {
-    font-size: 20px;
-    line-height: 24px;
-    text-align: center;
-    color: rgba(0, 0, 0, 0.47);
+  font-size: 20px;
+  line-height: 24px;
+  text-align: center;
+  color: rgba(0, 0, 0, 0.47);
 }
 
 .login-form {
-    display: flexbox;
-    align-self: center;
-    flex: 1 0 auto;
-    margin-top: 44px;
+  display: flexbox;
+  align-self: center;
+  flex: 1 0 auto;
+  margin-top: 44px;
 }
 
 .create-container {
-    width: 100%;
-    height: 100%;
-    padding: 30px;
-    display: flex;
-    justify-content: space-around;
-    align-content: space-around;
-    // align-items: center;
-    flex-wrap: wrap;
-    flex-direction: column;
-    margin-top: 20px;
+  width: 100%;
+  height: 100%;
+  padding: 30px;
+  display: flex;
+  justify-content: space-around;
+  align-content: space-around;
+  // align-items: center;
+  flex-wrap: wrap;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
 .form-container {
-    background: #f0f0f0;
-    border-radius: 15px;
-    padding: 12px;
-    max-width: 800px;
-    min-width: 400px;
-    margin-top: 20px;
+  background: #f0f0f0;
+  border-radius: 15px;
+  padding: 12px;
+  max-width: 800px;
+  min-width: 400px;
+  margin-top: 20px;
 }
 
 .create-title {
-    font-weight: bold;
-    font-size: 18px;
-    line-height: 27px;
-    text-align: left;
-    /* identical to box height */
-    color: #20db6b;
-    text-transform: uppercase;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 27px;
+  text-align: left;
+  /* identical to box height */
+  color: #20db6b;
+  text-transform: uppercase;
 }
 
 .create {
-    height: 100%;
-    display: flex;
+  height: 100%;
+  display: flex;
+}
+
+// stats
+
+.stat-container {
+  background: #ffffff;
+  box-shadow: 0px 20px 100px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+  padding: 10px;
+  height: 400px;
+  text-align: center;
+  border-bottom: #20db6b 1px solid;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+  align-items: center;
+}
+
+.stat-title-container {
+  padding: 20px;
+  text-align: left;
+}
+
+// diocese page
+.top-list-container {
+  background: #ffffff;
+  box-shadow: 0px 4px 21px rgba(166, 172, 190, 0.29);
+  border-radius: 7px;
+  padding: 13px;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.table-container {
+  width: 100%;
+  background: #ffffff;
+  box-shadow: 0px 4px 4px rgba(166, 172, 190, 0.29);
+  border-radius: 10px;
+  padding: 10px;
+  min-height:400px;
+}
+.table-container .empty{
+  text-align: center;
+  margin-top: 100px;
+  font-size: 25px;
+  color: #d4d6d5;
 }

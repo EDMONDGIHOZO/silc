@@ -44,7 +44,7 @@ export default {
   data: () => ({
     links: [
       ["mdi-view-dashboard", "DASHBOARD", "home"],
-      ["mdi-church", "DIOCESES", "dioceses"],
+      ["mdi-church", "DIOCESES", "all-dioceses"],
       ["mdi-christianity-outline", "PAROISSES", "paroisse"],
       ["mdi-account-group", "GROUPES", "groupes"],
       ["mdi-google-analytics", "RAPPORTS", "rapports"],
@@ -59,6 +59,7 @@ export default {
     logout() {
       this.$store.dispatch("auth/logout");
       this.$router.push({ name: "login" });
+      location.reload();
     },
   },
 };

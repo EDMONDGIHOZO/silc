@@ -5,7 +5,6 @@
         <v-col cols="12" md="6">
           <v-text-field
             v-model="accountsOpenend"
-            :rules="commonRules"
             outlined
             dense
             rounded
@@ -17,7 +16,6 @@
         <v-col cols="12" md="6">
           <v-text-field
             v-model="membersCredited"
-            :rules="commonRules"
             outlined
             dense
             rounded
@@ -29,7 +27,6 @@
         <v-col cols="12" md="6">
           <v-text-field
             v-model="creditedAmount"
-            :rules="commonRules"
             outlined
             dense
             rounded
@@ -57,7 +54,7 @@
             :disabled="finished"
             depressed
             rounded
-            @click="moveStep(4)"
+            @click="saveRelations"
           >
             Continue
           </v-btn>
@@ -69,6 +66,7 @@
 
 <script>
 import store from "@/store/index";
+import ActionsService from "@/services/actions.service";
 export default {
   data: () => ({
     accountsOpenend: 0,
@@ -76,9 +74,30 @@ export default {
     creditedAmount: 0,
     groupBankAccount: false,
     groupBankCredit: false,
+    finished: false,
+    valid: false,
   }),
 
   methods: {
+    // save the relations informations
+    saveRelations() {
+      const formData = {
+        collectionId: localStorage.getItem("collectionId"),
+        membersOpenedAccounts: this.accountsOpenend,
+        membersCredited: this.membersCredited,
+        creditedAmount: this.creditedAmount,
+        groupBankAccount: this.groupBankAccount,
+        groupBankCredit: this.groupBankAccount,
+      };
+      // save to the server
+      ActionsService.SaveRelations(formData).then((response) => {
+        const payload = response.data;
+        this.$store.commit("alerter", payload);
+        // this.credits = true;
+        // this.epargneBtn = false;
+        store.commit("updateSteps", 4);
+      });
+    },
     moveStep(stepy) {
       store.commit("updateSteps", stepy);
     },

@@ -25,9 +25,7 @@
         <v-stepper-step step="3" :complete="steps > 3">
           Relation avec Institution financiel
         </v-stepper-step>
-        <v-stepper-step step="4" complete>
-          Done
-        </v-stepper-step>
+        <v-stepper-step step="4" complete> Done </v-stepper-step>
       </v-stepper-header>
 
       <v-stepper-items>
@@ -47,6 +45,7 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+    <Snackbar :message="alert.message" :color="alert.color" />
   </div>
 </template>
 
@@ -55,13 +54,15 @@ import GeneralData from "@/components/creation/generalData.vue";
 import FinancialData from "@/components/creation/financialData.vue";
 import FinancialRelations from "@/components/creation/financialRelations.vue";
 import DoneAnimation from "@/components/helpers/doneAnimation.vue";
+import Snackbar from "@/components/layouts/snackbars.vue";
+import { mapState } from "vuex";
 
 export default {
-  computed: {
-    steps() {
-      return this.$store.state.steps;
-    },
-  },
+  name: "datacollection",
+  data: () => ({
+    valid: null,
+  }),
+  computed: mapState(["steps", "alert"]),
 
   methods: {
     close() {
@@ -73,7 +74,8 @@ export default {
     GeneralData,
     FinancialData,
     FinancialRelations,
-    DoneAnimation
+    DoneAnimation,
+    Snackbar,
   },
 };
 </script>
