@@ -139,11 +139,24 @@
   box-shadow: 0px 4px 4px rgba(166, 172, 190, 0.29);
   border-radius: 10px;
   padding: 10px;
-  min-height:400px;
+  min-height: 400px;
 }
-.table-container .empty{
+.table-container .empty {
   text-align: center;
   margin-top: 100px;
   font-size: 25px;
   color: #d4d6d5;
+}
+
+.table-container h3 {
+  text-align: left;
+  font-size: 20px;
+}
+
+
+.editing-title {
+  font-size:20px;
+  font-weight: bold;
+  color: #363635;
+  text-align: center;
 }

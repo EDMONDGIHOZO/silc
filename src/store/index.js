@@ -32,6 +32,12 @@ export default new Vuex.Store({
       data: [],
     },
 
+    singleDiocese: {
+      loaded: false,
+      status: "",
+      data: [],
+    },
+
     // alert views
     alert: {
       message: "it works fine like this",
@@ -68,6 +74,11 @@ export default new Vuex.Store({
       state.diocese.data = payload.data;
       state.diocese.loaded = true;
     },
+    keepDiocese(state, payload) {
+      state.singleDiocese.data = payload.data;
+      state.singleDiocese.loaded = true;
+      state.singleDiocese.empty = false;
+    },
 
     saveUserInfo(state, payload) {
       state.UserInfo = payload;
@@ -94,6 +105,18 @@ export default new Vuex.Store({
           console.log("some error occured");
         }
       });
+    },
+    getDiocese({ commit }, id) {
+      return ActionsService.getDiocese(id).then((response) => {
+        if (response.statusText === "OK") {
+          commit("keepDiocese", response.data);
+        } else {
+          console.log("some error occured");
+        }
+      });
+    },
+    deleteDiocese(id) {
+      console.log("function called and give" + id);
     },
   },
   modules: {

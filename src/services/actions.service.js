@@ -21,6 +21,20 @@ class ActionsService {
     return axios.get(API_URL + `dioceses`, { headers: authHeader() });
   }
 
+  getDiocese(id) {
+    return axios.get(API_URL + `dioceses/${id}`, { headers: authHeader() });
+  }
+
+  editDiocese(id, newName) {
+    return axios.put(
+      API_URL + `dioceses/${id}`,
+      newName,
+      {
+        headers: authHeader(),
+      }
+    );
+  }
+
   getGroupes() {
     return axios.get(API_URL + `api/groupeAll`, { headers: authHeader() });
   }

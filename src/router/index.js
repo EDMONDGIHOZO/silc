@@ -85,6 +85,24 @@ const routes = [
             "../views/dashboard/raports/dioceses.vue"
           ),
       },
+      {
+        path: "paroisses",
+        name: "all-paroisses",
+        component: () =>
+          import(
+            /* webpackChunkName: 'all-paroisses' */
+            "../views/dashboard/raports/paroisses.vue"
+          ),
+      },
+      {
+        path: "all-groupes",
+        name: "all-groupes",
+        component: () =>
+          import(
+            /* webpackChunkName: 'all-groupes' */
+            "../views/dashboard/raports/all-groupes.vue"
+          ),
+      },
       //raports
       {
         path: "/groupes",

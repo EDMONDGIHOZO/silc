@@ -6,18 +6,14 @@
         <v-col cols="12">
           <v-sheet class="mx-auto" max-width="900">
             <v-slide-group multiple show-arrows>
-              <v-slide-item
-                v-for="dio in diocese.data"
-                :key="dio.id"
-                v-slot="{ active, toggle }"
-              >
+              <v-slide-item v-for="dio in diocese.data" :key="dio.id">
                 <v-btn
                   class="mx-2"
                   :input-value="active"
                   active-class="purple white--text"
                   depressed
                   rounded
-                  @click="toggle"
+                  @click="getDiocese(dio.id), active"
                 >
                   {{ dio.name }}
                 </v-btn>
@@ -32,7 +28,7 @@
     </div>
     <v-row wrap class="my-5">
       <v-col cols="12">
-        <simple-table v-if="diocese.loaded" />
+        <simple-table v-if="diocese.loaded" :headers="headers" />
         <skeleton-loader type="table-tbody, table-thead" v-else />
       </v-col>
     </v-row>
@@ -47,6 +43,12 @@ export default {
   name: "all-dioceses",
   data: () => ({
     model: null,
+    active: false,
+    toggle_exclusive: undefined,
+    headers: [
+      { title: "Nom", id: 1 },
+      { title: "Groupes", id: 2 },
+    ],
   }),
 
   computed: {
@@ -55,6 +57,12 @@ export default {
 
   mounted() {
     this.$store.dispatch("getDioceses");
+  },
+
+  methods: {
+    getDiocese(dio_id) {
+      this.$store.dispatch("getDiocese", dio_id);
+    },
   },
 
   components: {

@@ -45,9 +45,8 @@ export default {
     links: [
       ["mdi-view-dashboard", "DASHBOARD", "home"],
       ["mdi-church", "DIOCESES", "all-dioceses"],
-      ["mdi-christianity-outline", "PAROISSES", "paroisse"],
-      ["mdi-account-group", "GROUPES", "groupes"],
-      ["mdi-google-analytics", "RAPPORTS", "rapports"],
+      ["mdi-christianity-outline", "PAROISSES", "all-paroisses"],
+      ["mdi-account-group", "GROUPES", "all-groupes"],
       ["mdi-account-supervisor-circle", "USERS", "users"],
     ],
   }),
