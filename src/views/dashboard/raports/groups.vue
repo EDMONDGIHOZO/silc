@@ -5,6 +5,7 @@
       :items="groupes"
       sort-by="name"
       class="elevation-1"
+      @click:row="handleClick"
       v-if="showTable"
     >
       <template v-slot:top>
@@ -98,7 +99,6 @@
       </template>
 
       <template v-slot:item.actions="{ item }">
-        <v-icon small @click="viewItem(item)" class="mr-2"> mdi-eye </v-icon>
         <v-icon small class="mr-2" @click="editItem(item)"> mdi-pencil </v-icon>
         <v-icon small @click="deleteItem(item)"> mdi-delete </v-icon>
       </template>
@@ -147,7 +147,6 @@ export default {
       },
       { text: "Actions", value: "actions", sortable: false },
     ],
-    desserts: [],
     editedIndex: -1,
     itemId: 0,
     editedItem: {
@@ -194,16 +193,15 @@ export default {
       });
     },
 
+    handleClick(row) {
+      const groupId = row.id;
+      return this.$router.push({ name: "group-view", params: { groupId: groupId } });
+    },
+
     editItem(item) {
       this.editedIndex = this.groupes.indexOf(item);
       this.editedItem = Object.assign({}, item);
       this.itemId = item.id;
-      this.dialog = true;
-    },
-
-    viewItem(item) {
-      this.editedIndex = this.groupes.indexOf(item);
-      this.editedItem = Object.assign({}, item);
       this.dialog = true;
     },
 

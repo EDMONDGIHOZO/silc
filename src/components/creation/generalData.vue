@@ -1,6 +1,6 @@
 <template>
   <div class="contents">
-    <v-form v-model="valid" @submit.prevent>
+    <v-form v-model="valid" @submit.prevent class="data-create-container">
       <v-row class="wrap my-4">
         <v-col cols="12">
           <h3>Reference du groupe</h3>
@@ -291,7 +291,6 @@ export default {
 
     browserSave(keyname, value) {
       localStorage.setItem(keyname, value);
-      localStorage.setItem("step", JSON.stringify(2));
     },
 
     saveGenInfo() {

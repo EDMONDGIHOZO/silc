@@ -66,11 +66,24 @@ class ActionsService {
     });
   }
 
-  SaveCredits(formData) {
+  saveCredits(formData) {
     return axios.post(API_URL + `credits`, formData, {
       headers: authHeader(),
     });
   }
+
+  savePenalty(formData){
+    return axios.post(API_URL + `penality`, formData, {
+      headers: authHeader(),
+    });
+  }
+
+  saveEntraide(formData){
+    return axios.post(API_URL + `entraide`, formData, {
+      headers: authHeader(),
+    });
+  }
+
   saveRebursement(formData) {
     return axios.post(API_URL + `rebursements`, formData, {
       headers: authHeader(),

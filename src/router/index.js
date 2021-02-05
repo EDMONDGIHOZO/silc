@@ -3,7 +3,8 @@ import VueRouter from "vue-router";
 import Home from "../views/dashboard-holder.vue";
 import Auth from "../views/auth/AuthHolder.vue";
 import Creator from "../components/helpers/create.vue";
-import Paroisse from "../views/dashboard/raports/singleParoisse.vue"
+import Paroisse from "../views/dashboard/raports/singleParoisse.vue";
+import SingleGroup from "../views/dashboard/raports/singleGroup.vue";
 
 Vue.use(VueRouter);
 
@@ -113,6 +114,12 @@ const routes = [
         path: "paroisses/:parid",
         component: Paroisse,
         name: "paroisse",
+        props: true
+      },
+      {
+        path: "groupes/:groupId",
+        component: SingleGroup,
+        name: "group-view",
         props: true
       }
     ],

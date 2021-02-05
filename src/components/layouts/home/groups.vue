@@ -16,7 +16,7 @@
           <tr v-for="item in info" :key="item.id">
             <td class="text-left">{{ item.name }} ({{item.group_code}})</td>
             <td>{{ item.collections[0].membres_actuel_inscrits_girls + item.collections[0].membres_actuel_inscrits_boys }}</td>
-            <td class="text-right">{{ item.collections[0].collection_date | formatDate }}</td>
+            <td class="text-left">{{ item.collections[0].collection_date | formatDate }}</td>
           </tr>
         </tbody>
       </template>
@@ -71,3 +71,5 @@ export default {
   },
 };
 </script>
+
+

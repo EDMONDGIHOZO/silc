@@ -2,7 +2,7 @@
   <div class="container">
     <v-row wrap class="mt-3">
       <v-col cols="12">
-        <h3>General Information</h3>
+        <h3 class="display-1 text-uppercase">Informations générales</h3>
       </v-col>
       <v-col cols="12" md="4">
         <roundedCardItem
@@ -169,7 +169,6 @@ export default {
           const epargnes = collections.map(
             (item) => item[0].epargne.valeur_total_epargne_realise_mois
           );
-          console.log(epargnes);
           // get the sum of epargnes
           const total_epargnes = this.total(epargnes);
           // attach result to the statuses

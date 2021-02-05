@@ -6,16 +6,6 @@ Vue.use(Vuex);
 
 // const debug = process.env.NODE_ENV !== 'production';
 
-let currentStep = localStorage.getItem("step");
-if (!currentStep) {
-  currentStep = 1;
-}
-// let currentStep = 1;
-// if (colid) {
-//   currentStep = 2;
-// } else {
-//   currentStep = 1;
-// }
 export default new Vuex.Store({
   state: {
     logo: require("@/assets/logo.png"),
@@ -23,7 +13,7 @@ export default new Vuex.Store({
     drawer: true,
     UserInfo: [],
     avatarChar: "N",
-    steps: currentStep,
+    step: 1,
 
     // dioceseses
     diocese: {
@@ -75,11 +65,8 @@ export default new Vuex.Store({
       }
     },
 
-    updateSteps(state, steps) {
-      state.steps = steps;
-    },
-    endSteps(state) {
-      state.steps = 1;
+    updateSteps(state, step) {
+      state.step = step;
     },
 
     keepDioceses(state, payload) {

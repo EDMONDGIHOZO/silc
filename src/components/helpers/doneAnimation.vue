@@ -67,7 +67,7 @@ export default {
   font-weight: bold;
   color: base.$secondary;
   transform: translateY(-600px);
-  animation: 1.2s slideIn ease-in-out forwards 1s;
+  animation: 0.4s slideIn ease-in-out forwards 1s;
   z-index: 10;
   opacity: 0;
   position: relative;
