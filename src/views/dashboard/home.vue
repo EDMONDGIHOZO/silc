@@ -166,7 +166,10 @@ export default {
           // get only collections
           const collections = filtered.map((item) => item.collections);
           // get only des epargnes
-          const epargnes = collections.map((item) => item[0].epargne.amount);
+          const epargnes = collections.map(
+            (item) => item[0].epargne.valeur_total_epargne_realise_mois
+          );
+          console.log(epargnes);
           // get the sum of epargnes
           const total_epargnes = this.total(epargnes);
           // attach result to the statuses
@@ -174,7 +177,7 @@ export default {
 
           // get the granteds (actroyes)
           const granted = collections.map(
-            (item) => item[0].credit.granted_credit
+            (item) => item[0].credit.nombres_total_credit_actroyes
           );
           // get the sum of epargnes
           const total_granted = this.total(granted);
@@ -183,7 +186,7 @@ export default {
 
           // get the granted capital (actroyes)
           const grantedCapital = collections.map(
-            (item) => item[0].credit.granted_capital
+            (item) => item[0].credit.valeur_de_credit_actroyes_capital
           );
           // get the sum of epargnes
           const total_granted_capital = this.total(grantedCapital);
@@ -192,10 +195,14 @@ export default {
 
           // get the attendence information
           //** boys */
-          const boys = collections.map((item) => item[0].boys_attended);
+          const boys = collections.map(
+            (item) => item[0].membres_present_en_reunion_boys
+          );
           const total_boys = this.total(boys);
           //** girls */
-          const girls = collections.map((item) => item[0].girls_attended);
+          const girls = collections.map(
+            (item) => item[0].membres_present_en_reunion_girls
+          );
           const total_girls = this.total(girls);
 
           // make the series model

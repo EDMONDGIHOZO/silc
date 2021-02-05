@@ -3,8 +3,11 @@ import VueRouter from "vue-router";
 import Home from "../views/dashboard-holder.vue";
 import Auth from "../views/auth/AuthHolder.vue";
 import Creator from "../components/helpers/create.vue";
+import Paroisse from "../views/dashboard/raports/singleParoisse.vue"
 
 Vue.use(VueRouter);
+
+
 
 const routes = [
   /** normal pages holder */
@@ -76,6 +79,7 @@ const routes = [
           },
         ],
       },
+
       {
         path: "dioceses",
         name: "all-dioceses",
@@ -95,16 +99,6 @@ const routes = [
           ),
       },
       {
-        path: "all-groupes",
-        name: "all-groupes",
-        component: () =>
-          import(
-            /* webpackChunkName: 'all-groupes' */
-            "../views/dashboard/raports/all-groupes.vue"
-          ),
-      },
-      //raports
-      {
         path: "/groupes",
         name: "groups",
         component: () =>
@@ -113,6 +107,14 @@ const routes = [
             "../views/dashboard/raports/groups.vue"
           ),
       },
+
+      // singles
+      {
+        path: "paroisses/:parid",
+        component: Paroisse,
+        name: "paroisse",
+        props: true
+      }
     ],
   },
   /*** user authentication routes  */

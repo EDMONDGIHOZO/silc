@@ -2,8 +2,8 @@
   <div class="login-container">
     <v-alert
       border="top"
-      :color="alertColor"
-      :type="alertType"
+      color="info"
+      type="alertType"
       dark
       v-if="error"
     >
@@ -75,7 +75,7 @@ export default {
     status: [],
     error: false,
     alertColor: "",
-    alertType: "",
+    alertType: "info",
     emailRules: [
       (v) => !!v || "E-mail is required",
       (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",

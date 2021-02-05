@@ -1,6 +1,11 @@
 <template>
   <div class="container">
-    <div class="title-bar"><h4 class="my-3">Tous les dioceses</h4></div>
+    <div class="title-container">
+      <h4 class="my-3">Tous les dioceses</h4>
+      <v-btn color="success" router to="/create/diocese" rounded depressed
+        ><v-icon>mdi-plus</v-icon> nouveau</v-btn
+      >
+    </div>
     <div class="top-list-container">
       <v-row wrap align-content="center" no-gutters v-if="diocese.loaded">
         <v-col cols="12">
@@ -46,8 +51,9 @@ export default {
     active: false,
     toggle_exclusive: undefined,
     headers: [
-      { title: "Nom", id: 1 },
-      { title: "Groupes", id: 2 },
+      { title: "Nom de paroisse", id: 1 },
+      { title: "Nombre de groupes", id: 2 },
+      {title: "Actions", id: 3}
     ],
   }),
 

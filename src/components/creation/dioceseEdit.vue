@@ -11,12 +11,12 @@
           v-bind="attrs"
           v-on="on"
         >
-          <v-icon left>mdi-pencil</v-icon>Edit
+          <v-icon left>mdi-pencil</v-icon>Editer
         </v-btn>
       </template>
       <v-card>
         <v-card-title>
-          <span class="editing-title"
+          <span class="diolog-title"
             >modifier les informations du diocèse {{ dioName }}</span
           >
         </v-card-title>

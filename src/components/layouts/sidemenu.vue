@@ -46,14 +46,14 @@ export default {
       ["mdi-view-dashboard", "DASHBOARD", "home"],
       ["mdi-church", "DIOCESES", "all-dioceses"],
       ["mdi-christianity-outline", "PAROISSES", "all-paroisses"],
-      ["mdi-account-group", "GROUPES", "all-groupes"],
+      ["mdi-account-group", "GROUPES", "groups"],
       ["mdi-account-supervisor-circle", "USERS", "users"],
     ],
   }),
   computed: mapState(["sidelogo", "drawer"]),
   methods: {
     goTo(route) {
-      return this.$router.push({ name: route });
+      return this.$router.push({ name: route }, () => {});
     },
     logout() {
       this.$store.dispatch("auth/logout");

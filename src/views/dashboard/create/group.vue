@@ -37,7 +37,7 @@
               placeholder="Select..."
               background-color="white"
               required
-              @change="findParoisses"
+              @change="getDioPar"
               outlined
               dense
               rounded
@@ -200,9 +200,7 @@
 
     <!-- group informations -->
     <v-card outlined shaped v-if="groupInfo">
-      <v-card-title>
-        informations de groupe
-      </v-card-title>
+      <v-card-title> informations de groupe </v-card-title>
       <v-card-text text-center>
         <p>
           voici le code du groupe, veuillez le sauvegarder quelque part pour une
@@ -251,7 +249,7 @@ export default {
     groupInfo: false,
 
     //  dates management
-    showEnd:false,
+    showEnd: false,
     startMenu: false,
     endMenu: false,
   }),
@@ -284,11 +282,11 @@ export default {
       this.$refs.menu.save(startDate);
     },
 
-    findParoisses() {
+    getDioPar() {
       try {
-        ActionsService.getParoisses(this.diocese_id).then((response) => {
+        ActionsService.getDioPar(this.diocese_id).then((response) => {
           this.paroisses = [];
-          this.paroisses = response.data.data.paroisses;
+          this.paroisses = response.data.data;
           this.hideParoisses = false;
         });
       } catch (error) {

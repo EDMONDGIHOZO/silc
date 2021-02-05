@@ -7,16 +7,16 @@
       <template v-slot:default>
         <thead>
           <tr>
-            <th class="text-left">nom de groupe</th>
+            <th class="text-left">code de groupe</th>
             <th class="text-left">membres inscrits</th>
             <th class="text-left">date récente de collecte des données</th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="item in info" :key="item.id">
-            <td>{{ item.group_code }}</td>
-            <td>{{ item.collections[0].registered_members }}</td>
-            <td>{{ item.collections[0].collection_date | formatDate }}</td>
+            <td class="text-left">{{ item.name }} ({{item.group_code}})</td>
+            <td>{{ item.collections[0].membres_actuel_inscrits_girls + item.collections[0].membres_actuel_inscrits_boys }}</td>
+            <td class="text-right">{{ item.collections[0].collection_date | formatDate }}</td>
           </tr>
         </tbody>
       </template>

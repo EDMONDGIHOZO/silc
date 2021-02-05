@@ -60,27 +60,30 @@ export default {
       showAlert: true,
       alertMessage: "",
       showProgress: null,
-      response: false
+      response: false,
     };
   },
 
   methods: {
     register() {
       const formData = { name: this.name.toLowerCase() };
-      this.response = true;
-      this.showProgress = true;
+
       try {
         ActionsService.createDiocese(formData).then((response) => {
-        this.showProgress = false;
-          this.showAlert = true;
-          this.name = "";
-          this.alertType = response.data.status;
-          this.alertMessage = response.data.message;     
+          if (response.statusText === "OK") {
+            this.response = true;
+            this.showProgress = true;
+            this.showProgress = false;
+            this.showAlert = true;
+            this.name = "";
+            this.alertType = response.data.status;
+            this.alertMessage = response.data.message;
 
-          setTimeout(() => (this.$router.push({name: "home"})), 4000)
+            setTimeout(() => this.$router.push({ name: "home" }), 4000);
+          }
         });
       } catch (error) {
-        console.log(error);
+        console.log(error.response.data.message);
       }
     },
 

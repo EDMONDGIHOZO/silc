@@ -8,6 +8,24 @@ class ActionsService {
     return axios.get(API_URL + `groupes`, { headers: authHeader() });
   }
 
+  editGroup(gid, formData) {
+    return axios.put(API_URL + `groupes/${gid}`, formData, {
+      headers: authHeader(),
+    });
+  }
+
+  deleteGroup(gid) {
+    return axios.delete(API_URL + `groupes/${gid}`, {
+      headers: authHeader(),
+    });
+  }
+
+  deleteParoisse(pid) {
+    return axios.delete(API_URL + `paroisses/${pid}`, {
+      headers: authHeader(),
+    });
+  }
+
   createGroup(formData) {
     return axios.post(API_URL + `groupes`, formData, { headers: authHeader() });
   }
@@ -26,13 +44,13 @@ class ActionsService {
   }
 
   editDiocese(id, newName) {
-    return axios.put(
-      API_URL + `dioceses/${id}`,
-      newName,
-      {
-        headers: authHeader(),
-      }
-    );
+    return axios.put(API_URL + `dioceses/${id}`, newName, {
+      headers: authHeader(),
+    });
+  }
+
+  deleteDiocese(id) {
+    return axios.delete(API_URL + `dioceses/${id}`, { headers: authHeader() });
   }
 
   getGroupes() {
@@ -87,8 +105,8 @@ class ActionsService {
     return axios.get(API_URL + `user/me`, { headers: authHeader() });
   }
 
-  getParoisses(diocese_id) {
-    return axios.get(API_URL + `dioceses/${diocese_id}`, {
+  getDioPar(diocese_id) {
+    return axios.get(API_URL + `api/dio-pars/${diocese_id}`, {
       headers: authHeader(),
     });
   }
@@ -102,6 +120,18 @@ class ActionsService {
 
   getAec() {
     return axios.get(API_URL + `api/aec`, {
+      headers: authHeader(),
+    });
+  }
+
+  allParoisses() {
+    return axios.get(API_URL + `paroisses`, {
+      headers: authHeader(),
+    });
+  }
+
+  getPar(id) {
+    return axios.get(API_URL + `paroisses/${id}`, {
       headers: authHeader(),
     });
   }

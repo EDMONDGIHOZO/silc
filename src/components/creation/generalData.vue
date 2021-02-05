@@ -5,7 +5,7 @@
         <v-col cols="12">
           <h3>Reference du groupe</h3>
         </v-col>
-        <v-col cols="12" md="6">
+        <v-col cols="12" md="4">
           <v-menu
             ref="menu"
             v-model="menu"
@@ -35,21 +35,7 @@
             ></v-date-picker>
           </v-menu>
         </v-col>
-        <v-col cols="12" md="6">
-          <v-text-field
-            v-model="collectorName"
-            :rules="commonRules"
-            append-icon="mdi-feather"
-            :placeholder="UserInfo.username"
-            disabled
-            background-color="white"
-            label="Nom du Collecteur"
-            required
-            outlined
-            dense
-            rounded
-          ></v-text-field>
-        </v-col>
+
         <v-col cols="12" md="4">
           <v-select
             :items="groups"
@@ -65,48 +51,156 @@
             v-model="groupId"
           ></v-select>
         </v-col>
+
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="registeredMembers"
+            v-model="debutEpargne"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="Date de début d’épargne du cycle actuel"
+            required
+            type="date"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="finEpargneCycle"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="Date probable de fin du cycle actuel"
+            required
+            type="date"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="maximalTimeCredit"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="Durée maximale convenue de crédit  (mois)"
+            required
+            type="number"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="currentRegisteredBoys"
             append-icon="mdi-account-multiple"
             background-color="white"
             outlined
             dense
             rounded
-            label="membres actuellement inscrits"
+            label="Membres actuels inscrits(Garçons)"
             required
             type="number"
           ></v-text-field>
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="newMembers"
+            v-model="currentRegisteredGirls"
+            append-icon="mdi-account-multiple"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="Membres actuels inscrits(Filles)"
+            required
+            type="number"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="registeredPreviousMonthBoys"
+            append-icon="mdi-account-multiple"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="inscrits dans le mois précédent(Garçons)"
+            required
+            type="number"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="registeredPreviousMonthGirls"
+            append-icon="mdi-account-multiple"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="inscrits dans le mois précédent(Filles)"
+            required
+            type="number"
+          ></v-text-field>
+        </v-col>
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="newMembersGirls"
             append-icon="mdi-account-multiple-plus"
             background-color="white"
             outlined
             dense
             rounded
-            label="nouveaux membres"
+            label="nouveaux membres(Filles)"
             required
             type="number"
           ></v-text-field>
         </v-col>
+
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="abandons"
+            v-model="newMembersBoys"
+            append-icon="mdi-account-multiple-plus"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="Nouveaux membres enregistrés (Garcons)"
+            required
+            type="number"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="abandonCurrentMonthBoys"
             append-icon="mdi-account-multiple-minus"
             background-color="white"
             outlined
             dense
             rounded
-            label="membres abandonnés"
+            label="membres abandonnés(Garcons)"
             required
             type="number"
           ></v-text-field>
         </v-col>
+
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="boysAttended"
+            v-model="abandonCurrentMonthGirls"
+            append-icon="mdi-account-multiple-minus"
+            background-color="white"
+            outlined
+            dense
+            rounded
+            label="membres abandonnés(Filles)"
+            required
+            type="number"
+          ></v-text-field>
+        </v-col>
+
+        <v-col cols="12" md="4">
+          <v-text-field
+            v-model="presentBoys"
             append-icon="mdi-human-male"
             background-color="white"
             label="garçons présents"
@@ -119,7 +213,7 @@
         </v-col>
         <v-col cols="12" md="4">
           <v-text-field
-            v-model="girlsAttended"
+            v-model="presentGirls"
             append-icon="mdi-human-female"
             background-color="white"
             label="Filles présents"
@@ -131,38 +225,7 @@
           ></v-text-field>
         </v-col>
       </v-row>
-      <v-divider></v-divider>
-      <v-row class="wrap my-4">
-        <v-col cols="12">
-          <h3>Penalites/Amandes</h3>
-        </v-col>
-        <v-col cols="12" md="4">
-          <v-text-field
-            v-model="punishedMembers"
-            append-icon="mdi-account-cash"
-            background-color="white"
-            label="Membres Punis"
-            outlined
-            dense
-            rounded
-            required
-            type="number"
-          ></v-text-field>
-        </v-col>
-        <v-col cols="12" md="4">
-        <v-text-field
-          v-model="paidPenalities"
-          append-icon="mdi-cash-100"
-          background-color="white"
-          label="Montant de penalites payees"
-          outlined
-          dense
-          rounded
-          required
-          type="number"
-        ></v-text-field>
-      </v-col>
-      </v-row>
+
       <v-btn
         color="primary"
         type="submit"
@@ -186,20 +249,25 @@ export default {
     groups: [],
     stepy: 2,
     commonRules: [(v) => v.length <= 1 || "Max 25 characters"],
-    // data collection
-    collectionDate: null,
-    collectorName: "",
-    newMembers: null,
-    registeredMembers: null,
-    boysAttended: null,
-    girlsAttended: null,
-    abandons: null,
+    // data to be collected
+    collectionDate: "",
     groupId: null,
+    debutEpargne: "",
+    finEpargneCycle: "",
+    maximalTimeCredit: null,
+    registeredPreviousMonthBoys: null,
+    registeredPreviousMonthGirls: null,
+    abandonCurrentMonthBoys: null,
+    abandonCurrentMonthGirls: null,
+    newMembersBoys: null,
+    newMembersGirls: null,
+    currentRegisteredBoys: null,
+    currentRegisteredGirls: null,
+    presentGirls: null,
+    presentBoys: null,
+    collectorName: "",
+    latest: false,
     valid: false,
-    // penalites
-    punishedMembers: null,
-    paidPenalities: 0,
-    latest: true
   }),
 
   watch: {
@@ -229,15 +297,21 @@ export default {
     saveGenInfo() {
       const formData = {
         collectionDate: this.collectionDate,
-        collectorName: this.collectorName,
-        newMembers: this.newMembers,
         groupId: this.groupId,
-        abandons: this.abandons,
-        registeredMembers: this.registeredMembers,
-        boysAttended: this.boysAttended,
-        girlsAttended: this.girlsAttended,
-        punishedMembers: this.punishedMembers,
-        paidPenalities: this.paidPenalities,
+        debutEpargne: this.debutEpargne,
+        finEpargneCycle: this.finEpargneCycle,
+        maximalTimeCredit: this.maximalTimeCredit,
+        registeredPreviousMonthBoys: this.registeredPreviousMonthBoys,
+        registeredPreviousMonthGirls: this.registeredPreviousMonthGirls,
+        abandonCurrentMonthBoys: this.abandonCurrentMonthBoys,
+        abandonCurrentMonthGirls: this.abandonCurrentMonthGirls,
+        newMembersBoys: this.newMembersBoys,
+        newMembersGirls: this.newMembersGirls,
+        currentRegisteredBoys: this.currentRegisteredBoys,
+        currentRegisteredGirls: this.currentRegisteredGirls,
+        presentGirls: this.presentGirls,
+        presentBoys: this.presentBoys,
+        collectorName: this.collectorName,
         latest: this.latest,
       };
 

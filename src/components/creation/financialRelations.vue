@@ -69,11 +69,13 @@ import store from "@/store/index";
 import ActionsService from "@/services/actions.service";
 export default {
   data: () => ({
-    accountsOpenend: 0,
-    membersCredited: 0,
-    creditedAmount: 0,
+    
+    accountsOpenend: null,
+    membersCredited: null,
+    creditedAmount: null,
     groupBankAccount: false,
     groupBankCredit: false,
+
     finished: false,
     valid: false,
   }),

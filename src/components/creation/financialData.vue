@@ -133,30 +133,57 @@
       </v-col>
       <v-col cols="12" md="6">
         <v-text-field
-          v-model="rebursedCapital"
+          v-model="valeurCreditRebursedCapital"
           outlined
           dense
           rounded
           type="number"
           :disabled="rebursementBtn"
           background-color="white"
-          label="credits Rembourses (capital)"
+          label="crédits remboursés (capital)"
           required
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="6">
         <v-text-field
-          v-model="rebursedInterest"
+          v-model="valeurInteretsCreditRebursed"
           outlined
           :disabled="rebursementBtn"
           dense
           rounded
           background-color="white"
-          label="intérêts remboursés"
+          label="intérêts sur les crédits remboursés"
           type="number"
           required
         ></v-text-field>
       </v-col>
+      <v-col cols="12" md="6">
+        <v-text-field
+          v-model="valeurCreditCapitalRestantRebursedFin"
+          outlined
+          :disabled="rebursementBtn"
+          dense
+          rounded
+          background-color="white"
+          label="crédits (capital) restant à rembourser"
+          type="number"
+          required
+        ></v-text-field>
+      </v-col>
+      <v-col cols="12" md="6">
+        <v-text-field
+          v-model="valeurInteretsCreditRestantRebursed"
+          outlined
+          :disabled="rebursementBtn"
+          dense
+          rounded
+          background-color="white"
+          label="intérêts aux crédits restant à rembourser"
+          type="number"
+          required
+        ></v-text-field>
+      </v-col>
+
       <div class="saveArea">
         <v-btn
           color="info"
@@ -210,8 +237,10 @@ export default {
     interetsSurCredit: "",
     interestForGrants: "",
     // donnees de rebursement
-    rebursedCapital: 0,
-    rebursedInterest: 0,
+    valeurCreditRebursedCapital: null,
+    valeurInteretsCreditRebursed: null,
+    valeurCreditCapitalRestantRebursedFin: null,
+    valeurInteretsCreditRestantRebursed: null,
 
     // views
     color: "",
@@ -228,7 +257,6 @@ export default {
         amount: this.amount,
       };
       ActionsService.SaveEpargne(formData).then((response) => {
-        console.log(response);
         const payload = response.data;
         if (response.statusText === "OK") {
           this.$store.commit("alerter", payload);
@@ -270,9 +298,16 @@ export default {
     reburse() {
       // get the inputs
       const formData = {
-        collectionId: this.collectionId,
-        rebursedInterest: this.rebursedInterest,
-        rebursedCapital: this.rebursedCapital,
+        collectionId: localStorage.getItem("collectionId"),
+        valeurCreditRebursedCapital: this.valeurCreditRebursedCapital,
+        valeurInteretsCreditRebursed: this.valeurInteretsCreditRebursed,
+        valeurCreditCapitalRestantRebursedFin: this
+          .valeurCreditCapitalRestantRebursedFin,
+        valeurInteretsCreditRestantRebursed: this
+          .valeurInteretsCreditRestantRebursed,
+        valeurCreditRetard:
+          this.valeurCreditCapitalRestantRebursedFin +
+          this.valeurInteretsCreditRestantRebursed,
       };
       // save to the server
       ActionsService.saveRebursement(formData).then((response) => {
