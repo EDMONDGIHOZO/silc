@@ -2,6 +2,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import ActionsService from "@/services/actions.service";
 import { auth } from "./auth.module";
+import { group } from "./group.module";
 Vue.use(Vuex);
 
 // const debug = process.env.NODE_ENV !== 'production';
@@ -283,5 +284,6 @@ export default new Vuex.Store({
   },
   modules: {
     auth,
+    group,
   },
 });

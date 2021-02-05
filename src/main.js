@@ -6,6 +6,7 @@ import vuetify from './plugins/vuetify'
 import Vuelidate from "vuelidate";
 import Axios from 'axios';
 import moment from 'moment';
+import localization from 'moment/locale/fr';
 /** import scss files */
 import '@/assets/styles/main.scss'
 import '@/assets/styles/mobile.scss'
@@ -24,9 +25,10 @@ if (accessToken) {
 
 // filtering
 /** date formatting  */
+moment.updateLocale('fr', localization);
 Vue.filter('formatDate', function(value) {
     if (value) {
-        return moment(value).format('MMM Do YYYY')
+        return moment(value).format('Do MMMM YYYY')
     }
 })
 

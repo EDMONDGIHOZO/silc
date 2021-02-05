@@ -148,6 +148,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  getSgroup(groupId) {
+    return axios.get(API_URL + `sgroup/${groupId}`, {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new ActionsService();
