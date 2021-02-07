@@ -159,6 +159,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  getCollection(colid) {
+    return axios.get(API_URL + `collections/${colid}`, {
+      headers: authHeader(),
+    });
+  }
 }
 
 export default new ActionsService();

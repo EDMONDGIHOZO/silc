@@ -15,6 +15,7 @@ export default new Vuex.Store({
     UserInfo: [],
     avatarChar: "N",
     step: 1,
+    collectionData: null,
 
     // dioceseses
     diocese: {
@@ -68,6 +69,10 @@ export default new Vuex.Store({
 
     updateSteps(state, step) {
       state.step = step;
+    },
+
+    keepCollectionInfo(state, payload) {
+      state.collectionData = payload.data;
     },
 
     keepDioceses(state, payload) {
@@ -249,6 +254,16 @@ export default new Vuex.Store({
           return Promise.reject(error);
         }
       );
+    },
+
+    collectionGet({ commit }, colid) {
+      return ActionsService.getCollection(colid).then((response) => {
+        if (response.statusText === "OK") {
+          commit("keepCollectionInfo", response.data);
+        } else {
+          console.log("some error occured");
+        }
+      });
     },
 
     getDioceses({ commit }) {

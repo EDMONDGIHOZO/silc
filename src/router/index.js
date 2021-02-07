@@ -109,6 +109,24 @@ const routes = [
             "../views/dashboard/raports/groups.vue"
           ),
       },
+      {
+        path: "/users",
+        name: "users",
+        component: () =>
+          import(
+            /* webpackChunkName: 'users' */
+            "../views/dashboard/users.vue"
+          ),
+      },
+      {
+        path: "/help",
+        name: "help",
+        component: () =>
+          import(
+            /* webpackChunkName: 'help' */
+            "../views/dashboard/help.vue"
+          ),
+      },
 
       // singles
       {

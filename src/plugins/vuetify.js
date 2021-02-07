@@ -10,6 +10,7 @@ export default new Vuetify({
                 primary: '#119F4A', //dark green
                 secondary: '#20DB6B', // light green
                 accent: '#EDFFF4', // lighter green
+                danger: '#EB5757', // lighter red
             },
         },
     },

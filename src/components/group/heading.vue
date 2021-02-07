@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="gData.loaded">
     <div class="title-container">
       <h2 class="primary--text display-1 font-weight-bold">
         GROUPE | UBUMANZI
@@ -45,7 +45,7 @@ import { mapState } from "vuex";
 export default {
   name: "grouphead",
   computed: mapState({
-    pData: (state) => state.group.pData,
+    gData: (state) => state.group.gData,
     basicDetails: (state) => state.group.basicDetails,
   }),
 };

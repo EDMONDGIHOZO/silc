@@ -48,6 +48,7 @@ export default {
       ["mdi-christianity-outline", "PAROISSES", "all-paroisses"],
       ["mdi-account-group", "GROUPES", "groups"],
       ["mdi-account-supervisor-circle", "USERS", "users"],
+      ["mdi-help", "AIDE", "help"],
     ],
   }),
   computed: mapState(["sidelogo", "drawer"]),

@@ -6,6 +6,8 @@ export const group = {
   state: {
     basicDetails: {},
     collections: [],
+    tauxInterets: 0,
+
     gData: {
       loaded: false,
     },
@@ -22,11 +24,17 @@ export const group = {
           boys: payload.data.initial_boys_number,
         },
       };
-      const sortedCols = _.sortBy(payload.data.collections, o => o.collection_date)
+      const sortedCols = _.sortBy(
+        payload.data.collections,
+        (o) => o.collection_date
+      );
+
+      console.log(payload);
       state.basicDetails = details;
       state.collections = sortedCols;
-      state.gData.loaded = true;
+      state.tauxInterets = payload.data.monthly_interest;
 
+      state.gData.loaded = true;
     },
   },
 
