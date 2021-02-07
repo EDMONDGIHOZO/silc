@@ -1,27 +1,21 @@
 <template>
   <div class="container">
-    <div class="forms-container">
-      <v-card
-        class="mx-auto pa-5"
-        max-width="440"
-        min-height="380"
-        id="auth-card"
-      >
+    <v-row wrap justify="center">
+      <v-col cols="12" md="6" class="loginer">
         <router-view></router-view>
-      </v-card>
-    </div>
-
-    <div class="app-info">
-      <div class="details pa-4">
-        <v-img :src="logo" width="340" alt="SILC-LOGO"></v-img>
-      </div>
-      <div class="details-text pa-4">
-        <p>
-          Gestion de donnees du programe d’encadrement des jeunes vulnerables
-          dans les group <b>SILC</b>
-        </p>
-      </div>
-    </div>
+      </v-col>
+      <v-col cols="12" md="6" class="intro">
+        <div class="logo-container">
+          <v-img :src="logo" width="340" alt="SILC-LOGO" class="logo"></v-img>
+        </div>
+        <div class="text-container">
+          <p>
+            Gestion de donnees du programe d’encadrement des jeunes vulnerables
+            dans les group <strong>SILC</strong>
+          </p>
+        </div>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -34,3 +28,32 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.intro {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  flex-wrap: wrap;
+  padding: 20px;
+}
+
+.logo-container {
+  align-items: center;
+  position: relative;
+}
+
+.text-container {
+  text-align: center;
+  margin: 30px;
+}
+
+.loginer {
+  margin: auto 10px;
+  max-width: 500px;
+  border-radius:20px;
+  padding: 20px;
+  background-color: rgb(207, 252, 231);
+}
+</style>

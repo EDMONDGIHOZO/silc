@@ -1,73 +1,78 @@
 <template>
   <div class="container">
-    <v-row wrap class="mt-3">
-      <v-col cols="12">
-        <h3 class="display-1 text-uppercase">Informations générales</h3>
-      </v-col>
-      <v-col cols="12" md="4">
-        <roundedCardItem
-          :title="dioceses.title"
-          :number="dioceses.number"
-          :color="dioceses.color"
-        />
-      </v-col>
-      <v-col cols="12" md="4">
-        <roundedCardItem
-          :title="paroisses.title"
-          :number="paroisses.number"
-          :color="paroisses.color"
-        />
-      </v-col>
-      <v-col cols="12" md="4">
-        <roundedCardItem
-          :title="groupes.title"
-          :number="groupes.number"
-          :color="groupes.color"
-        />
-      </v-col>
-    </v-row>
+    <div class="nothing" v-if="!dataIn">
+      <h4 class="display-3">veuillez d'abord créer des données!</h4>
+    </div>
+    <div class="data" v-else>
+      <v-row wrap class="mt-3">
+        <v-col cols="12">
+          <h3 class="display-1 text-uppercase">Informations générales</h3>
+        </v-col>
+        <v-col cols="12" md="4">
+          <roundedCardItem
+            :title="dioceses.title"
+            :number="dioceses.number"
+            :color="dioceses.color"
+          />
+        </v-col>
+        <v-col cols="12" md="4">
+          <roundedCardItem
+            :title="paroisses.title"
+            :number="paroisses.number"
+            :color="paroisses.color"
+          />
+        </v-col>
+        <v-col cols="12" md="4">
+          <roundedCardItem
+            :title="groupes.title"
+            :number="groupes.number"
+            :color="groupes.color"
+          />
+        </v-col>
+      </v-row>
 
-    <!-- financial information  -->
-    <v-row wrap class="mt-5">
-      <v-col cols="12" md="4">
-        <tiledCardItem
-          v-if="loaded"
-          :title="creditsActroyes.title"
-          :amount="creditsActroyes.amount"
-          :icon="creditsActroyes.icon"
-        />
-        <ContentLoader type="card" v-else />
-      </v-col>
-      <v-col cols="12" md="4">
-        <tiledCardItem
-          v-if="loaded"
-          :title="epargnes.title"
-          :amount="epargnes.amount"
-          :icon="epargnes.icon"
-        />
-        <ContentLoader type="card" v-else />
-      </v-col>
-      <v-col cols="12" md="4">
-        <tiledCardItem
-          v-if="loaded"
-          :title="grantedCapital.title"
-          :amount="grantedCapital.amount"
-          :icon="grantedCapital.icon"
-        />
-        <ContentLoader type="card" v-else />
-      </v-col>
-    </v-row>
+      <!-- financial information  -->
+      <v-row wrap class="mt-5">
+        <v-col cols="12" md="4">
+          <tiledCardItem
+            v-if="loaded"
+            :title="creditsActroyes.title"
+            :amount="creditsActroyes.amount"
+            :icon="creditsActroyes.icon"
+          />
+          <ContentLoader type="card" v-else />
+        </v-col>
+        <v-col cols="12" md="4">
+          <tiledCardItem
+            v-if="loaded"
+            :title="epargnes.title"
+            :amount="epargnes.amount"
+            :icon="epargnes.icon"
+          />
+          <ContentLoader type="card" v-else />
+        </v-col>
+        <v-col cols="12" md="4">
+          <tiledCardItem
+            v-if="loaded"
+            :title="grantedCapital.title"
+            :amount="grantedCapital.amount"
+            :icon="grantedCapital.icon"
+          />
+          <ContentLoader type="card" v-else />
+        </v-col>
+      </v-row>
 
-    <!-- statistics information  -->
-    <v-row wrap class="my-5">
-      <v-col cols="12" md="7">
-        <groups :info="groups_info" />
-      </v-col>
-      <v-col cols="12" md="5">
-        <attendence :att_info="attendence" v-if="loaded" />
-        <ContentLoader type="image" v-else />
-      </v-col>
-    </v-row>
+      <!-- statistics information  -->
+      <v-row wrap class="my-5">
+        <v-col cols="12" md="7">
+          <groups :info="groups_info" />
+        </v-col>
+        <v-col cols="12" md="5">
+          <attendence :att_info="attendence" v-if="loaded" />
+          <ContentLoader type="image" v-else />
+        </v-col>
+      </v-row>
+    </div>
   </div>
 </template>
 
@@ -91,6 +96,7 @@ export default {
 
   data: () => ({
     loaded: false,
+    dataIn: false,
     // dioceses
     dioceses: {
       title: "Dioceses",
@@ -146,6 +152,7 @@ export default {
           this.dioceses.number = res.dioceses.total;
           this.paroisses.number = res.paroisses.total;
           this.groupes.number = res.groupes.total;
+          
         } else {
           alert("an error occured");
         }
@@ -162,6 +169,7 @@ export default {
         if (response.statusText === "OK") {
           // filter those with non empty collections
           const data = response.data.data;
+          this.dataIn = true;
           const filtered = data.filter((col) => col.collections.length > 0);
           // get only collections
           const collections = filtered.map((item) => item.collections);
@@ -229,3 +237,13 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.nothing {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(151, 151, 151);
+}
+</style>

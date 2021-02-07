@@ -1,43 +1,40 @@
 <template>
   <div class="login-container">
-    <v-alert
-      border="top"
-      color="info"
-      type="alertType"
-      dark
-      v-if="error"
-    >
+    <v-alert border="top" color="info" type="alertType" dark v-if="error">
       {{ status }}
     </v-alert>
     <div class="form-title">
-      <p>LOGIN</p>
+      <p>s'identifier</p>
     </div>
     <form class="login-form" @submit.prevent>
       <v-text-field
         v-model="email"
         label="Email"
         :rules="emailRules"
+        background-color="white"
         required
         outlined
         rounded
         dense
       ></v-text-field>
+
       <v-text-field
         v-model="password"
         :error-messages="passwordErrors"
         label="Password"
         required
         type="password"
+         background-color="white"
         outlined
         rounded
         dense
         @input="$v.password.$touch()"
         @blur="$v.password.$touch()"
       ></v-text-field>
+
       <v-btn
         class="mr-4"
         @click="login"
-        block
         color="primary"
         rounded
         depressed
@@ -84,9 +81,8 @@ export default {
 
   /** computation */
 
-
   computed: {
-      passwordErrors() {
+    passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
       !this.$v.password.required && errors.push("Password is required");
@@ -95,29 +91,28 @@ export default {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
-
   },
 
   created() {
     if (this.loggedIn) {
-      this.$router.push({name: 'home'});
+      this.$router.push({ name: "home" });
     }
   },
 
   methods: {
     login() {
-        const userInfo = {
-            email: this.email,
-            password: this.password
-        }
+      const userInfo = {
+        email: this.email,
+        password: this.password,
+      };
       this.$store.dispatch("auth/login", userInfo).then((res) => {
-            if (res.status === "success") {
-              this.$router.push({name: 'home'});
-            } else {
-                this.error = true;
-              this.status = res.message;
-            }
-          });
+        if (res.status === "success") {
+          this.$router.push({ name: "home" });
+        } else {
+          this.error = true;
+          this.status = res.message;
+        }
+      });
     },
   },
 };
