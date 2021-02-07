@@ -85,9 +85,6 @@ export default {
   },
 
   methods: {
-    goHome() {
-      return this.$router.push({ name: "home" });
-    },
     saveInfo() {
       // show completion animation
       const formData = {
@@ -101,10 +98,8 @@ export default {
 
       ActionsService.SaveRelations(formData).then((response) => {
         if (response.statusText === "OK") {
-          localStorage.removeItem('collectionId')
-          this.$store.commit("updateSteps", 1);
+          this.$store.commit("updateSteps", 8);
           this.complete = true;
-          setTimeout(this.goHome, 4500);
         }
       });
     },

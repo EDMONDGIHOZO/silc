@@ -56,11 +56,17 @@
           <reburse />
         </v-stepper-content>
 
-        <v-stepper-step step="7" :complete="done">
+        <v-stepper-step step="7" :complete="step > 7">
           Relations avec institutions financières
         </v-stepper-step>
         <v-stepper-content step="7">
           <relation />
+        </v-stepper-content>
+        <v-stepper-step step="8" :complete="done">
+         Caisse du solde
+        </v-stepper-step>
+        <v-stepper-content step="8">
+          <solde />
         </v-stepper-content>
       </v-stepper>
     </v-row>
@@ -78,6 +84,8 @@ import Credit from "@/views/dashboard/create/creditInterne.vue";
 import Reburse from "@/views/dashboard/create/rebursement.vue";
 import Relation from "@/views/dashboard/create/relation.vue";
 import Snackbar from "@/components/layouts/snackbars.vue";
+import Solde from "@/views/dashboard/create/solde.vue";
+
 import { mapState } from "vuex";
 
 export default {
@@ -97,6 +105,7 @@ export default {
   components: {
     GeneralData,
     penalites: Penalites,
+    solde: Solde,
     entraide: Entraide,
     epargne: Epargne,
     credit: Credit,

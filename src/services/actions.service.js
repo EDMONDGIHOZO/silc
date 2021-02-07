@@ -72,6 +72,12 @@ class ActionsService {
     });
   }
 
+  SaveSolde(formData) {
+    return axios.post(API_URL + `soldes`, formData, {
+      headers: authHeader(),
+    });
+  }
+
   savePenalty(formData){
     return axios.post(API_URL + `penality`, formData, {
       headers: authHeader(),

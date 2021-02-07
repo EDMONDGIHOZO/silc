@@ -39,13 +39,14 @@
         rounded
         depressed
         type="submit"
+        min-width="200px"
       >
         Login
       </v-btn>
     </form>
-    <small class="right my-4">
-      <a href="mailto:edtech250@hotmail.com">forgot password ?</a>
-    </small>
+    <div class="dnp">
+      <a href="mailto:edtech250@hotmail.com">Demander un nouveau mot de passe</a>
+    </div>
   </div>
 </template>
 <script>
@@ -117,3 +118,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.dnp {
+  padding:20px 0px;
+}
+</style>

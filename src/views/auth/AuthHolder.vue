@@ -46,7 +46,13 @@ export default {
 
 .text-container {
   text-align: center;
-  margin: 30px;
+  margin: 50px 30px 30px 30px;
+}
+
+.text-container p {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(2, 212, 37)
 }
 
 .loginer {
@@ -54,6 +60,6 @@ export default {
   max-width: 500px;
   border-radius:20px;
   padding: 20px;
-  background-color: rgb(207, 252, 231);
+  background-color:#edfff4;
 }
 </style>
