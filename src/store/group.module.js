@@ -1,10 +1,11 @@
-// import _ from "lodash";
+import _ from "lodash";
 import ActionsService from "@/services/actions.service";
 
 export const group = {
   namespaced: true,
   state: {
     basicDetails: {},
+    collections: [],
     gData: {
       loaded: false,
     },
@@ -21,8 +22,11 @@ export const group = {
           boys: payload.data.initial_boys_number,
         },
       };
-
+      const sortedCols = _.sortBy(payload.data.collections, o => o.collection_date)
       state.basicDetails = details;
+      state.collections = sortedCols;
+      state.gData.loaded = true;
+
     },
   },
 

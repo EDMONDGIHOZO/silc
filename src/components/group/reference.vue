@@ -1,0 +1,99 @@
+<template>
+  <div class="container">
+    <loading-data type="table" v-if="!gData.loaded" />
+    <div class="reference">
+      <div class="title-container">
+        <h3 class="gtitle">
+          LISTE DES COLLECTIONS DE DONNÉES RÉALISÉES POUR CE GROUPE
+        </h3>
+      </div>
+      <v-simple-table dark>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th class="text-left">Date de collecte de données</th>
+              <th class="text-left">collecteur</th>
+              <th class="text-left">Date de début d’épargne du cycle actuel</th>
+              <th class="text-left">Date probable de fin du cycle actuel</th>
+              <th class="text-left">Temps passés du cycle actuel</th>
+              <th class="text-left">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="item in collections" :key="item.id">
+              <td class="font-weight-bold">
+                {{ item.collection_date | formatDate }}
+              </td>
+              <td>{{ item.collector_name }}</td>
+              <td>{{ item.date_debut_epargne_cycle | formatDate }}</td>
+              <td>{{ item.date_probable_fin_epargne_cycle | formatDate }}</td>
+              <td>
+                <v-chip color="orange darken-2">{{
+                  item.collection_date | passedFormat
+                }}</v-chip>
+              </td>
+              <td class="actions">
+                <v-btn
+                  color="info mx-2"
+                  rounded
+                  small
+                  @click="viewCollection(item.id)"
+                  >voir plus</v-btn
+                >
+                <v-btn color="secondary" rounded small>modifier</v-btn>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </div>
+  </div>
+</template>
+<script>
+import { mapState } from "vuex";
+import Loading from "@/components/layouts/loaders.vue";
+export default {
+  computed: mapState({
+    collections: (state) => state.group.collections,
+    gData: (state) => state.group.gData,
+  }),
+
+  methods: {
+    viewCollection(colid) {
+      return this.$router.push({
+        name: "single-collection",
+        params: { colid },
+      });
+    },
+  },
+
+  components: {
+    "loading-data": Loading,
+  },
+};
+</script>
+
+<style scoped>
+.reference {
+  width: 100%;
+  background: #ffffff;
+  border: 1px solid #c4c4c4;
+  box-sizing: border-box;
+  border-radius: 5px;
+  padding: 12px;
+}
+
+.title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

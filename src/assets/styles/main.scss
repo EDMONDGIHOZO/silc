@@ -180,15 +180,26 @@
   color: base.$secondary;
 }
 
-.info-card-list-title{
+.info-card-list-title {
   font-size: 14px;
 }
 
 .data-create-container {
   padding: 16px;
   border-radius: 10px;
-  -moz-box-shadow:    inset 0 0 10px #dbdbdb;
+  -moz-box-shadow: inset 0 0 10px #dbdbdb;
   -webkit-box-shadow: inset 0 0 10px #dddddd;
-  box-shadow:         inset 0 0 10px #f0f0f0;
+  box-shadow: inset 0 0 10px #f0f0f0;
   background-color: #fffdfd;
+}
+
+
+
+.gtitle {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 23px;
+  /* identical to box height */
+  text-align: center;
+  color: #747474;
 }
