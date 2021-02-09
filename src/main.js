@@ -10,6 +10,7 @@ import localization from "moment/locale/fr";
 /** import scss files */
 import "@/assets/styles/main.scss";
 import "@/assets/styles/mobile.scss";
+import numelize from "numeral";
 
 // authentication
 Vue.prototype.$http = Axios;
@@ -33,6 +34,12 @@ Vue.filter("formatDate", function(value) {
 Vue.filter("passedFormat", function(value) {
   if (value) {
     return moment(value).fromNow(true);
+  }
+});
+
+Vue.filter("num", function(value) {
+  if (value) {
+    return numelize(value).format("0,0");
   }
 });
 

@@ -3,6 +3,7 @@ import Vuex from "vuex";
 import ActionsService from "@/services/actions.service";
 import { auth } from "./auth.module";
 import { group } from "./group.module";
+import numeral from "numeral";
 Vue.use(Vuex);
 
 // const debug = process.env.NODE_ENV !== 'production';
@@ -16,6 +17,10 @@ export default new Vuex.Store({
     avatarChar: "N",
     step: 1,
     collectionData: null,
+    moyenneEpargne: 0,
+    montPerCredit: 0,
+    totalReb: 0,
+    totalCredit: 0,
 
     // dioceseses
     diocese: {
@@ -72,7 +77,42 @@ export default new Vuex.Store({
     },
 
     keepCollectionInfo(state, payload) {
+      // ge the total members
+      const response = payload.data;
+      const total_members =
+        response.membres_actuel_inscrits_girls +
+        response.membres_actuel_inscrits_boys;
+
+      const epargne = response.epargne.valeur_total_epargne_realise_mois;
+
+      const total_credited =
+        response.credit.membres_contracte_un_credit_girls +
+        response.credit.membres_contracte_un_credit_boys;
+
+      const total_creditValue =
+        response.rebursed.valeur_de_credit_rembourse_capital +
+        response.rebursed.valeur_des_interets_sur_credit_rembourse;
+
+      const total_rebursed =
+        response.rebursed.valeur_de_credit_rembourse_capital +
+        response.rebursed.valeur_des_interets_sur_credit_rembourse;
+
+      const credMoy =
+        response.credit.valeur_de_credit_actroyes_capital / total_credited;
+
+      function numelize(number) {
+        return numeral(number).format("0,0");
+      }
+
+      const moy = epargne / total_members;
+      const formated = numelize(moy);
+      const montPerCredit = numelize(credMoy);
+
       state.collectionData = payload.data;
+      state.moyenneEpargne = formated;
+      state.montPerCredit = montPerCredit;
+      state.totalReb = total_rebursed;
+      state.totalCredit = total_creditValue;
     },
 
     keepDioceses(state, payload) {
@@ -118,8 +158,7 @@ export default new Vuex.Store({
       );
 
       const total_girls_credite = collections.reduce(
-        (a, b) => +a + +b.credit.membres_contracte_un_credit_girls,
-        0
+        (a, b) => +a + +b.credit.membres_contracte_un_credit_girls
       );
 
       const total_boys_credite = collections.reduce(
