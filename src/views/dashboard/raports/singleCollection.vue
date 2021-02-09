@@ -1,14 +1,12 @@
 <template>
   <div class="container">
     <v-toolbar flat color="secondary" rounded>
-      <v-toolbar-title
-        class="font-weight-bold">COLLECTION DE -
+      <v-toolbar-title class="font-weight-bold"
+        >COLLECTION DE -
         {{ collectionData.collection_date | formatDate }}</v-toolbar-title
       >
       <v-spacer></v-spacer>
-      <v-btn color="success" depressed>
-        <v-icon left>mdi-book</v-icon> Livre de caisse</v-btn
-      >
+      <caisse-bank :data="collectionData" />
     </v-toolbar>
 
     <div class="single-collection">
@@ -514,9 +512,14 @@
 
 <script>
 import { mapState } from "vuex";
+import Caisse from "@/views/dashboard/raports/bank.vue";
 export default {
   name: "single-collection",
   props: ["colid"],
+
+  components: {
+    "caisse-bank": Caisse,
+  },
 
   computed: mapState({
     collectionData: (state) => state.collectionData,
@@ -541,7 +544,11 @@ export default {
 
 <style lang="scss" scoped>
 .titler {
-  background: linear-gradient(97.85deg, #2EAE64 15.25%, rgba(11, 255, 79, 0.64) 96.1%);
+  background: linear-gradient(
+    97.85deg,
+    #2eae64 15.25%,
+    rgba(11, 255, 79, 0.64) 96.1%
+  );
   border-radius: 14px 0px 0px 20px;
   height: 100px;
   border: 1px solid rgb(135, 255, 171);
