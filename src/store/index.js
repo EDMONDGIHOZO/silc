@@ -17,6 +17,9 @@ export default new Vuex.Store({
     avatarChar: "N",
     step: 1,
     collectionData: null,
+    colData: {
+      loaded: false,
+    },
     moyenneEpargne: 0,
     montPerCredit: 0,
     totalReb: 0,
@@ -79,6 +82,10 @@ export default new Vuex.Store({
     keepCollectionInfo(state, payload) {
       // ge the total members
       const response = payload.data;
+
+      const nulls = response;
+      console.log(nulls);
+
       const total_members =
         response.membres_actuel_inscrits_girls +
         response.membres_actuel_inscrits_boys;
@@ -89,13 +96,16 @@ export default new Vuex.Store({
         response.credit.membres_contracte_un_credit_girls +
         response.credit.membres_contracte_un_credit_boys;
 
-      const total_creditValue =
-        response.rebursed.valeur_de_credit_rembourse_capital +
-        response.rebursed.valeur_des_interets_sur_credit_rembourse;
-
-      const total_rebursed =
-        response.rebursed.valeur_de_credit_rembourse_capital +
-        response.rebursed.valeur_des_interets_sur_credit_rembourse;
+      if (response.rebursed !== null) {
+        const total_creditValue =
+          response.rebursed.valeur_de_credit_rembourse_capital +
+          response.rebursed.valeur_des_interets_sur_credit_rembourse;
+        const total_rebursed =
+          response.rebursed.valeur_de_credit_rembourse_capital +
+          response.rebursed.valeur_des_interets_sur_credit_rembourse;
+        state.totalCredit = total_creditValue;
+        state.totalReb = total_rebursed;
+      }
 
       const credMoy =
         response.credit.valeur_de_credit_actroyes_capital / total_credited;
@@ -111,8 +121,7 @@ export default new Vuex.Store({
       state.collectionData = payload.data;
       state.moyenneEpargne = formated;
       state.montPerCredit = montPerCredit;
-      state.totalReb = total_rebursed;
-      state.totalCredit = total_creditValue;
+      state.colData.loaded = true;
     },
 
     keepDioceses(state, payload) {

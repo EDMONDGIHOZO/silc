@@ -61,5 +61,6 @@ export default {
   border-radius:20px;
   padding: 20px;
   background-color:#edfff4;
+  border: 1px solid rgb(218, 218, 218);
 }
 </style>

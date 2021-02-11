@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="container" v-if="colData.loaded">
     <v-toolbar flat color="secondary" rounded>
       <v-toolbar-title class="font-weight-bold"
         >COLLECTION DE -
@@ -528,6 +528,7 @@ export default {
     tauxInterets: (state) => state.group.tauxInterets,
     totalReb: (state) => state.totalReb,
     totalCredit: (state) => state.totalCredit,
+    colData: (state) => state.colData
   }),
 
   mounted() {

@@ -28,8 +28,6 @@ export const group = {
         payload.data.collections,
         (o) => o.collection_date
       );
-
-      console.log(payload);
       state.basicDetails = details;
       state.collections = sortedCols;
       state.tauxInterets = payload.data.monthly_interest;

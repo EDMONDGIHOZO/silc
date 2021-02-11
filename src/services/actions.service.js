@@ -1,7 +1,8 @@
 import axios from "axios";
 import authHeader from "./authHeader";
 
-const API_URL = "http://localhost:3333/";
+// const API_URL = "http://localhost:3333/";
+const API_URL = "http://silc.nceingenieurs.com/";
 
 class ActionsService {
   getGroups() {
@@ -10,6 +11,17 @@ class ActionsService {
 
   editGroup(gid, formData) {
     return axios.put(API_URL + `groupes/${gid}`, formData, {
+      headers: authHeader(),
+    });
+  }
+  updateUser(id, formData) {
+    return axios.put(API_URL + `user/edit/${id}`, formData, {
+      headers: authHeader(),
+    });
+  }
+
+  saveUser(formData) {
+    return axios.post(API_URL + `user/register`, formData, {
       headers: authHeader(),
     });
   }
@@ -78,13 +90,13 @@ class ActionsService {
     });
   }
 
-  savePenalty(formData){
+  savePenalty(formData) {
     return axios.post(API_URL + `penality`, formData, {
       headers: authHeader(),
     });
   }
 
-  saveEntraide(formData){
+  saveEntraide(formData) {
     return axios.post(API_URL + `entraide`, formData, {
       headers: authHeader(),
     });
@@ -122,6 +134,10 @@ class ActionsService {
 
   getUserInfo() {
     return axios.get(API_URL + `user/me`, { headers: authHeader() });
+  }
+
+  getUsers() {
+    return axios.get(API_URL + `user/all`, { headers: authHeader() });
   }
 
   getDioPar(diocese_id) {

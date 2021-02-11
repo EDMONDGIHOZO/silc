@@ -13,15 +13,24 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in info" :key="item.id">
-            <td class="text-left">{{ item.name }} ({{item.group_code}})</td>
-            <td>{{ item.collections[0].membres_actuel_inscrits_girls + item.collections[0].membres_actuel_inscrits_boys }}</td>
-            <td class="text-left">{{ item.collections[0].collection_date | formatDate }}</td>
+          <tr v-for="item in info" :key="item.id" @click="goto(item.id)">
+            <td class="text-left">{{ item.name }} ({{ item.group_code }})</td>
+            <td>
+              {{
+                item.collections[0].membres_actuel_inscrits_girls +
+                item.collections[0].membres_actuel_inscrits_boys
+              }}
+            </td>
+            <td class="text-left">
+              {{ item.collections[0].collection_date | formatDate }}
+            </td>
           </tr>
         </tbody>
       </template>
     </v-simple-table>
-    <v-btn color="success" rounded depressed>plus sur les groupes</v-btn>
+    <v-btn color="success" rounded depressed router to="/groupes"
+      >plus sur les groupes</v-btn
+    >
   </div>
 </template>
 
@@ -29,45 +38,13 @@
 export default {
   props: ["info"],
   data() {
-    return {
-      desserts: [
-        {
-          name: "Frozen Yogurt",
-          girls: 159,
-          boys: 159,
-        },
-        {
-          name: "Ice cream sandwich",
-          girls: 237,
-          boys: 44,
-        },
-        {
-          name: "Eclair",
-          girls: 262,
-          boys: 159,
-        },
-        {
-          name: "Cupcake",
-          girls: 305,
-          boys: 400,
-        },
-        {
-          name: "Gingerbread",
-          girls: 356,
-          boys: 40,
-        },
-        {
-          name: "Jelly bean",
-          girls: 375,
-          boys: 40,
-        },
-        {
-          name: "Lollipop",
-          girls: 392,
-          boys: 40,
-        },
-      ],
-    };
+    return {};
+  },
+
+  methods: {
+    goto(id) {
+      return this.$router.push({ name: "group-view", params: { "groupId": id } });
+    },
   },
 };
 </script>
