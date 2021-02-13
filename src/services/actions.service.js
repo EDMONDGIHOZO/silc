@@ -1,8 +1,8 @@
 import axios from "axios";
 import authHeader from "./authHeader";
 
-// const API_URL = "http://localhost:3333/";
-const API_URL = "http://silc.nceingenieurs.com/";
+const API_URL = "http://localhost:3333/";
+// const API_URL = "http://silc.nceingenieurs.com/";
 
 class ActionsService {
   getGroups() {
