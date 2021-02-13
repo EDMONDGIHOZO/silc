@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3333/user/";
-// const API_URL = "http://silc.nceingenieurs.com/user/";
+// const API_URL = "http://localhost:3333/user/";
+const API_URL = "https://silc.nceingenieurs.com/user/";
 class AuthService {
   login(user) {
     return axios
