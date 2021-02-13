@@ -6,3 +6,9 @@ $lightPrimary: #b7f7d0;
 $mainFont: 'Poppins',
 sans-serif;
 // end of common variables
+
+body {
+    margin: auto;
+    overflow: hidden;
+    box-sizing: border-box;
+}
