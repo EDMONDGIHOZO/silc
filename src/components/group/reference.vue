@@ -40,7 +40,13 @@
                   @click="viewCollection(item.id)"
                   >voir plus</v-btn
                 >
-                <v-btn color="secondary" rounded small>modifier</v-btn>
+                <v-btn
+                  color="secondary"
+                  @click="editCollection(item.id)"
+                  rounded
+                  small
+                  >modifier</v-btn
+                >
               </td>
             </tr>
           </tbody>
@@ -64,6 +70,10 @@ export default {
         name: "single-collection",
         params: { colid },
       });
+    },
+
+    editCollection(colid) {
+      this.$router.push({ name: "collection-edit", params: { colid: colid } });
     },
   },
 

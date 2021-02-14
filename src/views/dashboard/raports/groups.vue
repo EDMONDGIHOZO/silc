@@ -162,7 +162,7 @@ export default {
 
   computed: {
     formTitle() {
-      return this.editedIndex === -1 ? "New Item" : "Editer le groupe";
+      return this.editedIndex === -1 ? "New Group" : "Editer le groupe";
     },
   },
 
