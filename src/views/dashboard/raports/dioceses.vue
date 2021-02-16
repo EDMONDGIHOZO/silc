@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="title-container">
-      <h4 class="my-3">Tous les dioceses</h4>
+      <h4 class="my-3">Tous les Dioceses</h4>
       <v-btn color="success" router to="/create/diocese" rounded depressed
-        ><v-icon>mdi-plus</v-icon> nouveau</v-btn
+        ><v-icon>mdi-plus</v-icon> nouvelle</v-btn
       >
     </div>
     <div class="top-list-container">
