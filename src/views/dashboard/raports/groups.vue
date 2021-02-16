@@ -5,6 +5,7 @@
       :items="groupes"
       sort-by="name"
       class="elevation-1"
+      :search="search"
       @click:row="handleClick"
       v-if="showTable"
     >
@@ -12,7 +13,7 @@
         <v-toolbar flat>
           <v-toolbar-title>TOUS LES GROUPES</v-toolbar-title>
           <v-divider class="mx-4" inset vertical></v-divider>
-          <v-spacer></v-spacer>
+          <v-spacer />
           <v-btn color="success" depressed rounded router to="/create/groupe">
             <v-icon plus>mdi-plus</v-icon> Nuveau</v-btn
           >
@@ -21,7 +22,6 @@
               <v-card-title>
                 <span class="headline">{{ formTitle }}</span>
               </v-card-title>
-
               <v-card-text>
                 <v-container>
                   <v-row>
@@ -96,6 +96,14 @@
             </v-card>
           </v-dialog>
         </v-toolbar>
+        <v-text-field
+          v-model="search"
+          label="recherche par nom"
+          outlined
+          max-width="500"
+          dense
+          class="mx-4"
+        ></v-text-field>
       </template>
 
       <template v-slot:item.actions="{ item }">
@@ -115,20 +123,21 @@ import ActionsService from "@/services/actions.service";
 import loading from "@/components/layouts/loaders.vue";
 export default {
   data: () => ({
+    search: "",
     dialog: false,
     dialogDelete: false,
     showTable: false,
     groupes: [],
     headers: [
       {
-        text: "Group name",
+        text: "Nom",
         align: "start",
         sortable: false,
         value: "name",
         cellClass: "font-weight-black caption",
       },
       {
-        text: "Group Code",
+        text: "Code",
         value: "group_code",
         cellClass: "font-weight-black caption",
       },
@@ -138,7 +147,7 @@ export default {
         text: "Duree maximale",
         value: "credit_group_max_time",
       },
-      { text: "Interets mansuel", value: "monthly_interest" },
+      { text: "Taux Mensuel", value: "monthly_interest" },
       { text: "date créée", value: "start_date", cellClass: "dateField" },
       {
         text: "fin du cycle actuel",
@@ -195,7 +204,10 @@ export default {
 
     handleClick(row) {
       const groupId = row.id;
-      return this.$router.push({ name: "group-view", params: { groupId: groupId } });
+      return this.$router.push({
+        name: "group-view",
+        params: { groupId: groupId },
+      });
     },
 
     editItem(item) {

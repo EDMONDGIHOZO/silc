@@ -1,9 +1,9 @@
 <template>
   <div class="container">
     <div class="title-container">
-      <h4>Tous les paroisses</h4>
+      <h4>Toutes les Paroisses</h4>
       <v-btn color="success" router to="/create/paroisse" rounded depressed
-        ><v-icon>mdi-plus</v-icon> nouveau</v-btn
+        ><v-icon>mdi-plus</v-icon> Nouvelle</v-btn
       >
     </div>
     <div class="table-container" v-if="showTable">
@@ -26,7 +26,7 @@
             small
             @click="deleteItem(item)"
             class="mr-2"
-            >Effacer</v-btn
+            >supprimer</v-btn
           >
         </template>
       </v-data-table>
@@ -34,12 +34,12 @@
       <v-dialog v-model="dialogDelete" max-width="600px">
         <v-card>
           <v-card-title class="font-weight-bold"
-            >Are you sure you want to delete this paroisse ?</v-card-title
+            >Êtes-vous sûr de vouloir supprimer cette paroisse?</v-card-title
           >
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="blue darken-1" text @click="closeDelete"
-              >Cancel</v-btn
+              >Annuler</v-btn
             >
             <v-btn color="blue darken-1" text @click="deleteItemConfirm"
               >OK</v-btn

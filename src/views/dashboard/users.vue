@@ -6,12 +6,12 @@
         <v-dialog v-model="dialog" persistent max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="success" depressed rounded v-bind="attrs" v-on="on">
-              <v-icon left>mdi-account-plus</v-icon> NEW USER</v-btn
+              <v-icon left>mdi-account-plus</v-icon>nouvel utilisateur</v-btn
             >
           </template>
           <v-card>
             <v-card-title>
-              <span class="text-center">New User</span>
+              <span class="text-center">nouvel utilisateur</span>
             </v-card-title>
             <v-card-text>
               <v-container>
@@ -89,9 +89,12 @@
               <div class="overline text-left">
                 {{ user.firstname }} {{ user.lastname }}
               </div>
-              <v-list-item-subtitle class="text-left">{{
-                user.role.name
-              }}</v-list-item-subtitle>
+              <v-list-item-subtitle
+                class="text-left"
+                v-text="
+                  user.role.name === 'collector' ? 'collecteur' : 'admin'
+                "
+                />
             </v-list-item-content>
             <v-list-item-avatar color="secondary white--text">
               {{ user.__meta__.collections_count }}
@@ -106,7 +109,7 @@
               @click="disableUser(user.id, user.active)"
               v-if="user.active"
             >
-              DESACTIVE
+              DESACTIVER
             </v-btn>
             <v-btn
               rounded
@@ -115,7 +118,7 @@
               @click="disableUser(user.id, user.active)"
               v-else
             >
-              ACTIVATE
+              ACTIVER
             </v-btn>
             <v-spacer></v-spacer>
             <small class="mx-1">status</small>
