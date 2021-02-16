@@ -70,7 +70,7 @@
               type="number"
               rounded
               background-color="white"
-              label="credit maximal"
+              label="Durée maximale credit "
               required
             ></v-text-field>
           </v-col>
@@ -95,7 +95,7 @@
               type="number"
               rounded
               background-color="white"
-              label="Garcons"
+              label="Garçons"
               required
             ></v-text-field>
           </v-col>
@@ -126,7 +126,7 @@
                   :value="startDate"
                   v-on="on"
                   v-bind="attrs"
-                  label="date de début"
+                  label="date de début du cycle"
                   append-icon="mdi-calendar"
                   background-color="white"
                   rounded
