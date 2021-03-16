@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer v-model="drawer" app color="accent" elevation="2">
+  <v-navigation-drawer app color="accent" elevation="2">
     <div class="side-menu">
       <v-sheet color="accent" class="pa-4 logo-container">
         <img :src="sidelogo" alt="" />
