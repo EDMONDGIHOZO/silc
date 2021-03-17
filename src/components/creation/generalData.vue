@@ -383,11 +383,10 @@ export default {
 
 		// fait le taux total
 		tauxTotal() {
-			if (this.boysTaux > 0 && this.girlsTaux > 0) {
-				return this.summer(this.boysTaux, this.girlsTaux);
-			} else {
-				return 0 + "%";
-			}
+			let x = parseInt(this.boysTaux);
+			let y = parseInt(this.girlsTaux);
+			const tot = x + y;
+			return tot + "%";
 		},
 
 		abandonboysTaux() {
@@ -412,11 +411,10 @@ export default {
 		},
 
 		abandonTauxTotal() {
-			if (this.abandongirlsTaux > 0 && this.abandonboysTaux > 0) {
-				return this.summer(this.abandonboysTaux, this.abandongirlsTaux);
-			} else {
-				return 0 + "%";
-			}
+			let x = parseInt(this.abandonboysTaux);
+			let y = parseInt(this.abandongirlsTaux);
+			const tot = x + y;
+			return tot + "%";
 		},
 	},
 	methods: {
