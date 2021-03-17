@@ -122,7 +122,7 @@
 					</div>
 				</v-col>
 				<v-col cols="12" md="6">
-					<v-card flat>
+					<v-card flat outlined>
 						<v-card-title class="col-title">
 							Taux d’abandon mensuel (%)
 						</v-card-title>
@@ -240,7 +240,7 @@
 					</div>
 				</v-col>
 				<v-col cols="12" md="6">
-					<v-card flat>
+					<v-card flat outlined>
 						<v-card-title class="col-title">
 							Taux de participation à la réunion
 						</v-card-title>
