@@ -13,7 +13,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo(5)"
+            <v-btn color="success" depressed rounded @click="saveInfo(3)"
               >save & continue</v-btn
             >
           </v-col>
