@@ -385,7 +385,7 @@ export default {
 		tauxTotal() {
 			let x = parseInt(this.boysTaux);
 			let y = parseInt(this.girlsTaux);
-			const tot = x + y;
+			const tot = (x + y) / 2 ;
 			return tot + "%";
 		},
 
@@ -413,7 +413,7 @@ export default {
 		abandonTauxTotal() {
 			let x = parseInt(this.abandonboysTaux);
 			let y = parseInt(this.abandongirlsTaux);
-			const tot = x + y;
+			const tot = (x + y) / 2;
 			return tot + "%";
 		},
 	},
