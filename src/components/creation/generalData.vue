@@ -129,7 +129,7 @@
 						<v-card-text class="taux">
 							<table width="100%">
 								<tr>
-									<td>boys</td>
+									<td>Garçons</td>
 									<td>{{ abandonboysTaux }}</td>
 								</tr>
 								<tr>
@@ -138,8 +138,12 @@
 									</td>
 								</tr>
 								<tr>
-									<td>girls</td>
+									<td>Filles</td>
 									<td>{{ abandongirlsTaux }}</td>
+								</tr>
+								<tr>
+									<td>Total</td>
+									<td>{{ abandonTauxTotal }}</td>
 								</tr>
 							</table>
 						</v-card-text>
@@ -247,7 +251,7 @@
 						<v-card-text class="taux">
 							<table width="100%">
 								<tr>
-									<td>boys</td>
+									<td>Garçons</td>
 									<td>{{ boysTaux }}</td>
 								</tr>
 								<tr>
@@ -256,8 +260,12 @@
 									</td>
 								</tr>
 								<tr>
-									<td>girls</td>
+									<td>Filles</td>
 									<td>{{ girlsTaux }}</td>
+								</tr>
+								<tr>
+									<td>Total</td>
+									<td>{{ tauxTotal }}</td>
 								</tr>
 							</table>
 						</v-card-text>
@@ -373,6 +381,15 @@ export default {
 			}
 		},
 
+		// fait le taux total
+		tauxTotal() {
+			if (this.boysTaux > 0 && this.girlsTaux > 0) {
+				return this.summer(this.boysTaux, this.girlsTaux);
+			} else {
+				return 0 + "%";
+			}
+		},
+
 		abandonboysTaux() {
 			if (this.abandonedBoys > 0) {
 				//   calculate percentage
@@ -387,8 +404,16 @@ export default {
 			if (this.abandonedBoys > 0) {
 				//   calculate percentage
 				return (
-					this.percentager(this.abandonedBoys, this.prevRegisteredGirls) + "%"
+					this.percentager(this.abandonedGirls, this.prevRegisteredGirls) + "%"
 				);
+			} else {
+				return 0 + "%";
+			}
+		},
+
+		abandonTauxTotal() {
+			if (this.abandongirlsTaux > 0 && this.abandonboysTaux > 0) {
+				return this.summer(this.abandonboysTaux, this.abandongirlsTaux);
 			} else {
 				return 0 + "%";
 			}
