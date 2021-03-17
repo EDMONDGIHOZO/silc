@@ -64,13 +64,73 @@
         <v-col cols="12" md="6">
           <div class="form-col">
             <div class="col-title">
+              <p>Membres inscrits dans le mois précédent</p>
+            </div>
+            <div class="fields">
+              <v-text-field
+                v-model="prevRegisteredBoys"
+                label="Garçons"
+                :rules="[rules.required]"
+                clearable
+                type="number"
+                filled
+                dense
+                class="mx-2"
+              ></v-text-field>
+              <v-text-field
+                v-model="prevRegisteredGirls"
+                label="Filles"
+                clearable
+                :rules="[rules.required]"
+                filled
+                type="number"
+                dense
+                class="mx-2"
+              ></v-text-field>
+            </div>
+            <v-chip color="black" dark>Total : {{ prevMembers }} </v-chip>
+          </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div class="form-col">
+            <div class="col-title">
+              <p>Abandons au cours du mois actuel</p>
+            </div>
+            <div class="fields">
+              <v-text-field
+                v-model="abandonedBoys"
+                label="Garçons"
+                :rules="[rules.required]"
+                clearable
+                type="number"
+                filled
+                dense
+                class="mx-2"
+              ></v-text-field>
+              <v-text-field
+                v-model="abandonedGirls"
+                label="Filles"
+                clearable
+                :rules="[rules.required]"
+                filled
+                type="number"
+                dense
+                class="mx-2"
+              ></v-text-field>
+            </div>
+            <v-chip color="black" dark>Total : {{ abandonedMembers }} </v-chip>
+          </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div class="form-col">
+            <div class="col-title">
               <p>Nouveaux membres enregistrés dans le mois</p>
             </div>
             <div class="fields">
               <v-text-field
                 v-model="newBoys"
                 label="Garçons"
-                :rules="[rules.required, rules.number]"
+                :rules="[rules.required]"
                 clearable
                 type="number"
                 filled
@@ -88,8 +148,94 @@
                 class="mx-2"
               ></v-text-field>
             </div>
-			<v-chip color="black" dark>Total : {{ newMembers }} </v-chip>
+            <v-chip color="black" dark>Total : {{ newMembers }} </v-chip>
           </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div class="form-col">
+            <div class="col-title">
+              <p>Membres actuels inscrits</p>
+            </div>
+            <div class="fields">
+              <v-text-field
+                v-model="actualBoys"
+                label="Garçons"
+                :rules="[rules.required]"
+                clearable
+                type="number"
+                filled
+                dense
+                class="mx-2"
+              ></v-text-field>
+              <v-text-field
+                v-model="actualGirls"
+                label="Filles"
+                clearable
+                :rules="[rules.required]"
+                filled
+                type="number"
+                dense
+                class="mx-2"
+              ></v-text-field>
+            </div>
+            <v-chip color="black" dark>Total : {{ actualMembers }} </v-chip>
+          </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <div class="form-col">
+            <div class="col-title">
+              <p>
+                Membres présents en réunion à la date de collecte de données
+              </p>
+            </div>
+            <div class="fields">
+              <v-text-field
+                v-model="attendedBoys"
+                label="Garçons"
+                :rules="[rules.required]"
+                clearable
+                type="number"
+                filled
+                dense
+                class="mx-2"
+              ></v-text-field>
+              <v-text-field
+                v-model="attendedGirls"
+                label="Filles"
+                clearable
+                :rules="[rules.required]"
+                filled
+                type="number"
+                dense
+                class="mx-2"
+              ></v-text-field>
+            </div>
+            <v-chip color="black" dark>Total : {{ attendedMembers }} </v-chip>
+          </div>
+        </v-col>
+        <v-col cols="12" md="6">
+          <v-card flat>
+            <v-card-title class="col-title">
+              Taux de participation à la réunion
+            </v-card-title>
+            <v-card-text class="taux">
+              <table width="100%">
+                <tr>
+                  <td>boys</td>
+                  <td>{{ boysTaux }}</td>
+                </tr>
+                <tr>
+                  <td colspan="2">
+                    <v-divider></v-divider>
+                  </td>
+                </tr>
+                <tr>
+                  <td>girls</td>
+                  <td>{{ girlsTaux }}</td>
+                </tr>
+              </table>
+            </v-card-text>
+          </v-card>
         </v-col>
       </v-row>
 
@@ -117,19 +263,21 @@ export default {
     commonRules: [(v) => v.length <= 1 || "Max 25 characters"],
     // data to be collected
     collectionDate: "",
+    prevRegisteredBoys: 0,
+    prevRegisteredGirls: 0,
     groupId: 0,
     newBoys: 0,
     newGirls: 0,
+    actualGirls: 0,
+    actualBoys: 0,
     abandonedGirls: 0,
     abandonedBoys: 0,
     attendedBoys: 0,
+    attendedGirls: 0,
     collectorName: "",
     // validation rules
     rules: {
       required: (value) => !!value || "obligatoire!",
-      // number: v => {
-      //   // add the number validationthings
-      // }
     },
   }),
 
@@ -154,16 +302,54 @@ export default {
     newMembers() {
       return this.summer(this.newBoys, this.newGirls);
     },
+    prevMembers() {
+      return this.summer(this.prevRegisteredGirls, this.prevRegisteredBoys);
+    },
+    actualMembers() {
+      return this.summer(this.actualGirls, this.actualBoys);
+    },
+    attendedMembers() {
+      return this.summer(this.attendedGirls, this.attendedBoys);
+    },
+    abandonedMembers() {
+      return this.summer(this.abandonedGirls, this.abandonedBoys);
+    },
+
+    girlsTaux() {
+      if (this.attendedGirls > 0) {
+        //   calculate percentage
+        return this.percentager(this.attendedGirls) + "%";
+      } else {
+        return 0 + "%";
+      }
+    },
+
+    boysTaux() {
+      if (this.attendedBoys > 0) {
+        //   calculate percentage
+        return this.percentager(this.attendedBoys) + "%";
+      } else {
+        return 0 + "%";
+      }
+    },
   },
   methods: {
     save(collectionDate) {
       this.$refs.menu.save(collectionDate);
     },
 
+    percentager(percent) {
+      return ((percent / this.attendedMembers) * 100).toFixed(1);
+    },
+
     summer(x, b) {
       let number1 = parseInt(x);
       let number2 = parseInt(b);
-      return number1 + number2;
+      if (number2 >= 0 && number1 >= 0) {
+        return number1 + number2;
+      } else {
+        return 0;
+      }
     },
 
     browserSave(keyname, value) {
@@ -203,8 +389,8 @@ export default {
 
 <style scoped>
 .col-title {
-  font-size: 14px;
-  color: rgb(91, 91, 91);
+  font-size: 16px;
+  color: rgb(0, 0, 0);
   font-style: italic;
   text-align: center;
   font-weight: bold;
@@ -223,5 +409,13 @@ export default {
   flex-wrap: nowrap;
   justify-content: space-between;
   align-items: flex-end;
+}
+.taux {
+  font-size: 20px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 15px;
 }
 </style>
