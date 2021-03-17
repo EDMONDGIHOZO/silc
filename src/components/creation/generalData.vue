@@ -358,7 +358,7 @@ export default {
 		girlsTaux() {
 			if (this.attendedGirls > 0) {
 				//   calculate percentage
-				return this.percentager(this.attendedGirls, this.actualMembers) + "%";
+				return this.percentager(this.attendedGirls, this.actualGirls) + "%";
 			} else {
 				return 0 + "%";
 			}
@@ -367,7 +367,7 @@ export default {
 		boysTaux() {
 			if (this.attendedBoys > 0) {
 				//   calculate percentage
-				return this.percentager(this.attendedBoys, this.actualMembers) + "%";
+				return this.percentager(this.attendedBoys, this.actualBoys) + "%";
 			} else {
 				return 0 + "%";
 			}
@@ -400,7 +400,7 @@ export default {
 		},
 
 		percentager(percent, total) {
-			return ((percent / total) * 100).toFixed(1);
+			return ((percent * 100) / total).toFixed(1);
 		},
 
 		summer(x, b) {
