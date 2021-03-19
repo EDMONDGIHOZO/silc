@@ -17,8 +17,8 @@
             <td class="text-left">{{ item.name }} ({{ item.group_code }})</td>
             <td>
               {{
-                item.collections[0].membres_actuel_inscrits_girls +
-                item.collections[0].membres_actuel_inscrits_boys
+                item.collections[0].actual_girls +
+                item.collections[0].actual_boys
               }}
             </td>
             <td class="text-left">
@@ -48,5 +48,3 @@ export default {
   },
 };
 </script>
-
-

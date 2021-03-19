@@ -152,7 +152,7 @@ export default {
           this.dioceses.number = res.dioceses.total;
           this.paroisses.number = res.paroisses.total;
           this.groupes.number = res.groupes.total;
-          
+
         } else {
           alert("an error occured");
         }
@@ -203,12 +203,12 @@ export default {
           // get the attendence information
           //** boys */
           const boys = collections.map(
-            (item) => item[0].membres_present_en_reunion_boys
+            (item) => item[0].attended_boys
           );
           const total_boys = this.total(boys);
           //** girls */
           const girls = collections.map(
-            (item) => item[0].membres_present_en_reunion_girls
+            (item) => item[0].attended_girls
           );
           const total_girls = this.total(girls);
 

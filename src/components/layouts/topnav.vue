@@ -50,14 +50,6 @@ export default {
     collapseOnScroll: true,
     topMenu: [
       {
-        title: "collecte de données",
-        route: "/create/data-collection",
-      },
-      {
-        title: "groupe",
-        route: "/create/groupe",
-      },
-      {
         title: "Diocese",
         route: "/create/diocese",
       },
@@ -65,6 +57,16 @@ export default {
         title: "Paroisse",
         route: "/create/paroisse",
       },
+      {
+        title: "groupe",
+        route: "/create/groupe",
+      },
+
+      {
+        title: "collecte de données",
+        route: "/create/data-collection",
+      },
+    
 
       {
         title: "User",
