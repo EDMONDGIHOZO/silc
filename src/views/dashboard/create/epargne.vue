@@ -1,15 +1,46 @@
 <template>
   <div class="container">
     <div class="data-create-container">
-      <v-form @submit.prevent="saveInfo">
+      <v-form @submit.prevent="saveInfo" ref="form">
         <v-row wrap>
-          <v-col cols="12">
+          <v-col cols="12" md="6" lg="4">
             <v-text-field
-              v-model="amount"
-              rounded
-              outlined
+              v-model="monthlyMinAmount"
+              :rules="[rules.required]"
+              dense
+              filled
+              type="number"
+              label="Montant minimum épargné chaque mois dans le groupe (Frw)"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6" lg="4">
+            <v-text-field
+              v-model="monthlyMaxAmount"
+              :rules="[rules.required]"
+              dense
+              filled
+              type="number"
+              label="Montant maximal épargné chaque mois dans le groupe (Frw)"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6" lg="4">
+            <v-text-field
+              v-model="periodReleasedAmount"
+              :rules="[rules.required]"
+              dense
+              filled
               type="number"
               label="Valeur totale de l’épargne réalisée au cours de la période/mois (Frw)"
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6" lg="4">
+            <v-text-field
+              v-model="this.moyenne"
+              disabled
+              dense
+              filled
+              type="number"
+              label="Moyenne de l’épargne par membre (Frw)"
             ></v-text-field>
           </v-col>
           <v-col cols="12">
@@ -28,22 +59,54 @@ import ActionsService from "@/services/actions.service";
 export default {
   name: "epargne",
   data: () => ({
-    amount: null,
-    collectionId: null,
+    rules: {
+      required: (value) => !!value || "obligatoire!",
+    },
+    // info for submission
+    periodReleasedAmount: 0,
+    monthlyMinAmount: 0,
+    monthlyMaxAmount: 0,
+    epargnePerMember: 0,
   }),
 
   methods: {
     saveInfo(step) {
-      const formData = {
-        collectionId: localStorage.getItem("collectionId"),
-        amount: this.amount,
-      };
+      if (this.$refs.form.validate()) {
+        const formData = {
+          collectionId: this.collection.id,
+          monthlyMinAmount: this.periodReleasedAmount,
+          periodReleasedAmount: this.monthlyMinAmount,
+          monthlyMaxAmount: this.monthlyMaxAmount,
+          epargnePerMember: this.moyenne,
+        };
+        // submit the data to the server
+        ActionsService.SaveEpargne(formData).then((response) => {
+          if (response.statusText === "OK") {
+            console.log(response.data);
+            this.$store.commit("updateSteps", step);
+          }
+        });
+      }
+    },
+  },
 
-      ActionsService.SaveEpargne(formData).then((response) => {
-        if (response.statusText === "OK") {
-          this.$store.commit("updateSteps", step);
-        }
-      });
+  computed: {
+    collection() {
+      return this.$store.state.collectionInfo;
+    },
+
+    moyenne() {
+      // get members actuels inscrits
+      if (this.collection !== null) {
+        let x = parseInt(this.collection.actual_girls);
+        let y = parseInt(this.collection.actual_boys);
+        const membresActuelInscrit = x + y;
+        // calculate moyenne
+        const moyenne = this.monthlyMinAmount / membresActuelInscrit;
+        return moyenne.toFixed(1);
+      } else {
+        return 0;
+      }
     },
   },
 

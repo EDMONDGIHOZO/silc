@@ -71,7 +71,6 @@ import ActionsService from "@/services/actions.service";
 export default {
   name: "relation",
   data: () => ({
-    collectionId: null,
     membersOpenedAccounts: null,
     membersCredited: null,
     creditedAmount: null,
@@ -88,7 +87,7 @@ export default {
     saveInfo() {
       // show completion animation
       const formData = {
-        collectionId: localStorage.getItem("collectionId"),
+        collectionId: this.collection.id,
         membersOpenedAccounts: this.membersOpenedAccounts,
         membersCredited: this.membersCredited,
         creditedAmount: this.creditedAmount,
@@ -105,8 +104,10 @@ export default {
     },
   },
 
-  mounted() {
-    this.collectionId = localStorage.getItem("collectionId");
+  computed: {
+    collection() {
+      return this.$store.state.collectionInfo;
+    },
   },
 };
 </script>

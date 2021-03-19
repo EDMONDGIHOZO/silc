@@ -53,7 +53,7 @@
           </v-col>
 
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo(7)"
+            <v-btn color="success" depressed rounded @click="saveInfo"
               >save & continue</v-btn
             >
           </v-col>
@@ -68,7 +68,6 @@ import ActionsService from "@/services/actions.service";
 export default {
   name: "rebursement",
   data: () => ({
-    collectionId: null,
     valeurCreditRebursedCapital: null,
     valeurInteretsCreditRebursed: null,
     valeurCreditCapitalRestantRebursedFin: null,
@@ -77,9 +76,9 @@ export default {
   }),
 
   methods: {
-    saveInfo(step) {
+    saveInfo() {
       const formData = {
-        collectionId: localStorage.getItem("collectionId"),
+        collectionId: this.collection.id,
         valeurCreditRebursedCapital: this.valeurCreditRebursedCapital,
         valeurInteretsCreditRebursed: this.valeurInteretsCreditRebursed,
         valeurCreditCapitalRestantRebursedFin: this
@@ -91,14 +90,16 @@ export default {
 
       ActionsService.saveRebursement(formData).then((response) => {
         if (response.statusText === "OK") {
-          this.$store.commit("updateSteps", step);
+          this.$router.push({ name: "home" });
         }
       });
     },
   },
 
-  mounted() {
-    this.collectionId = localStorage.getItem("collectionId");
+  computed: {
+    collection() {
+      return this.$store.state.collectionInfo;
+    },
   },
 };
 </script>

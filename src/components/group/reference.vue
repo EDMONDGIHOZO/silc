@@ -13,8 +13,6 @@
             <tr>
               <th class="text-left">Date de collecte de données</th>
               <th class="text-left">collecteur</th>
-              <th class="text-left">Date de début d’épargne du cycle actuel</th>
-              <th class="text-left">Date probable de fin du cycle actuel</th>
               <th class="text-left">Temps passés du cycle actuel</th>
               <th class="text-left">Actions</th>
             </tr>
@@ -25,8 +23,6 @@
                 {{ item.collection_date | formatDate }}
               </td>
               <td>{{ item.collector_name }}</td>
-              <td>{{ item.date_debut_epargne_cycle | formatDate }}</td>
-              <td>{{ item.date_probable_fin_epargne_cycle | formatDate }}</td>
               <td>
                 <v-chip color="orange darken-2">{{
                   item.collection_date | passedFormat

@@ -203,3 +203,35 @@
   text-align: center;
   color: #747474;
 }
+
+// forms
+.col-title {
+  font-size: 16px;
+  color: rgb(0, 0, 0);
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+}
+
+.form-col {
+  border-radius: 6px;
+  border: 1px dotted #066726;
+  margin: 2px;
+  padding: 5px;
+}
+
+.form-col .fields {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.taux {
+  font-size: 20px;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 15px;
+}

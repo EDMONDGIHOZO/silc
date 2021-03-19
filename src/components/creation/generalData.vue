@@ -294,7 +294,7 @@ export default {
     menu: false,
     groups: [],
     stepy: 2,
-    commonRules: [v => v.length <= 1 || "Max 25 characters"],
+    commonRules: [(v) => v.length <= 1 || "Max 25 characters"],
     // data to be collected
     collectionDate: "",
     prevRegisteredBoys: 0,
@@ -309,18 +309,18 @@ export default {
     collectorName: "",
     // validation rules
     rules: {
-      required: value => !!value || "obligatoire!"
-    }
+      required: (value) => !!value || "obligatoire!",
+    },
   }),
 
   watch: {
     menu(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
+    },
   },
 
   mounted() {
-    ActionsService.getGroupes().then(response => {
+    ActionsService.getGroupes().then((response) => {
       this.groups = response.data.data;
       this.collectorName = this.UserInfo.username;
     });
@@ -417,7 +417,7 @@ export default {
       const tot = (x + y) * 100;
       let ave = tot / z;
       return ave;
-    }
+    },
   },
   methods: {
     save(collectionDate) {
@@ -459,13 +459,17 @@ export default {
           attendedGirls: this.attendedGirls,
           collectorName: this.collectorName,
           actualGirls: this.actualGirls,
-          actualBoys: this.actualBoys
+          actualBoys: this.actualBoys,
         };
-        ActionsService.SaveGenInfo(formData).then(response => {
+
+        ActionsService.SaveGenInfo(formData).then((response) => {
           // save collection id in localStorage,for later usage
           let collectionId = response.data.data.id;
+          // save the current collection in memory
           this.browserSave("collectionId", collectionId);
-          store.commit("updateSteps", this.stepy);
+          const info = response.data.data;
+          this.$store.commit("setCurrentCollectionInfo", info);
+          this.$store.commit("updateSteps", this.stepy);
         });
       }
     },
@@ -476,8 +480,8 @@ export default {
 
     clear() {
       this.collectionDate = null;
-    }
-  }
+    },
+  },
 };
 </script>
 

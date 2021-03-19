@@ -8,14 +8,12 @@
       </v-col>
     </v-row>
     <div class="form-container" v-if="!showAlert">
-      <v-form v-model="valid" @submit.prevent="saveGroup">
+      <v-form @submit.prevent="saveGroup" ref="groupForm">
         <v-row class="wrap my-4">
           <v-col cols="12" md="6">
             <v-text-field
               v-model="name"
-              :error-messages="nameErrors"
-              @input="$v.name.$touch()"
-              @blur="$v.name.$touch()"
+              :rules="[rules.required]"
               outlined
               dense
               rounded
@@ -66,6 +64,7 @@
             <v-text-field
               v-model="maxCredit"
               outlined
+              :rules="[rules.required]"
               dense
               type="number"
               rounded
@@ -80,6 +79,7 @@
               outlined
               dense
               type="number"
+              :rules="[rules.required]"
               rounded
               background-color="white"
               label="intérêt mensuel"
@@ -93,6 +93,7 @@
               outlined
               dense
               type="number"
+              :rules="[rules.required]"
               rounded
               background-color="white"
               label="Garçons"
@@ -105,6 +106,7 @@
               append-icon="mdi-human-female"
               outlined
               type="number"
+              :rules="[rules.required]"
               dense
               rounded
               background-color="white"
@@ -130,6 +132,7 @@
                   append-icon="mdi-calendar"
                   background-color="white"
                   rounded
+                  :rules="[rules.required]"
                   dense
                   outlined
                 ></v-text-field>
@@ -155,6 +158,7 @@
                   close-on-content-click="false"
                   v-on="on"
                   v-bind="attrs"
+                  :rules="[rules.required]"
                   label="date de fin"
                   append-icon="mdi-calendar"
                   background-color="white"
@@ -173,7 +177,6 @@
 
           <v-col cols="12">
             <v-btn
-              :disabled="!valid"
               color="success"
               @click="saveGroup"
               class="mr-4"
@@ -223,13 +226,13 @@
 
 <script>
 import ActionsService from "@/services/actions.service";
-import { validationMixin } from "vuelidate";
-import { required, minLength } from "vuelidate/lib/validators";
 export default {
-  mixins: [validationMixin],
   data: () => ({
     dioceses: [],
     paroisses: [],
+    rules: {
+      required: (value) => !!value || "obligatoire!",
+    },
     diocese_id: "",
     paroisse_id: 1,
     name: "",
@@ -237,7 +240,6 @@ export default {
     boys: 0,
     monthlyInterest: 0,
     maxCredit: 0,
-    valid: false,
     startDate: "",
     endDate: "",
     hideParoisses: true,
@@ -253,24 +255,6 @@ export default {
     startMenu: false,
     endMenu: false,
   }),
-
-  validations: {
-    name: {
-      required,
-      minLength: minLength(4),
-    },
-  },
-
-  computed: {
-    nameErrors() {
-      const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.minLength &&
-        errors.push("Name must be at most 4 characters long");
-      !this.$v.name.required && errors.push("Name is required.");
-      return errors;
-    },
-  },
 
   mounted() {
     ActionsService.getDioceses().then((response) => {
@@ -299,32 +283,33 @@ export default {
     },
 
     saveGroup() {
-      this.$v.$touch();
-      const formData = {
-        name: this.name,
-        girls: this.girls,
-        boys: this.boys,
-        dioceseId: this.diocese_id,
-        paroisseId: this.paroisse_id,
-        maxCredit: this.maxCredit,
-        monthlyInterest: this.monthlyInterest,
-        startDate: this.startDate,
-        endDate: this.endDate,
-      };
+      if (this.$refs.groupForm.validate()) {
+        const formData = {
+          name: this.name,
+          girls: this.girls,
+          boys: this.boys,
+          dioceseId: this.diocese_id,
+          paroisseId: this.paroisse_id,
+          maxCredit: this.maxCredit,
+          monthlyInterest: this.monthlyInterest,
+          startDate: this.startDate,
+          endDate: this.endDate,
+        };
 
-      this.showProgress = true;
-      this.showAlert = true;
+        this.showProgress = true;
+        this.showAlert = true;
 
-      try {
-        ActionsService.createGroup(formData).then((response) => {
-          this.groupCode = response.data.data;
-          this.showProgress = false;
-          this.alertMessage = response.data.message;
-          this.alertType = response.data.status;
-          this.groupInfo = true;
-        });
-      } catch (error) {
-        console.log(error);
+        try {
+          ActionsService.createGroup(formData).then((response) => {
+            this.groupCode = response.data.data;
+            this.showProgress = false;
+            this.alertMessage = response.data.message;
+            this.alertType = response.data.status;
+            this.groupInfo = true;
+          });
+        } catch (error) {
+          console.log(error);
+        }
       }
     },
   },

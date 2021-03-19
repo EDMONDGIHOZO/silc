@@ -8,7 +8,7 @@
       </v-col>
     </v-row>
     <div class="form-container">
-      <v-form v-model="valid" @submit.prevent="register" v-if="!response">
+      <v-form v-model="valid" @submit.prevent="register" v-if="!response" ref="form">
         <v-row class="wrap my-4">
           <v-col cols="12">
             <v-text-field
@@ -18,6 +18,7 @@
               outlined
               background-color="white"
               v-model="name"
+              :rules="[rules.required]"
               required
             ></v-text-field>
           </v-col>
@@ -61,29 +62,33 @@ export default {
       alertMessage: "",
       showProgress: null,
       response: false,
+      rules: {
+        required: (value) => !!value || "obligatoire!",
+      },
     };
   },
 
   methods: {
     register() {
-      const formData = { name: this.name.toLowerCase() };
+      if (this.$refs.form.validate()) {
+        const formData = { name: this.name.toLowerCase() };
+        try {
+          ActionsService.createDiocese(formData).then((response) => {
+            if (response.statusText === "OK") {
+              this.response = true;
+              this.showProgress = true;
+              this.showProgress = false;
+              this.showAlert = true;
+              this.name = "";
+              this.alertType = response.data.status;
+              this.alertMessage = response.data.message;
 
-      try {
-        ActionsService.createDiocese(formData).then((response) => {
-          if (response.statusText === "OK") {
-            this.response = true;
-            this.showProgress = true;
-            this.showProgress = false;
-            this.showAlert = true;
-            this.name = "";
-            this.alertType = response.data.status;
-            this.alertMessage = response.data.message;
-
-            setTimeout(() => this.$router.push({ name: "home" }), 4000);
-          }
-        });
-      } catch (error) {
-        console.log(error.response.data.message);
+              setTimeout(() => this.$router.push({ name: "home" }), 4000);
+            }
+          });
+        } catch (error) {
+          console.log(error.response.data.message);
+        }
       }
     },
 

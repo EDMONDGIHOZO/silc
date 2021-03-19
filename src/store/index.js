@@ -17,6 +17,7 @@ export default new Vuex.Store({
     avatarChar: "N",
     step: 1,
     collectionData: null,
+    collectionInfo: null,
     colData: {
       loaded: false,
     },
@@ -73,6 +74,11 @@ export default new Vuex.Store({
         state.alert.status = true;
         state.alert.color = payload.status;
       }
+    },
+
+    setCurrentCollectionInfo(state, collectionInfo) {
+      state.collectionInfo = collectionInfo;
+      console.log(collectionInfo);
     },
 
     updateSteps(state, step) {
