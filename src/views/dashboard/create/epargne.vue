@@ -44,8 +44,8 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo(3)"
-              >save & continue</v-btn
+            <v-btn color="success" depressed rounded @click="moveStep(3)"
+              >continuer</v-btn
             >
           </v-col>
         </v-row>
@@ -55,6 +55,7 @@
 </template>
 
 <script>
+import store from "@/store/index";
 import ActionsService from "@/services/actions.service";
 export default {
   name: "epargne",
@@ -87,6 +88,10 @@ export default {
           }
         });
       }
+    },
+
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
     },
   },
 

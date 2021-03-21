@@ -3,29 +3,52 @@
     <div class="data-create-container">
       <v-form @submit.prevent="saveInfo">
         <v-row wrap>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="punishedMembers"
-              rounded
-              outlined
-              dense
-              type="number"
-              label="Membres punis au cours de la période"
-            ></v-text-field>
+          <v-col cols="12" md="5">
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Membres punis au cours de la période / mois
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="creditedBoys"
+                  label="Garçons"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
           </v-col>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="amountPaid"
-              rounded
-              outlined
-              dense
-              type="number"
-              label="Montant des pénalités payées (Frw)"
-            ></v-text-field>
+          <v-col cols="12" md="7">
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Montant des pénalités payées (Frw) au cours de la période /
+                  mois
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="creditedBoys"
+                  label="Garçons"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo(6)"
-              >save & continue</v-btn
+            <v-btn color="success" depressed rounded @click="verification()"
+              >continuer</v-btn
             >
           </v-col>
         </v-row>
@@ -42,6 +65,9 @@ export default {
     collectionId: null,
     punishedMembers: null,
     amountPaid: null,
+    rules: {
+      required: (value) => !!value || "obligatoire!",
+    },
   }),
 
   methods: {
@@ -57,6 +83,10 @@ export default {
           this.$store.commit("updateSteps", step);
         }
       });
+    },
+
+    verification() {
+      this.$router.push({ name: "verification" });
     },
   },
 

@@ -4,7 +4,7 @@
       <h3 class="info-card-title">Relations avec institution financiels</h3>
       <div class="info-card-container">
         <v-row wrap>
-          <v-col cols="6">
+          <v-col cols="6" v-if="relations">
             <p class="number">{{ relations.membres }}</p>
             <p class="titled">Membres ayant ouvert un compte bancaire</p>
           </v-col>

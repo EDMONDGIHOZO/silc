@@ -10,8 +10,6 @@ import CollectionEdit from "../views/dashboard/editing/CollectionEdit.vue";
 
 Vue.use(VueRouter);
 
-
-
 const routes = [
   /** normal pages holder */
   {
@@ -102,6 +100,15 @@ const routes = [
           ),
       },
       {
+        path: "verification",
+        name: "verification",
+        component: () =>
+          import(
+            /* webpackChunkName: 'verification' */
+            "../views/dashboard/raports/verification.vue"
+          ),
+      },
+      {
         path: "/groupes",
         name: "groups",
         component: () =>
@@ -134,26 +141,26 @@ const routes = [
         path: "paroisses/:parid",
         component: Paroisse,
         name: "paroisse",
-        props: true
+        props: true,
       },
       {
         path: "collections/:colid",
         component: Collection,
         name: "single-collection",
-        props: true
+        props: true,
       },
       {
         path: "groupes/:groupId",
         component: SingleGroup,
         name: "group-view",
-        props: true
+        props: true,
       },
       {
         path: "collection/edit/:colid",
         component: CollectionEdit,
         name: "collection-edit",
-        props: true
-      }
+        props: true,
+      },
     ],
   },
   /*** user authentication routes  */

@@ -6,58 +6,149 @@
     <div class="data-create-container" v-else>
       <v-form @submit.prevent="saveInfo">
         <v-row wrap>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="membersOpenedAccounts"
-              outlined
-              dense
-              rounded
-              background-color="white"
-              label="Membres ayant ouvert un compte bancaire durant la périod"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="membersCredited"
-              outlined
-              dense
-              rounded
-              background-color="white"
-              label="Membres ayant contracte un credit bancaire"
-              required
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="creditedAmount"
-              outlined
-              dense
-              rounded
-              background-color="white"
-              label="Montant des crédits bancaires contractés par les groupe"
-              required
-            ></v-text-field>
+          <v-col cols="12">
+            <div class="form-col">
+              <div class="col-title-main">
+                <p>
+                  Relations des membres des groupes avec les institutions
+                  financières
+                </p>
+              </div>
+              <div class="fields">
+                <v-row wrap>
+                  <v-col cols="12" md="6">
+                    <div class="col-title">
+                      <p>
+                        Membres ayant ouvert un compte bancaire durant la
+                        période/mois
+                      </p>
+                    </div>
+                    <v-text-field
+                      v-model="grantedCredit"
+                      label="entre le nombre"
+                      :rules="[rules.required]"
+                      clearable
+                      type="number"
+                      filled
+                      dense
+                      class="mx-2"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <div class="col-title">
+                      <p>
+                        Membres ayant contracté un crédit bancaire au cours de
+                        la période/mois
+                      </p>
+                    </div>
+                    <v-text-field
+                      v-model="grantedCredit"
+                      label="entre le nombre"
+                      :rules="[rules.required]"
+                      clearable
+                      type="number"
+                      filled
+                      dense
+                      class="mx-2"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="12">
+                    <div class="col-title">
+                      <p>
+                        Valeur des crédits bancaires contractés (capital +
+                        intérêts) au cours de la période/mois (Frw)
+                      </p>
+                    </div>
+                    <v-text-field
+                      v-model="grantedCredit"
+                      label="entre le nombre"
+                      :rules="[rules.required]"
+                      clearable
+                      type="number"
+                      filled
+                      dense
+                      class="mx-2"
+                    ></v-text-field>
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
           </v-col>
           <v-col cols="12">
-            <v-checkbox
-              v-model="groupBankAccount"
-              label="ce groupe a-t-il un compte bancaire?"
-            ></v-checkbox>
-          </v-col>
-          <v-col cols="12">
-            <v-checkbox
-              v-model="groupBankCredit"
-              hint=" N.B: Un groupe avec plusieurs crédits est compté une seule fois"
-              label="Groupes ayant contracté un crédit bancaire au cours de la période/mois"
-              persistent-hint
-            ></v-checkbox>
-          </v-col>
-
-          <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo"
-              >terminer et fermer</v-btn
-            >
+            <div class="form-col">
+              <div class="col-title-main">
+                <p>
+                  Relations des groupes avec les institutions financières
+                </p>
+              </div>
+              <div class="fields">
+                <v-row wrap>
+                  <v-col cols="12" md="6">
+                    <div class="col-title">
+                      <p>
+                        Groupes ayant ouvert un compte bancaire au cours de la
+                        période/mois
+                      </p>
+                    </div>
+                    <v-text-field
+                      v-model="grantedCredit"
+                      label="entre le nombre"
+                      :rules="[rules.required]"
+                      clearable
+                      type="number"
+                      filled
+                      dense
+                      class="mx-2"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="6">
+                    <div class="col-title">
+                      <p>
+                        Groupes ayant contracté un crédit bancaire au cours de
+                        la période/mois
+                      </p>
+                    </div>
+                    <v-text-field
+                      v-model="grantedCredit"
+                      label="entre le nombre"
+                      :rules="[rules.required]"
+                      clearable
+                      type="number"
+                      filled
+                      dense
+                      class="mx-2"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" md="12">
+                    <div class="col-title">
+                      <p>
+                        Montant des crédits bancaires contractés par les groupes
+                        au cours de la période/mois (Frw)
+                      </p>
+                    </div>
+                    <v-text-field
+                      v-model="grantedCredit"
+                      label="entre le nombre"
+                      :rules="[rules.required]"
+                      clearable
+                      type="number"
+                      filled
+                      dense
+                      class="mx-2"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12">
+                    <v-btn
+                      color="success"
+                      depressed
+                      rounded
+                      @click="moveStep(5)"
+                      >continuer</v-btn
+                    >
+                  </v-col>
+                </v-row>
+              </div>
+            </div>
           </v-col>
         </v-row>
       </v-form>
@@ -68,6 +159,7 @@
 <script>
 import DoneAnimation from "@/components/helpers/doneAnimation.vue";
 import ActionsService from "@/services/actions.service";
+import store from "@/store/index";
 export default {
   name: "relation",
   data: () => ({
@@ -77,6 +169,9 @@ export default {
     groupBankAccount: false,
     groupBankCredit: false,
     complete: false,
+    rules: {
+      required: (value) => !!value || "obligatoire!",
+    },
   }),
 
   components: {
@@ -101,6 +196,10 @@ export default {
           this.complete = true;
         }
       });
+    },
+
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
     },
   },
 

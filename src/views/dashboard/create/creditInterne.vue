@@ -32,10 +32,8 @@
                   dense
                   class="mx-2"
                 ></v-text-field>
+                <span>Total : {{ totalCredited }}</span>
               </div>
-              <v-chip color="black" class="my-3" dark
-                >Total : {{ totalCredited }}
-              </v-chip>
             </div>
           </v-col>
           <v-col cols="12" md="6">
@@ -48,17 +46,7 @@
               <div class="fields">
                 <v-text-field
                   v-model="grantedCredit"
-                  label="crédits"
-                  :rules="[rules.required]"
-                  clearable
-                  type="number"
-                  filled
-                  dense
-                  class="mx-2"
-                ></v-text-field>
-                <v-text-field
-                  v-model="grantedCapital"
-                  label="capital"
+                  label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
                   type="number"
@@ -67,41 +55,269 @@
                   class="mx-2"
                 ></v-text-field>
               </div>
-              <!-- <v-text-field
-                v-model="moyenne"
-                label="Moyenne du montant par crédit contracté (Frw)"
-                :rules="[rules.required]"
-                clearable
-                type="number"
-                filled
-                dense
-                class="mx-2"
-              ></v-text-field> -->
             </div>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
-              v-model="interestForGrants"
-              filled
-              :rules="[rules.required]"
-              type="number"
-              label="Valeur des intérêts sur les crédits octroyés au cours de la période/mois (Frw)"
-            ></v-text-field>
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Valeur des crédits octroyés (capital) au cours de la
+                  période/mois (Frw)
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="grantedCredit"
+                  label="entre le nombre"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
-              :value="totalCredAmount"
-              filled
-              :rules="[rules.required]"
-              disabled
-              type="number"
-              label="Valeur totale des crédits (capital+ intérêts) au cours de la période/mois (Frw)"
-            ></v-text-field>
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Moyenne du montant par crédit contracté (Frw)
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="grantedCredit"
+                  label="entre le nombre"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12" md="6">
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Valeur des intérêts sur les crédits octroyés au cours de la
+                  période/mois (Frw
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="grantedCredit"
+                  label="entre le nombre"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12" md="6">
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Valeur totale des crédits (capital+ intérêts) au cours de la
+                  période/mois (Frw)
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="grantedCredit"
+                  label="entre le nombre"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12" md="12">
+            <div class="form-col">
+              <div class="col-title-main">
+                <p>
+                  Remboursement des crédits au cours de la période/mois
+                </p>
+              </div>
+              <v-row wrap>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur des crédits remboursés (capital) au cours de la
+                      période/mois (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur des intérêts sur les crédits remboursés au cours de
+                      la période/mois (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur total des crédits remboursés (capital + intérêts)
+                      au cours de la période/mois (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur des crédits (capital) restant à rembourser à la fin
+                      de la période/mois (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur des intérêts aux crédits restant à rembourser à la
+                      fin de la période/mois (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur total des crédits (capital + intérêts) restant à
+                      rembourser à la fin de la période/mois (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur des crédits en retard (capital + intérêts) (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12" md="6">
+                  <div class="col-title">
+                    <p>
+                      Valeur des crédits en retard (capital + intérêts) (Frw)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+                <v-col cols="12">
+                  <div class="col-title">
+                    <p>
+                      Portefeuille à risque (%)
+                    </p>
+                  </div>
+                  <v-text-field
+                    v-model="grantedCredit"
+                    label="entre le nombre"
+                    :rules="[rules.required]"
+                    clearable
+                    type="number"
+                    filled
+                    dense
+                    class="mx-2"
+                  ></v-text-field>
+                </v-col>
+              </v-row>
+            </div>
           </v-col>
 
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo(6)"
-              >save & continue</v-btn
+            <v-btn color="success" depressed rounded @click="moveStep(4)"
+              >continuer</v-btn
             >
           </v-col>
         </v-row>
@@ -112,6 +328,7 @@
 
 <script>
 import ActionsService from "@/services/actions.service";
+import store from "@/store/index";
 export default {
   name: "creditInterne",
   data: () => ({
@@ -141,6 +358,9 @@ export default {
           this.$store.commit("updateSteps", step);
         }
       });
+    },
+     moveStep(stepy) {
+      store.commit("updateSteps", stepy);
     },
   },
 

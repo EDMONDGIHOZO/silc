@@ -278,7 +278,7 @@
         type="submit"
         depressed
         rounded
-        @click="saveGenInfo()"
+        @click="moveStep(2)"
       >
         Continue
       </v-btn>

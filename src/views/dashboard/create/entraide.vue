@@ -4,35 +4,73 @@
       <v-form @submit.prevent="saveInfo">
         <v-row wrap>
           <v-col cols="12" md="6">
-            <v-text-field
-              v-model="income"
-              rounded
-              outlined
-              type="number"
-              label="Valeur des entrées dans la caisse d’entraide"
-            ></v-text-field>
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Valeur des entrées dans la caisse d’entraide au cours de la
+                  période/mois (Frw)
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="creditedBoys"
+                  label="Garçons"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
           </v-col>
           <v-col cols="12" md="6">
-            <v-text-field
-              v-model="outgoing"
-              rounded
-              outlined
-              type="number"
-              label="Valeur des sorties dans la caisse d’entraide"
-            ></v-text-field>
-          </v-col>
-          <v-col cols="12" md="6">
-            <v-text-field
-              v-model="soutenus"
-              rounded
-              outlined
-              type="number"
-              label="Membres soutenus au cours de la période "
-            ></v-text-field>
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Valeur des sorties dans la caisse d’entraide au cours de la
+                  période/mois (Frw)
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="creditedBoys"
+                  label="Garçons"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo(5)"
-              >save & continue</v-btn
+            <div class="form-col">
+              <div class="col-title">
+                <p>
+                  Membres soutenus au cours de la période / mois
+                </p>
+              </div>
+              <div class="fields">
+                <v-text-field
+                  v-model="creditedBoys"
+                  label="Garçons"
+                  :rules="[rules.required]"
+                  clearable
+                  type="number"
+                  filled
+                  dense
+                  class="mx-2"
+                ></v-text-field>
+              </div>
+            </div>
+          </v-col>
+          <v-col cols="12">
+            <v-btn color="success" depressed rounded @click="moveStep(6)"
+              >continuer</v-btn
             >
           </v-col>
         </v-row>
@@ -43,6 +81,7 @@
 
 <script>
 import ActionsService from "@/services/actions.service";
+import store from "@/store/index";
 export default {
   name: "entraide",
   data: () => ({
@@ -50,6 +89,9 @@ export default {
     income: null,
     outgoing: null,
     soutenus: null,
+    rules: {
+      required: (value) => !!value || "obligatoire!",
+    },
   }),
 
   methods: {
@@ -58,7 +100,7 @@ export default {
         collectionId: localStorage.getItem("collectionId"),
         income: this.income,
         outgoing: this.outgoing,
-        soutenus: this.soutenus
+        soutenus: this.soutenus,
       };
 
       ActionsService.saveEntraide(formData).then((response) => {
@@ -66,6 +108,9 @@ export default {
           this.$store.commit("updateSteps", step);
         }
       });
+    },
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
     },
   },
 
