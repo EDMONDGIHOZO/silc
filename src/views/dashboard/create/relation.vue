@@ -24,7 +24,7 @@
                       </p>
                     </div>
                     <v-text-field
-                      v-model="grantedCredit"
+                      v-model="membersOpenedAccounts"
                       label="entre le nombre"
                       :rules="[rules.required]"
                       clearable
@@ -42,7 +42,7 @@
                       </p>
                     </div>
                     <v-text-field
-                      v-model="grantedCredit"
+                      v-model="membersCredited"
                       label="entre le nombre"
                       :rules="[rules.required]"
                       clearable
@@ -60,7 +60,7 @@
                       </p>
                     </div>
                     <v-text-field
-                      v-model="grantedCredit"
+                      v-model="creditedAmount"
                       label="entre le nombre"
                       :rules="[rules.required]"
                       clearable
@@ -91,7 +91,7 @@
                       </p>
                     </div>
                     <v-text-field
-                      v-model="grantedCredit"
+                      v-model="groupBankAccount"
                       label="entre le nombre"
                       :rules="[rules.required]"
                       clearable
@@ -109,7 +109,7 @@
                       </p>
                     </div>
                     <v-text-field
-                      v-model="grantedCredit"
+                      v-model="groupBankCredit"
                       label="entre le nombre"
                       :rules="[rules.required]"
                       clearable
@@ -127,7 +127,7 @@
                       </p>
                     </div>
                     <v-text-field
-                      v-model="grantedCredit"
+                      v-model="groupCreditAmount"
                       label="entre le nombre"
                       :rules="[rules.required]"
                       clearable
@@ -163,11 +163,12 @@ import store from "@/store/index";
 export default {
   name: "relation",
   data: () => ({
-    membersOpenedAccounts: null,
-    membersCredited: null,
-    creditedAmount: null,
-    groupBankAccount: false,
-    groupBankCredit: false,
+    membersOpenedAccounts: 0,
+    membersCredited: 0,
+    creditedAmount: 0,
+    groupBankAccount: 0,
+    groupCreditAmount:0,
+    groupBankCredit: 0,
     complete: false,
     rules: {
       required: (value) => !!value || "obligatoire!",

@@ -45,7 +45,7 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="grantedCredit"
+                  v-model="totalCredited"
                   label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
@@ -67,7 +67,7 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="grantedCredit"
+                  v-model="grantedCapital"
                   label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
@@ -88,7 +88,7 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="grantedCredit"
+                  v-model="moyenneAmountCredit"
                   label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
@@ -110,7 +110,7 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="grantedCredit"
+                  v-model="interestForGrants"
                   label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
@@ -160,7 +160,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="rebursedValueCapital"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -178,7 +178,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="rebursedInterestValue"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -196,7 +196,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="rebursedCapitalInterest"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -206,6 +206,7 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="12" md="6">
                   <div class="col-title">
                     <p>
@@ -214,7 +215,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="remainingCreditCapitalValue"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -224,6 +225,7 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
+
                 <v-col cols="12" md="6">
                   <div class="col-title">
                     <p>
@@ -232,7 +234,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="ginterestRemainingCredit"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -242,6 +244,8 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
+
+
                 <v-col cols="12" md="6">
                   <div class="col-title">
                     <p>
@@ -250,7 +254,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="creditCapitalInterestRemaining"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -260,6 +264,8 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
+
+
                 <v-col cols="12" md="6">
                   <div class="col-title">
                     <p>
@@ -267,7 +273,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
+                    v-model="capitalCreditRemaining"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -277,32 +283,17 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
+
+
                 <v-col cols="12" md="6">
-                  <div class="col-title">
-                    <p>
-                      Valeur des crédits en retard (capital + intérêts) (Frw)
-                    </p>
-                  </div>
-                  <v-text-field
-                    v-model="grantedCredit"
-                    label="entre le nombre"
-                    :rules="[rules.required]"
-                    clearable
-                    type="number"
-                    filled
-                    dense
-                    class="mx-2"
-                  ></v-text-field>
-                </v-col>
-                <v-col cols="12">
                   <div class="col-title">
                     <p>
                       Portefeuille à risque (%)
                     </p>
                   </div>
                   <v-text-field
-                    v-model="grantedCredit"
-                    label="entre le nombre"
+                    v-model="risky"
+                    label="%"
                     :rules="[rules.required]"
                     clearable
                     type="number"
@@ -311,6 +302,7 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
+
               </v-row>
             </div>
           </v-col>
@@ -332,14 +324,27 @@ import store from "@/store/index";
 export default {
   name: "creditInterne",
   data: () => ({
-    creditedGirls: null,
-    creditedBoys: null,
-    grantedCredit: null,
-    grantedCapital: null,
-    interestForGrants: null,
+    creditedGirls: 0,
+    creditedBoys: 0,
+    grantedCredit: 0,
+    grantedCapital:0,
+    interestForGrants: 0,
+    moyenneAmountCredit: 0,
+    capitalInterest: 0,
     rules: {
       required: (value) => !!value || "obligatoire!",
     },
+    // rebursement
+    rebursedValueCapital: 0,
+    rebursedInterestValue: 0,
+    rebursedCapitalInterest: 0,
+    remainingCreditCapitalValue: 0,
+    interestRemainingCredit: 0,
+    creditCapitalInterestRemaining: 0,
+    capitalCreditRemaining: 0,
+    risky: 0
+
+
   }),
 
   methods: {

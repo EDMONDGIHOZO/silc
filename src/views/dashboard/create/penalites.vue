@@ -12,8 +12,8 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="creditedBoys"
-                  label="Garçons"
+                  v-model="punishedMembers"
+                  label="Nombre"
                   :rules="[rules.required]"
                   clearable
                   type="number"
@@ -34,8 +34,8 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="creditedBoys"
-                  label="Garçons"
+                  v-model="amountPaid"
+                  label="Nombres"
                   :rules="[rules.required]"
                   clearable
                   type="number"
@@ -62,9 +62,8 @@ import ActionsService from "@/services/actions.service";
 export default {
   name: "penalites",
   data: () => ({
-    collectionId: null,
-    punishedMembers: null,
-    amountPaid: null,
+    punishedMembers: 0,
+    amountPaid: 0,
     rules: {
       required: (value) => !!value || "obligatoire!",
     },

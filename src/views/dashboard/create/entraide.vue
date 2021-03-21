@@ -13,7 +13,7 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="creditedBoys"
+                  v-model="income"
                   label="Garçons"
                   :rules="[rules.required]"
                   clearable
@@ -35,7 +35,7 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="creditedBoys"
+                  v-model="outgoing"
                   label="Garçons"
                   :rules="[rules.required]"
                   clearable
@@ -56,8 +56,8 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="creditedBoys"
-                  label="Garçons"
+                  v-model="soutenus"
+                  label="Nombre"
                   :rules="[rules.required]"
                   clearable
                   type="number"
@@ -85,10 +85,9 @@ import store from "@/store/index";
 export default {
   name: "entraide",
   data: () => ({
-    collectionId: null,
-    income: null,
-    outgoing: null,
-    soutenus: null,
+    income: 0,
+    outgoing: 0,
+    soutenus: 0,
     rules: {
       required: (value) => !!value || "obligatoire!",
     },
