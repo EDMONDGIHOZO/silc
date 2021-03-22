@@ -1,72 +1,108 @@
 <template>
   <div class="container">
-    <div class="title-container">
-      <h3 v-if="loaded" class="text-uppercase display-1 primary--text font-weight-bold">PAROISSE DE {{ pData.name }}</h3>
-      <data-loaders type="text@3" v-else />
+    <div class="paroisse">
+      <div class="title-container">
+        <h3>
+          Paroissse de <span class="primary--text">{{ paroisse.name }}</span>
+        </h3>
+      </div>
+
+      <div class="contents">
+        <v-row wrap>
+          <v-col cols="12" md="4">
+            <v-card outlined>
+              <v-card-title class="card-tit">
+                résumé sur la paroisse
+              </v-card-title>
+              <v-list>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Groupes</v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-avatar>
+                    <v-avatar color="teal" size="48">
+                      <span class="white--text font-weight-bold">{{
+                        nombresGroupes
+                      }}</span>
+                    </v-avatar>
+                  </v-list-item-avatar>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Valeur d Epargne</v-list-item-title>
+                  </v-list-item-content>
+
+                  <v-chip class="ma-2" label dark color="orange">
+                    45000 RWF
+                  </v-chip>
+                </v-list-item>
+              </v-list>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-card outlined>
+              <v-card-title class="card-tit">
+                Taux de participation
+              </v-card-title>
+            </v-card>
+          </v-col>
+          <v-col cols="12" md="4">
+            <v-card outlined>
+              <v-card-title class="card-tit">
+                Relations avec institution financiels
+              </v-card-title>
+            </v-card>
+          </v-col>
+        </v-row>
+      </div>
     </div>
-    <v-row wrap justifycenter>
-      <v-col cols="12" md="4">
-        <resume v-if="loaded" />
-        <data-loaders v-else type="card" />
-      </v-col>
-      <v-col cols="12" md="4">
-        <taux-participation v-if="loaded" />
-        <data-loaders v-else type="card" />
-      </v-col>
-      <v-col cols="12" md="4">
-        <relation v-if="loaded" />
-        <data-loaders v-else type="card" />
-      </v-col>
-    </v-row>
-    <v-row wrap justifycenter class="my-5">
-      <v-col cols="12" md="8">
-        <paroisse-groupes v-if="loaded" />
-        <data-loaders v-else type="card" />
-      </v-col>
-      <v-col cols="12" md="4">
-        <membres v-if="loaded" />
-        <data-loaders v-else type="card" />
-      </v-col>
-    </v-row>
   </div>
 </template>
 
 <script>
-import Resume from "@/components/paroisseComponents/resume.vue";
-import TauxParticipation from "@/components/paroisseComponents/tauxParticipation.vue";
-import Relation from "@/components/paroisseComponents/relation.vue";
-import Pgroups from "@/components/paroisseComponents/pgroups.vue";
-import Membres from "@/components/paroisseComponents/membres.vue";
-import Loading from "@/components/layouts/loaders.vue";
-import { mapState } from "vuex";
-
+import ActionsService from "@/services/actions.service";
 export default {
   name: "paroisse",
   props: ["parid"],
-  data: () => ({
-    loaded: true,
-  }),
-  components: {
-    resume: Resume,
-    relation: Relation,
-    membres: Membres,
-    "data-loaders": Loading,
-    "paroisse-groupes": Pgroups,
-    "taux-participation": TauxParticipation,
-  },
-  computed: {
-    ...mapState(["pData"]),
+  data() {
+    return {
+      loaded: false,
+      paroisse: {},
+    };
   },
 
   mounted() {
-    this.getParoisse();
+    this.getParoisseInfo();
+  },
+
+  computed: {
+    nombresGroupes() {
+      if (this.loaded) {
+        let number = this.paroisse.__meta__.groups_count;
+        return number;
+      } else {
+        return 0;
+      }
+    },
   },
 
   methods: {
-    // fetch data for all components
-    getParoisse() {
-      return this.$store.dispatch("getPar", this.parid);
+    getParoisseInfo() {
+      ActionsService.getPar(this.parid).then((response) => {
+        if (response.statusText === "OK") {
+          const data = response.data.data;
+          this.paroisse = data;
+          this.loaded = true;
+        }
+      });
     },
   },
 };
 </script>
+
+<style scoped>
+.title-container {
+  font-size: 25px;
+  padding: 20px;
+}
+</style>

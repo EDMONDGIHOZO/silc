@@ -14,7 +14,7 @@
               <div class="fields">
                 <v-text-field
                   v-model="income"
-                  label="Garçons"
+                  label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
                   type="number"
@@ -36,7 +36,7 @@
               <div class="fields">
                 <v-text-field
                   v-model="outgoing"
-                  label="Garçons"
+                  label="entre le nombre"
                   :rules="[rules.required]"
                   clearable
                   type="number"
