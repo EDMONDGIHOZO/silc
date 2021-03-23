@@ -111,6 +111,7 @@
                   <v-btn
                     color="success"
                     type="submit"
+                    @click="goto"
                     class="my-4"
                     rounded
                     block
@@ -156,6 +157,10 @@ export default {
   methods: {
     moveStep(stepy) {
       store.commit("updateSteps", stepy);
+    },
+
+    goto() {
+      this.$router.push({ name: "home" });
     },
   },
 };
