@@ -3,7 +3,7 @@
     <div class="stat-title-container">
       <h3>Infos membres</h3>
     </div>
-    <v-simple-table height="300px" fixed-header>
+    <!-- <v-simple-table height="300px" fixed-header>
       <template v-slot:default>
         <thead>
           <tr>
@@ -27,6 +27,28 @@
           </tr>
         </tbody>
       </template>
+    </v-simple-table> -->
+    <v-simple-table height="300px" fixed-header>
+      <template v-slot:default>
+        <thead>
+          <tr>
+            <th class="text-left">code de groupe</th>
+            <th class="text-left">membres inscrits</th>
+            <th class="text-left">date récente de collecte des données</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-left">ABADAHANA GDFK (sample)</td>
+            <td>
+              12 34
+            </td>
+            <td class="text-left">
+              12 mars 2020
+            </td>
+          </tr>
+        </tbody>
+      </template>
     </v-simple-table>
     <v-btn color="success" rounded depressed router to="/groupes"
       >plus sur les groupes</v-btn
@@ -43,7 +65,7 @@ export default {
 
   methods: {
     goto(id) {
-      return this.$router.push({ name: "group-view", params: { "groupId": id } });
+      return this.$router.push({ name: "group-view", params: { groupId: id } });
     },
   },
 };

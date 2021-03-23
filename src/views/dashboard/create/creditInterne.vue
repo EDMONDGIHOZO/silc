@@ -32,7 +32,6 @@
                   dense
                   class="mx-2"
                 ></v-text-field>
-                <span>Total : {{ totalCredited }}</span>
               </div>
             </div>
           </v-col>
@@ -89,10 +88,11 @@
               <div class="fields">
                 <v-text-field
                   v-model="moyenneAmountCredit"
-                  label="entre le nombre"
+                  label="Calcul automatique"
                   :rules="[rules.required]"
                   clearable
                   type="number"
+                  prefix="RWF"
                   filled
                   dense
                   class="mx-2"
@@ -132,8 +132,8 @@
               </div>
               <div class="fields">
                 <v-text-field
-                  v-model="grantedCredit"
-                  label="entre le nombre"
+                  v-model="capitalInterest"
+                  label="Calcul automatique"
                   :rules="[rules.required]"
                   clearable
                   type="number"
@@ -182,6 +182,7 @@
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
+                    prefix="RWF"
                     type="number"
                     filled
                     dense
@@ -197,7 +198,7 @@
                   </div>
                   <v-text-field
                     v-model="rebursedCapitalInterest"
-                    label="entre le nombre"
+                    label="Calcul automatique"
                     :rules="[rules.required]"
                     clearable
                     type="number"
@@ -234,7 +235,7 @@
                     </p>
                   </div>
                   <v-text-field
-                    v-model="ginterestRemainingCredit"
+                    v-model="interestRemainingCredit"
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
@@ -244,7 +245,6 @@
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
-
 
                 <v-col cols="12" md="6">
                   <div class="col-title">
@@ -265,7 +265,6 @@
                   ></v-text-field>
                 </v-col>
 
-
                 <v-col cols="12" md="6">
                   <div class="col-title">
                     <p>
@@ -284,7 +283,6 @@
                   ></v-text-field>
                 </v-col>
 
-
                 <v-col cols="12" md="6">
                   <div class="col-title">
                     <p>
@@ -293,16 +291,16 @@
                   </div>
                   <v-text-field
                     v-model="risky"
-                    label="%"
+                    label="Calcul Automatique"
+                    prefix="%"
+                    right-prefic
                     :rules="[rules.required]"
-                    clearable
                     type="number"
                     filled
                     dense
                     class="mx-2"
                   ></v-text-field>
                 </v-col>
-
               </v-row>
             </div>
           </v-col>
@@ -327,24 +325,18 @@ export default {
     creditedGirls: 0,
     creditedBoys: 0,
     grantedCredit: 0,
-    grantedCapital:0,
+    grantedCapital: 0,
     interestForGrants: 0,
-    moyenneAmountCredit: 0,
-    capitalInterest: 0,
+    totalCredited: 0,
     rules: {
       required: (value) => !!value || "obligatoire!",
     },
     // rebursement
     rebursedValueCapital: 0,
     rebursedInterestValue: 0,
-    rebursedCapitalInterest: 0,
     remainingCreditCapitalValue: 0,
     interestRemainingCredit: 0,
-    creditCapitalInterestRemaining: 0,
     capitalCreditRemaining: 0,
-    risky: 0
-
-
   }),
 
   methods: {
@@ -364,7 +356,7 @@ export default {
         }
       });
     },
-     moveStep(stepy) {
+    moveStep(stepy) {
       store.commit("updateSteps", stepy);
     },
   },
@@ -376,24 +368,58 @@ export default {
       return col;
     },
 
-    totalCredAmount() {
-      if (this.grantedCapital > 0 && this.interestForGrants > 0) {
-        let x = parseInt(this.grantedCapital);
-        let y = parseInt(this.interestForGrants);
-
-        const tot = x + y;
-        return tot;
+    // moyenne
+    moyenneAmountCredit() {
+      if (this.totalCredited > 0 && this.grantedCapital > 0) {
+        let value = parseInt(this.grantedCapital);
+        let nombre = parseInt(this.totalCredited);
+        let res = value / nombre;
+        return res.toFixed(2);
+      } else {
+        return 0;
+      }
+    },
+    // Valeur totale des crédits (capital+ intérêts) au cours de la période/mois (Frw)
+    capitalInterest() {
+      if (this.interestForGrants > 0 && this.grantedCapital > 0) {
+        let interest = parseInt(this.interestForGrants);
+        let capital = parseInt(this.grantedCapital);
+        let res = capital + interest;
+        return res.toFixed(2);
+      } else {
+        return 0;
+      }
+    },
+    // Valeur total des crédits remboursés (capital + intérêts) au cours de la période/mois (Frw)
+    rebursedCapitalInterest() {
+      if (this.rebursedValueCapital > 0 && this.rebursedInterestValue > 0) {
+        let ifg = parseInt(this.rebursedInterestValue);
+        let rvc = parseInt(this.rebursedValueCapital);
+        let res = ifg + rvc;
+        return res.toFixed(0);
+      } else {
+        return 0;
+      }
+    },
+    creditCapitalInterestRemaining() {
+      if (
+        this.interestRemainingCredit > 0 &&
+        this.remainingCreditCapitalValue > 0
+      ) {
+        let irc = parseInt(this.interestRemainingCredit);
+        let rccv = parseInt(this.remainingCreditCapitalValue);
+        let res = irc + rccv;
+        return res.toFixed(0);
       } else {
         return 0;
       }
     },
 
-    totalCredited() {
-      if (this.creditedGirls > 0 && this.creditedBoys > 0) {
-        let x = parseInt(this.creditedGirls);
-        let y = parseInt(this.creditedBoys);
-        const total = x + y;
-        return parseInt(total);
+    risky() {
+      let retard = parseInt(this.capitalCreditRemaining);
+      let restant = parseInt(this.remainingCreditCapitalValue);
+      if (restant > 0 && retard > 0) {
+        return (retard * 100) / restant;
       } else {
         return 0;
       }

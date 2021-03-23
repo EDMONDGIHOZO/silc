@@ -15,7 +15,7 @@ export default new Vuex.Store({
     drawer: true,
     UserInfo: [],
     avatarChar: "N",
-    step: 1,
+    step: 3,
     collectionData: null,
     collectionInfo: null,
     colData: {

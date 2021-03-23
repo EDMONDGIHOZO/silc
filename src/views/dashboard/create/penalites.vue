@@ -85,7 +85,7 @@ export default {
     },
 
     verification() {
-      this.$router.push({ name: "verification" });
+      this.$router.push({ name: "caisseBanquee" });
     },
   },
 

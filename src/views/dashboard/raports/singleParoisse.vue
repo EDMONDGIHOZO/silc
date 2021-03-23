@@ -17,29 +17,20 @@
               <v-list>
                 <v-list-item>
                   <v-list-item-content>
-                    <v-list-item-title>Groupes</v-list-item-title>
+                    <v-list-item-title>Nombre de groupes</v-list-item-title>
                   </v-list-item-content>
                   <v-list-item-avatar>
-                    <v-avatar color="teal" size="48">
+                    <v-avatar color="primary" size="48">
                       <span class="white--text font-weight-bold">{{
                         nombresGroupes
                       }}</span>
                     </v-avatar>
                   </v-list-item-avatar>
                 </v-list-item>
-                <v-list-item>
-                  <v-list-item-content>
-                    <v-list-item-title>Valeur d Epargne</v-list-item-title>
-                  </v-list-item-content>
-
-                  <v-chip class="ma-2" label dark color="orange">
-                    45000 RWF
-                  </v-chip>
-                </v-list-item>
               </v-list>
             </v-card>
           </v-col>
-          <v-col cols="12" md="4">
+          <!-- <v-col cols="12" md="4">
             <v-card outlined>
               <v-card-title class="card-tit">
                 Taux de participation
@@ -52,7 +43,7 @@
                 Relations avec institution financiels
               </v-card-title>
             </v-card>
-          </v-col>
+          </v-col> -->
         </v-row>
       </div>
     </div>

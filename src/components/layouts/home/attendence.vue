@@ -74,7 +74,7 @@ export default {
         enabled: true,
       },
 
-      labels: ["girls attendence", "boys Attendence"],
+      labels: ["Filles", "Garcons"],
       legend: {
         show: true,
         position: "bottom",

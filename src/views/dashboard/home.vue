@@ -95,8 +95,8 @@ export default {
   },
 
   data: () => ({
-    loaded: false,
-    dataIn: false,
+    loaded: true,
+    dataIn: true,
     // dioceses
     dioceses: {
       title: "Dioceses",
@@ -119,7 +119,7 @@ export default {
 
     creditsActroyes: {
       title: "credit Actroyes",
-      amount: 450000,
+      amount: 350000,
       icon: "mdi-assistant",
     },
     epargnes: {
@@ -140,7 +140,7 @@ export default {
 
   mounted() {
     this.dpg();
-    this.aec();
+    // this.aec();
   },
 
   methods: {
@@ -152,7 +152,6 @@ export default {
           this.dioceses.number = res.dioceses.total;
           this.paroisses.number = res.paroisses.total;
           this.groupes.number = res.groupes.total;
-
         } else {
           alert("an error occured");
         }
@@ -175,7 +174,7 @@ export default {
           const collections = filtered.map((item) => item.collections);
           // get only des epargnes
           const epargnes = collections.map(
-            (item) => item[0].epargne.valeur_total_epargne_realise_mois
+            (item) => item[0].epargne.period_released_amount
           );
           // get the sum of epargnes
           const total_epargnes = this.total(epargnes);
@@ -184,7 +183,7 @@ export default {
 
           // get the granteds (actroyes)
           const granted = collections.map(
-            (item) => item[0].credit.nombres_total_credit_actroyes
+            (item) => item[0].credit.granted_credit
           );
           // get the sum of epargnes
           const total_granted = this.total(granted);
@@ -193,7 +192,7 @@ export default {
 
           // get the granted capital (actroyes)
           const grantedCapital = collections.map(
-            (item) => item[0].credit.valeur_de_credit_actroyes_capital
+            (item) => item[0].credit.granted_capital
           );
           // get the sum of epargnes
           const total_granted_capital = this.total(grantedCapital);
@@ -202,18 +201,14 @@ export default {
 
           // get the attendence information
           //** boys */
-          const boys = collections.map(
-            (item) => item[0].attended_boys
-          );
+          const boys = collections.map((item) => item[0].attended_boys);
           const total_boys = this.total(boys);
           //** girls */
-          const girls = collections.map(
-            (item) => item[0].attended_girls
-          );
+          const girls = collections.map((item) => item[0].attended_girls);
           const total_girls = this.total(girls);
 
           // make the series model
-          let serie = function (key) {
+          let serie = function(key) {
             this.key = key;
           };
           const gathered = [];

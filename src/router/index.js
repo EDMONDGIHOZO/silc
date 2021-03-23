@@ -100,12 +100,12 @@ const routes = [
           ),
       },
       {
-        path: "verification",
-        name: "verification",
+        path: "caisse",
+        name: "caisseBanquee",
         component: () =>
           import(
-            /* webpackChunkName: 'verification' */
-            "../views/dashboard/raports/verification.vue"
+            /* webpackChunkName: 'caisse' */
+            "../views/dashboard/raports/caisse.vue"
           ),
       },
       {
