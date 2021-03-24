@@ -4,7 +4,7 @@
       <done-animation />
     </div>
     <div class="data-create-container" v-else>
-      <v-form @submit.prevent="saveInfo">
+      <v-form @submit.prevent="saveInfo" ref="relationForm">
         <v-row wrap>
           <v-col cols="12">
             <div class="form-col">
@@ -142,7 +142,7 @@
                       color="success"
                       depressed
                       rounded
-                      @click="moveStep(5)"
+                      @click="saveInfo()"
                       >continuer</v-btn
                     >
                   </v-col>
@@ -167,7 +167,7 @@ export default {
     membersCredited: 0,
     creditedAmount: 0,
     groupBankAccount: 0,
-    groupCreditAmount:0,
+    groupCreditAmount: 0,
     groupBankCredit: 0,
     complete: false,
     rules: {
@@ -182,21 +182,25 @@ export default {
   methods: {
     saveInfo() {
       // show completion animation
-      const formData = {
-        collectionId: this.collection.id,
-        membersOpenedAccounts: this.membersOpenedAccounts,
-        membersCredited: this.membersCredited,
-        creditedAmount: this.creditedAmount,
-        groupBankAccount: this.groupBankAccount,
-        groupBankCredit: this.groupBankCredit,
-      };
+      if (this.$refs.relationForm.validate()) {
+        const formData = {
+          collectionId: this.collection.id,
+          membersOpenedAccounts: this.membersOpenedAccounts,
+          membersCredited: this.membersCredited,
+          creditedAmount: this.creditedAmount,
+          groupBankAccount: this.groupBankAccount,
+          groupBankCredit: this.groupBankCredit,
+        };
 
-      ActionsService.SaveRelations(formData).then((response) => {
-        if (response.statusText === "OK") {
-          this.$store.commit("updateSteps", 8);
-          this.complete = true;
-        }
-      });
+        ActionsService.SaveRelations(formData).then((response) => {
+          if (response.statusText === "OK") {
+            this.$store.commit("updateSteps", 5);
+            this.complete = true;
+          }
+        });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
+      }
     },
 
     moveStep(stepy) {

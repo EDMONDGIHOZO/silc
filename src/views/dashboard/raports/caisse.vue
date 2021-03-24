@@ -111,7 +111,7 @@
                   <v-btn
                     color="success"
                     type="submit"
-                    @click="goto"
+                    @click="saveInfo"
                     class="my-4"
                     rounded
                     block
@@ -129,6 +129,7 @@
 
 <script>
 import store from "@/store/index";
+import ActionsService from "@/services/actions.service";
 export default {
   name: "verification",
   data() {
@@ -153,6 +154,15 @@ export default {
   },
   mounted() {
     this.moveStep(1);
+    if (this.collection !== null) {
+      this.fillem();
+    }
+  },
+
+  computed: {
+    collection() {
+      return this.$store.state.collectionInfo;
+    },
   },
   methods: {
     moveStep(stepy) {
@@ -161,6 +171,38 @@ export default {
 
     goto() {
       this.$router.push({ name: "home" });
+    },
+
+    fillem() {
+      const info = this.collection;
+      console.log(info);
+    },
+
+    saveInfo() {
+      if (this.$refs.form.validate()) {
+        const formData = {
+          collectionId: this.collection.id,
+          rapportSold: this.rapportSold,
+          epargneEntre: this.epargneEntre,
+          creditRembourseCapitalInterest: this.creditRembourseCapitalInterest,
+          caisseSolidalite: this.caisseSolidalite,
+          entrePenalite: this.entrePenalite,
+          autreEntre: this.autreEntre,
+          totalEntre: this.totalEntre,
+          sortieCreditActroye: this.sortieCreditActroye,
+          autreSortie: this.autreSortie,
+          totalSortie: this.totalSortie,
+          soldePeriode: this.soldePeriode,
+        };
+        // submit the data to the server
+        ActionsService.SaveEpargne(formData).then((response) => {
+          if (response.statusText === "OK") {
+            console.log(response.data);
+          }
+        });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
+      }
     },
   },
 };

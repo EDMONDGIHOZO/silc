@@ -44,7 +44,7 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="moveStep(3)"
+            <v-btn color="success" depressed rounded @click="saveInfo(3)"
               >continuer</v-btn
             >
           </v-col>
@@ -87,6 +87,8 @@ export default {
             this.$store.commit("updateSteps", step);
           }
         });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
       }
     },
 

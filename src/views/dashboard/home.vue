@@ -6,7 +6,7 @@
     <div class="data" v-else>
       <v-row wrap class="mt-3">
         <v-col cols="12">
-          <h3 class="gtitle text-uppercase">Informations générales</h3>
+          <h3 class="gtitle text-uppercase">Données en synthèse</h3>
         </v-col>
         <v-col cols="12" md="4">
           <roundedCardItem

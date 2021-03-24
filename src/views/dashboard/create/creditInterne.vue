@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="data-create-container">
-      <v-form @submit.prevent="saveInfo">
+      <v-form @submit.prevent="saveInfo" ref="creditForm">
         <v-row wrap justify="center" align-content="center" class="ma-2">
           <v-col cols="12" md="6">
             <div class="form-col">
@@ -306,7 +306,7 @@
           </v-col>
 
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="moveStep(4)"
+            <v-btn color="success" depressed rounded @click="saveInfo(4)"
               >continuer</v-btn
             >
           </v-col>
@@ -341,20 +341,33 @@ export default {
 
   methods: {
     saveInfo(step) {
-      const formData = {
-        collectionId: this.collection.id,
-        creditedGirls: this.creditedGirls,
-        creditedBoys: this.creditedBoys,
-        grantedCredit: this.grantedCredit,
-        grantedCapital: this.grantedCapital,
-        interestForGrants: this.interestForGrants,
-      };
+      if (this.$refs.creditForm.validate()) {
+        const formData = {
+          collectionId: this.collection.id,
+          creditedGirls: this.creditedGirls,
+          creditedBoys: this.creditedBoys,
+          grantedCredit: this.grantedCredit,
+          grantedCapital: this.grantedCapital,
+          interestForGrants: this.interestForGrants,
+          moyenneAmountCredit: this.moyenneAmountCredit,
+          rebursedValueCapital: this.rebursedValueCapital,
+          rebursedInterestValue: this.rebursedInterestValue,
+          rebursedCapitalInterest: this.rebursedCapitalInterest,
+          remainingCreditCapitalValue: this.remainingCreditCapitalValue,
+          interestRemainingCredit: this.interestRemainingCredit,
+          creditCapitalInterestRemaining: this.creditCapitalInterestRemaining,
+          capitalCreditRemaining: this.capitalCreditRemaining,
+          risky: this.risky,
+        };
 
-      ActionsService.saveCredits(formData).then((response) => {
-        if (response.statusText === "OK") {
-          this.$store.commit("updateSteps", step);
-        }
-      });
+        ActionsService.saveCredits(formData).then((response) => {
+          if (response.statusText === "OK") {
+            this.$store.commit("updateSteps", step);
+          }
+        });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
+      }
     },
     moveStep(stepy) {
       store.commit("updateSteps", stepy);

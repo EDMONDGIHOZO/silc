@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="data-create-container">
-      <v-form @submit.prevent="saveInfo">
+      <v-form @submit.prevent="saveEntraide" ref="aideForm">
         <v-row wrap>
           <v-col cols="12" md="6">
             <div class="form-col">
@@ -69,7 +69,12 @@
             </div>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="moveStep(6)"
+            <v-btn
+              color="success"
+              depressed
+              rounded
+              type="submit"
+              @click="saveEntraide"
               >continuer</v-btn
             >
           </v-col>
@@ -94,27 +99,33 @@ export default {
   }),
 
   methods: {
-    saveInfo(step) {
-      const formData = {
-        collectionId: localStorage.getItem("collectionId"),
-        income: this.income,
-        outgoing: this.outgoing,
-        soutenus: this.soutenus,
-      };
+    saveEntraide() {
+      if (this.$refs.aideForm.validate()) {
+        const formData = {
+          collectionId: this.collection.id,
+          income: this.income,
+          outgoing: this.outgoing,
+          soutenus: this.soutenus,
+        };
 
-      ActionsService.saveEntraide(formData).then((response) => {
-        if (response.statusText === "OK") {
-          this.$store.commit("updateSteps", step);
-        }
-      });
+        ActionsService.saveEntraide(formData).then((response) => {
+          if (response.statusText === "OK") {
+            this.$store.commit("updateSteps", 6);
+          }
+        });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
+      }
     },
     moveStep(stepy) {
       store.commit("updateSteps", stepy);
     },
   },
 
-  mounted() {
-    this.collectionId = localStorage.getItem("collectionId");
+  computed: {
+    collection() {
+      return this.$store.state.collectionInfo;
+    },
   },
 };
 </script>

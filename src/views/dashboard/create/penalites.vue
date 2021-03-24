@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="data-create-container">
-      <v-form @submit.prevent="saveInfo">
+      <v-form @submit.prevent="saveInfo" ref="penForm">
         <v-row wrap>
           <v-col cols="12" md="5">
             <div class="form-col">
@@ -47,7 +47,7 @@
             </div>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="verification()"
+            <v-btn color="success" depressed rounded @click="saveInfo"
               >continuer</v-btn
             >
           </v-col>
@@ -71,26 +71,36 @@ export default {
 
   methods: {
     saveInfo(step) {
-      const formData = {
-        collectionId: localStorage.getItem("collectionId"),
-        punishedMembers: this.punishedMembers,
-        amountPaid: this.amountPaid,
-      };
+      if (this.$refs.penForm.validate()) {
+        const formData = {
+          collectionId: this.collection.id,
+          punishedMembers: this.punishedMembers,
+          amountPaid: this.amountPaid,
+        };
 
-      ActionsService.savePenalty(formData).then((response) => {
-        if (response.statusText === "OK") {
-          this.$store.commit("updateSteps", step);
-        }
-      });
+        ActionsService.savePenalty(formData).then((response) => {
+          if (response.statusText === "OK") {
+            this.$store.commit("updateSteps", step);
+            this.$router.push({ name: "caisseBanquee" });
+          }
+        });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
+      }
     },
 
-    verification() {
-      this.$router.push({ name: "caisseBanquee" });
-    },
+    // verification() {
+    //   this.$router.push({ name: "caisseBanquee" });
+    // },
   },
 
   mounted() {
     this.collectionId = localStorage.getItem("collectionId");
+  },
+  computed: {
+    collection() {
+      return this.$store.state.collectionInfo;
+    },
   },
 };
 </script>

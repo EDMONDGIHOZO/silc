@@ -278,7 +278,7 @@
         type="submit"
         depressed
         rounded
-        @click="moveStep(2)"
+        @click="saveGenInfo()"
       >
         Continue
       </v-btn>
@@ -471,6 +471,8 @@ export default {
           this.$store.commit("setCurrentCollectionInfo", info);
           this.$store.commit("updateSteps", this.stepy);
         });
+      } else {
+        alert("assurez-vous que, il n'y a pas de champ vide!");
       }
     },
 
