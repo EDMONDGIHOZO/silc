@@ -1,8 +1,8 @@
 import axios from "axios";
 import authHeader from "./authHeader";
 
-const API_URL = "http://localhost:3333/";
-// const API_URL = "https://silc.nceingenieurs.com/";
+// const API_URL = "http://localhost:3333/";
+const API_URL = "https://silc.nceingenieurs.com/";
 
 class ActionsService {
   getGroups() {
@@ -116,6 +116,11 @@ class ActionsService {
 
   SaveEpargne(formData) {
     return axios.post(API_URL + `epargnes`, formData, {
+      headers: authHeader(),
+    });
+  }
+  saveCaisse(formData) {
+    return axios.post(API_URL + `caisse`, formData, {
       headers: authHeader(),
     });
   }
