@@ -4,6 +4,7 @@
       <v-col cols="12">
         <div class="create-title">
           <p>créer un groupe</p>
+          <p>Total des membres:  {{ totalMembers }}</p>
         </div>
       </v-col>
     </v-row>
@@ -69,7 +70,20 @@
               type="number"
               rounded
               background-color="white"
-              label="Durée maximale credit "
+              label="Durée maximale credit (mois) "
+              required
+            ></v-text-field>
+          </v-col>
+          <v-col cols="12" md="6">
+            <v-text-field
+              v-model="creationDate"
+              outlined
+              :rules="[rules.required]"
+              dense
+              type="date"
+              rounded
+              background-color="white"
+              label="Date de création du groupe "
               required
             ></v-text-field>
           </v-col>
@@ -82,7 +96,7 @@
               :rules="[rules.required]"
               rounded
               background-color="white"
-              label="intérêt mensuel"
+              label="intérêt mensuel (%)"
               required
             ></v-text-field>
           </v-col>
@@ -159,7 +173,7 @@
                   v-on="on"
                   v-bind="attrs"
                   :rules="[rules.required]"
-                  label="date de fin"
+                  label="Date de fin du cycle actuel"
                   append-icon="mdi-calendar"
                   background-color="white"
                   rounded
@@ -233,6 +247,7 @@ export default {
     rules: {
       required: (value) => !!value || "obligatoire!",
     },
+    creationDate: "",
     diocese_id: "",
     paroisse_id: 1,
     name: "",
@@ -261,6 +276,20 @@ export default {
       this.dioceses = response.data.data;
     });
   },
+
+  computed: {
+    totalMembers() {
+      let girls = parseInt(this.girls);
+      let boys = parseInt(this.boys);
+      let total = girls + boys;
+      if (total > 0) {
+        return total;
+      } else {
+        return 0;
+      }
+    },
+  },
+
   methods: {
     save(startDate) {
       this.$refs.menu.save(startDate);
@@ -294,6 +323,7 @@ export default {
           monthlyInterest: this.monthlyInterest,
           startDate: this.startDate,
           endDate: this.endDate,
+          creationDate: this.creationDate,
         };
 
         this.showProgress = true;
@@ -315,3 +345,11 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.create-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+</style>

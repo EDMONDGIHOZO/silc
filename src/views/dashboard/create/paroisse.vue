@@ -126,7 +126,7 @@ export default {
           this.alertType = response.data.status;
           this.alertMessage = response.data.message;
 
-          setTimeout(() => this.$router.push({ name: "home" }), 4000);
+          setTimeout(() => this.$router.push({ name: "home" }), 2000);
         });
       } catch (error) {
         console.log(error);
