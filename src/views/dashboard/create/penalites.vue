@@ -1,5 +1,18 @@
 <template>
   <div class="container">
+    <div class="backer">
+      <v-btn
+        color="black"
+        dark
+        class="my-5"
+        small
+        depressed
+        rounded
+        @click="moveStep(5)"
+      >
+        <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
+      >
+    </div>
     <div class="data-create-container">
       <v-form @submit.prevent="saveInfo" ref="penForm">
         <v-row wrap>
@@ -59,6 +72,8 @@
 
 <script>
 import ActionsService from "@/services/actions.service";
+import store from "@/store/index";
+
 export default {
   name: "penalites",
   data: () => ({
@@ -70,6 +85,9 @@ export default {
   }),
 
   methods: {
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
+    },
     saveInfo(step) {
       if (this.$refs.penForm.validate()) {
         const formData = {

@@ -1,5 +1,17 @@
 <template>
   <div class="container">
+    <div class="backer">
+      <v-btn
+        color="black"
+        dark
+        class="my-5"
+        small
+        depressed
+        rounded
+        @click="moveStep(2)"
+        > <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
+      >
+    </div>
     <div class="data-create-container">
       <v-form @submit.prevent="saveInfo" ref="creditForm">
         <v-row wrap justify="center" align-content="center" class="ma-2">

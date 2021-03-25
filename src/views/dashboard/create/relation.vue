@@ -4,6 +4,19 @@
       <done-animation />
     </div>
     <div class="data-create-container" v-else>
+      <div class="backer">
+        <v-btn
+          color="black"
+          dark
+          class="my-5"
+          small
+          depressed
+          rounded
+          @click="moveStep(3)"
+        >
+          <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
+        >
+      </div>
       <v-form @submit.prevent="saveInfo" ref="relationForm">
         <v-row wrap>
           <v-col cols="12">
@@ -138,11 +151,7 @@
                     ></v-text-field>
                   </v-col>
                   <v-col cols="12">
-                    <v-btn
-                      color="success"
-                      depressed
-                      rounded
-                      @click="saveInfo()"
+                    <v-btn color="success" depressed rounded @click="saveInfo()"
                       >continuer</v-btn
                     >
                   </v-col>
