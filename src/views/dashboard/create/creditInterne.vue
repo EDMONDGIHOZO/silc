@@ -9,7 +9,8 @@
         depressed
         rounded
         @click="moveStep(2)"
-        > <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
+      >
+        <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
       >
     </div>
     <div class="data-create-container">
@@ -443,8 +444,10 @@ export default {
     risky() {
       let retard = parseInt(this.capitalCreditRemaining);
       let restant = parseInt(this.remainingCreditCapitalValue);
+
       if (restant > 0 && retard > 0) {
-        return (retard * 100) / restant;
+        const finalrest = (retard * 100) / restant;
+        return finalrest.toFixed(1);
       } else {
         return 0;
       }

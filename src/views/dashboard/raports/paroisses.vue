@@ -123,6 +123,8 @@ export default {
         if (response.statusText === "OK") {
           this.paroisses.splice(this.editedIndex);
           this.closeDelete();
+          alert("la paroisse a été supprimée avec succès");
+          location.reload();
         } else {
           alert("paroisse is not deleted");
         }

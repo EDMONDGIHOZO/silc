@@ -1,5 +1,8 @@
 <template>
   <div class="contents">
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
     <v-form @submit.prevent class="data-create-container" ref="dataForm">
       <v-row class="wrap my-4">
         <v-col cols="12">
@@ -40,6 +43,41 @@
           </div>
         </v-col>
 
+        <v-col cols="12" md="6">
+          <div class="form-col">
+            <div class="col-title">
+              <p>Sélectionnez le Diocèse et Paroisse</p>
+            </div>
+            <div class="fields">
+              <v-select
+                :items="dioceses"
+                label="Diocèse"
+                @click="getDiocese"
+                @change="getSingleDiocese"
+                append-icon="mdi-church"
+                filled
+                item-text="name"
+                item-value="id"
+                :rules="[rules.required]"
+                dense
+                v-model="diocese_id"
+              ></v-select>
+              <v-select
+                :items="paroisses"
+                label="Paroisse"
+                append-icon="mdi-stairs"
+                @change="getParoisse"
+                class="mx-2"
+                filled
+                item-text="name"
+                item-value="id"
+                :rules="[rules.required]"
+                dense
+                v-model="paroisse_id"
+              ></v-select>
+            </div>
+          </div>
+        </v-col>
         <v-col cols="12" md="6">
           <div class="form-col">
             <div class="col-title">
@@ -292,6 +330,7 @@ import ActionsService from "@/services/actions.service";
 export default {
   data: () => ({
     menu: false,
+    overlay: false,
     groups: [],
     stepy: 2,
     commonRules: [(v) => v.length <= 1 || "Max 25 characters"],
@@ -311,6 +350,12 @@ export default {
     rules: {
       required: (value) => !!value || "obligatoire!",
     },
+
+    // frontend collections
+    dioceses: [],
+    paroisses: [],
+    diocese_id: null,
+    paroisse_id: null,
   }),
 
   watch: {
@@ -318,14 +363,6 @@ export default {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
     },
   },
-
-  mounted() {
-    ActionsService.getGroupes().then((response) => {
-      this.groups = response.data.data;
-      this.collectorName = this.UserInfo.username;
-    });
-  },
-
   computed: {
     UserInfo() {
       return this.$store.state.UserInfo;
@@ -383,10 +420,21 @@ export default {
 
     // fait le taux total
     tauxTotal() {
-      let x = parseInt(this.boysTaux);
-      let y = parseInt(this.girlsTaux);
-      const tot = (x + y) / 2;
-      return tot + "%";
+      // abaje
+      let presentGirls = parseInt(this.attendedGirls);
+      let presentBoys = parseInt(this.attendedBoys);
+      let presentTotal = presentGirls + presentBoys;
+      // actual registered
+      let actualBoys = parseInt(this.actualBoys);
+      let actualGirls = parseInt(this.actualGirls);
+      let actualTotal = actualBoys + actualGirls;
+
+      const final = (presentTotal * 100) / actualTotal;
+      if (final > 0) {
+        return final.toFixed(1);
+      } else {
+        return 0;
+      }
     },
 
     abandonboysTaux() {
@@ -416,12 +464,44 @@ export default {
       let z = parseInt(this.prevMembers);
       const tot = (x + y) * 100;
       let ave = tot / z;
-      return ave;
+      if (ave > 0) {
+        return ave;
+      } else {
+        return 0;
+      }
     },
   },
   methods: {
     save(collectionDate) {
       this.$refs.menu.save(collectionDate);
+    },
+
+    getDiocese() {
+      this.overlay = true;
+      ActionsService.getDioceses().then((response) => {
+        this.dioceses = response.data.data;
+        this.overlay = false;
+        this.collectorName = this.UserInfo.username;
+      });
+    },
+
+    getSingleDiocese() {
+      this.overlay = true;
+      if (this.diocese_id !== null) {
+        ActionsService.getDiocese(this.diocese_id).then((response) => {
+          this.paroisses = response.data.data.paroisses;
+          this.overlay = false;
+        });
+      }
+    },
+    getParoisse() {
+      this.overlay = true;
+      if (this.paroisse_id !== null) {
+        ActionsService.getPar(this.diocese_id).then((response) => {
+          this.groups = response.data.data.groups;
+          this.overlay = false;
+        });
+      }
     },
 
     percentager(percent, total) {

@@ -43,7 +43,7 @@ export default {
   name: "sideMenu",
   data: () => ({
     links: [
-      ["mdi-view-dashboard", "DASHBOARD", "home"],
+      ["mdi-view-dashboard", "TABLEAU DE BORD", "home"],
       ["mdi-church", "DIOCESES", "all-dioceses"],
       ["mdi-christianity-outline", "PAROISSES", "all-paroisses"],
       ["mdi-account-group", "GROUPES", "groups"],

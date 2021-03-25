@@ -14,35 +14,38 @@
     </div>
     <div class="data-create-container">
       <v-form @submit.prevent="saveInfo" ref="form">
-        <v-row wrap>
+        <v-row wrap class="main-form">
           <v-col cols="12" md="6" lg="4">
+            <label class="label">Montant minimum épargné chaque mois dans le groupe (Frw)</label>
             <v-text-field
               v-model="monthlyMinAmount"
               :rules="[rules.required]"
               dense
               filled
               type="number"
-              label="Montant minimum épargné chaque mois dans le groupe (Frw)"
+              label="entre le nombre"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" lg="4">
+            <label class="label">Montant maximal épargné chaque mois dans le groupe (Frw)</label>
             <v-text-field
               v-model="monthlyMaxAmount"
               :rules="[rules.required]"
               dense
               filled
               type="number"
-              label="Montant maximal épargné chaque mois dans le groupe (Frw)"
+              label="entre le nombre"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" lg="4">
+            <label class="label">Valeur totale de l’épargne réalisée au cours de la période/mois (Frw)</label>
             <v-text-field
               v-model="periodReleasedAmount"
               :rules="[rules.required]"
               dense
               filled
               type="number"
-              label="Valeur totale de l’épargne réalisée au cours de la période/mois (Frw)"
+              label="entre le nombre"
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" lg="4">

@@ -1,8 +1,8 @@
 <template>
-  <div class="container" v-if="gData.loaded">
+  <div class="container">
     <div class="title-container">
       <h2 class="primary--text display-1 font-weight-bold">
-        GROUPE | UBUMANZI
+        GROUPE | {{ name }}
       </h2>
     </div>
     <div class="details-container">
@@ -11,26 +11,22 @@
           <ul class="details">
             <li class="detail">
               <strong> Création </strong>
-              <p class="grey--text">
-                Le {{ basicDetails.created | formatDate }}
-              </p>
+              <p class="grey--text">Le {{ creationDate | formatDate }}</p>
             </li>
             <li class="detail">
               <strong> Diocese </strong>
-              <p class="grey--text">{{ basicDetails.diocese }}</p>
+              <p class="grey--text">{{ diocese }}</p>
             </li>
             <li class="detail">
               <strong> Paroisse </strong>
-              <p class="grey--text">{{ basicDetails.paroisse }}</p>
+              <p class="grey--text">{{ paroisse }}</p>
             </li>
             <li class="detail">
               <strong> Nombres de membres </strong>
-              <v-chip color="primary">{{
-                basicDetails.membres.girls + basicDetails.membres.boys
-              }}</v-chip>
+              <v-chip color="primary">{{ totalMembers }}</v-chip>
               <p class="grey--text">
-                <span> {{ basicDetails.membres.girls }} Filles et  </span>
-                <span>{{ basicDetails.membres.boys }} Garçons </span>
+                <span> {{ girls }} Filles et </span>
+                <span>{{ boys }} Garçons </span>
               </p>
             </li>
           </ul>
@@ -41,16 +37,20 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 export default {
   name: "grouphead",
-  computed: mapState({
-    gData: (state) => state.group.gData,
-    basicDetails: (state) => state.group.basicDetails,
-  }),
-};
-</script>    
+  props: [
+    "name",
 
+    "creationDate",
+    "diocese",
+    "paroisse",
+    "totalMembers",
+    "girls",
+    "boys",
+  ],
+};
+</script>
 
 <style lang="scss" scoped>
 .details {
