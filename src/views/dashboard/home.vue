@@ -33,6 +33,9 @@
 
       <!-- financial information  -->
       <v-row wrap class="mt-5">
+       <v-col cols="12">
+          <h3 class="text-uppercase">résumé de la dernière collections pour tous les groupes</h3>
+        </v-col>
         <v-col cols="12" md="4">
           <tiledCardItem
             v-if="loaded"
@@ -118,12 +121,12 @@ export default {
     // financial informations
 
     creditsActroyes: {
-      title: "Total des entrées (Frw) (tous les groupes)",
+      title: "Total des entrées (Frw)",
       amount: 350000,
       icon: "mdi-assistant",
     },
     epargnes: {
-      title: "Total des sorties (Frw) (tous les groupes) ",
+      title: "Total des sorties (Frw)",
       amount: 450000,
       icon: "mdi-credit-card-plus",
     },

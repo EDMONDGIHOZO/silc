@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="title-container">
-      <h2 class="primary--text display-1 font-weight-bold">
+      <h2 class="primary--text font-weight-bold">
         GROUPE | {{ name }}
       </h2>
     </div>

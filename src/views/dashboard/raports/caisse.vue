@@ -288,6 +288,7 @@ export default {
       if (this.$refs.form.validate()) {
         const formData = {
           collectionId: this.collection.id,
+          grouId: this.collection.group_id,
           rapportSold: this.rapportSold,
           epargneEntre: this.epargneEntre,
           creditRembourseCapitalInterest: this.creditRembourseCapitalInterest,

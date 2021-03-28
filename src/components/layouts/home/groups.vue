@@ -48,7 +48,7 @@
       </template>
     </v-simple-table> -->
     <v-btn color="success" rounded depressed router to="/groupes"
-      >plus sur les groupes</v-btn
+      >voir plus</v-btn
     >
   </div>
 </template>
