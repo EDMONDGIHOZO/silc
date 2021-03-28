@@ -3,14 +3,18 @@
     <div class="paroisse">
       <div class="title-container">
         <h3>
-          Paroissse de <span class="primary--text">{{ paroisse.name }}</span>
+          Paroissse de
+          <span class="primary--text" v-if="loaded">
+            {{ paroisse.name }} 
+          </span>
+          <loading-data type="card-heading" v-else />
         </h3>
       </div>
 
       <div class="contents">
         <v-row wrap>
-          <v-col cols="12" md="4">
-            <v-card outlined>
+          <v-col cols="12" md="4" class="info-card">
+            <v-card flat v-if="loaded">
               <v-card-title class="card-tit">
                 résumé sur la paroisse
               </v-card-title>
@@ -27,23 +31,34 @@
                     </v-avatar>
                   </v-list-item-avatar>
                 </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Valeur d epargne</v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-avatar>
+                    <v-avatar color="primary" size="48">
+                      <span class="white--text font-weight-bold">{{
+                        nombresGroupes
+                      }}</span>
+                    </v-avatar>
+                  </v-list-item-avatar>
+                </v-list-item>
+                <v-list-item>
+                  <v-list-item-content>
+                    <v-list-item-title>Valeur de credit</v-list-item-title>
+                  </v-list-item-content>
+                  <v-list-item-avatar>
+                    <v-avatar color="primary" size="48">
+                      <span class="white--text font-weight-bold">{{
+                        nombresGroupes
+                      }}</span>
+                    </v-avatar>
+                  </v-list-item-avatar>
+                </v-list-item>
               </v-list>
             </v-card>
+            <loading-data type="list-item-two-line" v-else />
           </v-col>
-          <!-- <v-col cols="12" md="4">
-            <v-card outlined>
-              <v-card-title class="card-tit">
-                Taux de participation
-              </v-card-title>
-            </v-card>
-          </v-col>
-          <v-col cols="12" md="4">
-            <v-card outlined>
-              <v-card-title class="card-tit">
-                Relations avec institution financiels
-              </v-card-title>
-            </v-card>
-          </v-col> -->
         </v-row>
       </div>
     </div>
@@ -52,6 +67,7 @@
 
 <script>
 import ActionsService from "@/services/actions.service";
+import Loading from "@/components/layouts/loaders.vue";
 export default {
   name: "paroisse",
   props: ["parid"],
@@ -64,6 +80,10 @@ export default {
 
   mounted() {
     this.getParoisseInfo();
+  },
+
+  components: {
+    "loading-data": Loading,
   },
 
   computed: {

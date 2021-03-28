@@ -118,17 +118,17 @@ export default {
     // financial informations
 
     creditsActroyes: {
-      title: "credit Actroyes",
+      title: "Total des entrées (Frw) (tous les groupes)",
       amount: 350000,
       icon: "mdi-assistant",
     },
     epargnes: {
-      title: "epargnes",
+      title: "Total des sorties (Frw) (tous les groupes) ",
       amount: 450000,
       icon: "mdi-credit-card-plus",
     },
     grantedCapital: {
-      title: "Capital Actroyes",
+      title: "Valeur des crédits bancaires contractés (capital + intérêts)",
       amount: 23400,
       icon: "mdi-credit-card-minus",
     },
@@ -140,7 +140,7 @@ export default {
 
   mounted() {
     this.dpg();
-    // this.aec();
+    this.getGroups();
   },
 
   methods: {
@@ -158,76 +158,20 @@ export default {
       });
     },
 
+    // trouves tous e groupes
+
+    getGroups() {
+      ActionsService.getGroups().then((response) => {
+        if (response.statusText === "OK") {
+          let data = response.data.data;
+          this.groups_info = data.slice(0, 8);
+        }
+      });
+    },
+
     total(items) {
       const total_items = items.reduce((a, b) => a + b);
       return total_items;
-    },
-
-    aec() {
-      ActionsService.getAec().then((response) => {
-        if (response.statusText === "OK") {
-          // filter those with non empty collections
-          const data = response.data.data;
-          this.dataIn = true;
-          const filtered = data.filter((col) => col.collections.length > 0);
-          // get only collections
-          const collections = filtered.map((item) => item.collections);
-          // get only des epargnes
-          const epargnes = collections.map(
-            (item) => item[0].epargne.period_released_amount
-          );
-          // get the sum of epargnes
-          const total_epargnes = this.total(epargnes);
-          // attach result to the statuses
-          this.epargnes.amount = total_epargnes;
-
-          // get the granteds (actroyes)
-          const granted = collections.map(
-            (item) => item[0].credit.granted_credit
-          );
-          // get the sum of epargnes
-          const total_granted = this.total(granted);
-          // attach result to the statuses
-          this.creditsActroyes.amount = total_granted;
-
-          // get the granted capital (actroyes)
-          const grantedCapital = collections.map(
-            (item) => item[0].credit.granted_capital
-          );
-          // get the sum of epargnes
-          const total_granted_capital = this.total(grantedCapital);
-          // attach result to the statuses
-          this.grantedCapital.amount = total_granted_capital;
-
-          // get the attendence information
-          //** boys */
-          const boys = collections.map((item) => item[0].attended_boys);
-          const total_boys = this.total(boys);
-          //** girls */
-          const girls = collections.map((item) => item[0].attended_girls);
-          const total_girls = this.total(girls);
-
-          // make the series model
-          let serie = function(key) {
-            this.key = key;
-          };
-          const gathered = [];
-          gathered[0] = new serie(total_girls);
-          gathered[1] = new serie(total_boys);
-          let gatheredNumbers = gathered.map((item) => item.key);
-          // send props the chart
-          this.attendence = gatheredNumbers;
-
-          // ------- send group info to table ------//
-          this.groups_info = filtered;
-
-          // show data on screen
-          this.loaded = true;
-        } else {
-          alert("an error occured");
-          this.loaded = false;
-        }
-      });
     },
   },
 };

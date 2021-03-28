@@ -35,10 +35,10 @@ export default {
 }
 
 .card-item-title {
-  font-size: 20px;
+  font-size: 14px;
   line-height: 24px;
   /* identical to box height */
-  color: #20db6b;
+  color: #077031;
 }
 
 .card-item-content {

@@ -1,34 +1,31 @@
 <template>
   <div class="stat-container">
     <div class="stat-title-container">
-      <h3>Infos membres</h3>
+      <h3>liste de tous les groupes</h3>
     </div>
-    <!-- <v-simple-table height="300px" fixed-header>
+    <v-simple-table height="300px" fixed-header>
       <template v-slot:default>
         <thead>
           <tr>
             <th class="text-left">code de groupe</th>
-            <th class="text-left">membres inscrits</th>
-            <th class="text-left">date récente de collecte des données</th>
+            <th class="text-left">Interets mensuel</th>
+            <th class="text-left">Date de création du groupe</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="item in info" :key="item.id" @click="goto(item.id)">
-            <td class="text-left">{{ item.name }} ({{ item.group_code }})</td>
-            <td>
-              {{
-                item.collections[0].actual_girls +
-                item.collections[0].actual_boys
-              }}
+          <tr v-for="item in info" :key="item.id" @click="goto(item.id)" class="text-left">
+            <td>{{ item.name }} ({{ item.group_code }})</td>
+            <td >
+              {{ item.monthly_interest }}
             </td>
-            <td class="text-left">
-              {{ item.collections[0].collection_date | formatDate }}
+            <td>
+              {{ item.Date_de_creation | formatDate }}
             </td>
           </tr>
         </tbody>
       </template>
-    </v-simple-table> -->
-    <v-simple-table height="300px" fixed-header>
+    </v-simple-table>
+    <!-- <v-simple-table height="300px" fixed-header>
       <template v-slot:default>
         <thead>
           <tr>
@@ -49,7 +46,7 @@
           </tr>
         </tbody>
       </template>
-    </v-simple-table>
+    </v-simple-table> -->
     <v-btn color="success" rounded depressed router to="/groupes"
       >plus sur les groupes</v-btn
     >
