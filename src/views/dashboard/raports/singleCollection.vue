@@ -9,7 +9,7 @@
       <caisse-bank :data="collectionData" />
     </v-toolbar>
 
-    <div class="single-collection">
+    <!-- <div class="single-collection">
       <div class="data-card">
         <v-row wrap justify="center" align="center">
           <v-col cols="12" md="4" class="titler">
@@ -47,10 +47,7 @@
                   >{{ collectionData.dure_maximale_convenue_credit }} Mois
                 </strong>
               </li>
-              <li class="list-item">
-                Taux d’intérêt mensuel du crédit (%)
-                <strong>{{ collectionData.groups.monthly_interest }} %</strong>
-              </li>
+              
             </ul>
           </v-col>
         </v-row>
@@ -284,24 +281,6 @@
                   </v-chip>
                 </div>
               </li>
-              <li class="list-item-special">
-                <h3>Remboursement des crédits au cours de la période/mois</h3>
-              </li>
-              <li class="list-item">
-                <p>
-                  Valeur des crédits remboursés (capital) au cours de la
-                  période/mois
-                </p>
-                <div class="chips">
-                  <v-chip color="primary">
-                    {{
-                      collectionData.rebursed.valeur_de_credit_rembourse_capital
-                        | num
-                    }}
-                    RWF
-                  </v-chip>
-                </div>
-              </li>
               <li class="list-item">
                 <p>
                   Valeur des intérêts sur les crédits remboursés au cours de la
@@ -506,7 +485,7 @@
           </v-col>
         </v-row>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 

@@ -93,28 +93,17 @@ export default new Vuex.Store({
       console.log(nulls);
 
       const total_members =
-        response.membres_actuel_inscrits_girls +
-        response.membres_actuel_inscrits_boys;
+        response.actual_girls +
+        response.actual_boys;
 
-      const epargne = response.epargne.valeur_total_epargne_realise_mois;
+      const epargne = response.epargne.period_released_amount;
 
       const total_credited =
-        response.credit.membres_contracte_un_credit_girls +
-        response.credit.membres_contracte_un_credit_boys;
-
-      if (response.rebursed !== null) {
-        const total_creditValue =
-          response.rebursed.valeur_de_credit_rembourse_capital +
-          response.rebursed.valeur_des_interets_sur_credit_rembourse;
-        const total_rebursed =
-          response.rebursed.valeur_de_credit_rembourse_capital +
-          response.rebursed.valeur_des_interets_sur_credit_rembourse;
-        state.totalCredit = total_creditValue;
-        state.totalReb = total_rebursed;
-      }
+        response.credit.credite_girls +
+        response.credit.credite_boys;
 
       const credMoy =
-        response.credit.valeur_de_credit_actroyes_capital / total_credited;
+        response.credit.moyenne_amount_credit;
 
       function numelize(number) {
         return numeral(number).format("0,0");

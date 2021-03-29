@@ -138,7 +138,7 @@
                   <v-btn
                     color="success"
                     type="submit"
-                    @click="saveCaisseInfo()"
+                    @click="saveCaisseInfo(), updateCollectionState()"
                     class="my-4"
                     rounded
                     block
@@ -311,6 +311,23 @@ export default {
       } else {
         alert("assurez-vous que, il n'y a pas de champ vide!");
       }
+    },
+
+    updateCollectionState() {
+      let id = this.collection.id;
+      let group = this.collection.group_id;
+      const formData = {
+        latest: true,
+        verified: true,
+        groupId: group,
+      };
+
+      // talk to the server
+      ActionsService.updateCollection(id, formData).then((response) => {
+        if (response.statusText === "OK") {
+          console.log("okay now");
+        }
+      });
     },
   },
 };

@@ -33,8 +33,10 @@
 
       <!-- financial information  -->
       <v-row wrap class="mt-5">
-       <v-col cols="12">
-          <h3 class="text-uppercase">résumé de la dernière collections pour tous les groupes</h3>
+        <v-col cols="12">
+          <h3 class="text-uppercase">
+            résumé de la dernière collections pour tous les groupes
+          </h3>
         </v-col>
         <v-col cols="12" md="4">
           <tiledCardItem
@@ -131,7 +133,7 @@ export default {
       icon: "mdi-credit-card-plus",
     },
     grantedCapital: {
-      title: "Valeur des crédits bancaires contractés (capital + intérêts)",
+      title: "Solde de la période",
       amount: 23400,
       icon: "mdi-credit-card-minus",
     },
@@ -142,6 +144,8 @@ export default {
   }),
 
   mounted() {
+    const allCookies = document.cookie;
+    console.log(allCookies);
     this.dpg();
     this.getGroups();
   },

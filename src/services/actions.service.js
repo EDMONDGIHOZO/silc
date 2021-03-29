@@ -19,6 +19,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  updateCollection(id, formData) {
+    return axios.put(API_URL + `collections/${id}`, formData, {
+      headers: authHeader(),
+    });
+  }
 
   saveUser(formData) {
     return axios.post(API_URL + `user/register`, formData, {
