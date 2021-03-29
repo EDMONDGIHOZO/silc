@@ -98,10 +98,6 @@ export default new Vuex.Store({
 
       const epargne = response.epargne.period_released_amount;
 
-      const total_credited =
-        response.credit.credite_girls +
-        response.credit.credite_boys;
-
       const credMoy =
         response.credit.moyenne_amount_credit;
 
