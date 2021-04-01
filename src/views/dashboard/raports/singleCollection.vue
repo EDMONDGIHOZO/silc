@@ -1,78 +1,177 @@
 <template>
-	<div class="container" v-if="colData.loaded">
-		<v-card flat tile>
-			<v-toolbar color="primary" flat rounded>
-				<v-toolbar-title class="font-weight-bold"
-					>Collection de {{ collectionData.collection_date | formatDate }}
-				</v-toolbar-title>
+  <div class="container" v-if="loaded">
+    <v-card flat tile>
+      <v-toolbar color="primary" flat rounded>
+        <v-toolbar-title class="white--text"
+          ><strong>
+            Collection de {{ collectionInfo.collection_date | formatDate }}
+          </strong>
+        </v-toolbar-title>
 
-				<v-spacer></v-spacer>
+        <v-spacer></v-spacer>
 
-				<v-btn
-					depressed
-					color="primary darken-2"
-					rounded
-					v-if="collectionData.verified"
-				>
-					<v-icon left>mdi-checkbox-marked-circle</v-icon>
-					vérifié
-				</v-btn>
-				<v-btn depressed color="primary darken-2" rounded v-else>
-					<v-icon left>mdi-checkbox-blank-circle</v-icon>
-					marquer comme vérifié
-				</v-btn>
-			</v-toolbar>
-		</v-card>
-		<!---------------------------------------------------------------- end of collection title -------------------------------------------->
-		<!---------------------------------------------------------------- the adding the collection components -------------------------------------------->
-		<v-row wrap>
-			<v-col cols="12" md="8">
-				<div class="comps-container">
-					<div class="main-title">
-						<h2>EN DÉTAILS</h2>
-					</div>
-				</div>
-			</v-col>
-		</v-row>
-	</div>
+        <v-btn
+          depressed
+          color="primary darken-2"
+          rounded
+          v-if="collectionInfo.verified"
+        >
+          <v-icon left>mdi-checkbox-marked-circle</v-icon>
+          vérifié
+        </v-btn>
+        <v-btn depressed color="primary darken-2" rounded v-else>
+          <v-icon left>mdi-checkbox-blank-circle</v-icon>
+          marquer comme vérifié
+        </v-btn>
+      </v-toolbar>
+    </v-card>
+    <!---------------------------------------------------------------- end of collection title -------------------------------------------->
+    <!---------------------------------------------------------------- the adding the collection components -------------------------------------------->
+    <v-row wrap>
+      <v-col cols="12" md="8">
+        <div class="comps-container">
+          <div class="main-title">
+            <h2>EN DÉTAILS</h2>
+          </div>
+          <basic-info
+            :prevRegG="collectionInfo.prev_registered_girls"
+            :prevRegB="collectionInfo.prev_registered_boys"
+            :abG="collectionInfo.abandoned_boys"
+            :abB="collectionInfo.abandoned_girls"
+            :abmB="abandonboysTaux"
+            :abmG="abandongirlsTaux"
+            :abmT="abandonTauxTotal"
+            :nmT="collectionInfo.new_girls + collectionInfo.new_boys"
+            :nmG="collectionInfo.new_girls"
+            :nmB="collectionInfo.new_boys"
+          />
+          <epargne :info="collectionInfo.epargne" />
+        </div>
+      </v-col>
+      <v-col cols="12" md="4">
+        <div class="comps-container">
+          <div class="main-title">
+            <h2>ACTIONS</h2>
+          </div>
+          <p>action links</p>
+        </div>
+      </v-col>
+    </v-row>
+  </div>
 </template>
 
 <script>
-import { mapState } from "vuex";
-
+import ActionsService from "@/services/actions.service";
+// views
+import Epargne from "@/components/view/Epargne.vue";
+import BasicInfo from "@/components/view/BasicInfo.vue";
 export default {
-	name: "single-collection",
-	props: ["colid"],
+  name: "single-collection",
+  props: ["colid"],
 
-	computed: mapState({
-		collectionData: (state) => state.collectionData,
-		moyenneEpargne: (state) => state.moyenneEpargne,
-		montPerCredit: (state) => state.montPerCredit,
-		tauxInterets: (state) => state.group.tauxInterets,
-		totalReb: (state) => state.totalReb,
-		totalCredit: (state) => state.totalCredit,
-		colData: (state) => state.colData,
-	}),
+  components: {
+    Epargne,
+    "basic-info": BasicInfo,
+  },
 
-	mounted() {
-		this.getInfo();
-	},
+  data() {
+    return {
+      collectionInfo: {},
+      loaded: false,
+      nulls: [],
+    };
+  },
 
-	methods: {
-		getInfo() {
-			this.$store.dispatch("collectionGet", this.colid);
-		},
-	},
+  mounted() {
+    this.getCollection();
+  },
+
+  computed: {
+    abandonboysTaux() {
+      if (this.collectionInfo.abandoned_boys > 0) {
+        //   calculate percentage
+        return (
+          this.percentager(
+            this.collectionInfo.abandoned_boys,
+            this.collectionInfo.prev_registered_boys
+          ) + "%"
+        );
+      } else {
+        return 0 + "%";
+      }
+    },
+
+    prevMembers() {
+      return this.summer(
+        this.collectionInfo.prev_registered_girls,
+        this.collectionInfo.prev_registered_boys
+      );
+    },
+
+    abandongirlsTaux() {
+      if (this.collectionInfo.abandoned_girls > 0) {
+        //   calculate percentage
+        return (
+          this.percentager(
+            this.collectionInfo.abandoned_girls,
+            this.collectionInfo.prev_registered_girls
+          ) + "%"
+        );
+      } else {
+        return 0 + "%";
+      }
+    },
+
+    abandonTauxTotal() {
+      let x = parseInt(this.collectionInfo.abandoned_girls);
+      let y = parseInt(this.collectionInfo.abandoned_boys);
+      let z = parseInt(this.prevMembers);
+      const tot = (x + y) * 100;
+      let ave = tot / z;
+      if (ave > 0) {
+        return ave.toFixed(1);
+      } else {
+        return 0;
+      }
+    },
+  },
+
+  methods: {
+    getCollection() {
+      ActionsService.getCollection(this.colid).then((response) => {
+        if (response.statusText === "OK") {
+          this.collectionInfo = response.data.data;
+          this.loaded = true;
+        } else {
+          alert("data not found");
+        }
+      });
+    },
+
+    percentager(percent, total) {
+      return ((percent * 100) / total).toFixed(1);
+    },
+
+    summer(x, b) {
+      let number1 = parseInt(x);
+      let number2 = parseInt(b);
+      if (number2 >= 0 && number1 >= 0) {
+        return number1 + number2;
+      } else {
+        return 0;
+      }
+    },
+  },
 };
 </script>
 
 <style lang="scss" scoped>
 .comps-container {
-	background: #fffbfb;
-	border: 1px solid #8d8d8d;
-	box-sizing: border-box;
-	border-radius: 6px;
-  padding:15px;
+  background: rgb(236, 247, 234);
+  border: 1px solid #ececec;
+  box-sizing: border-box;
+  border-radius: 6px;
+  padding: 15px;
   margin-top: 20px;
 }
 </style>
