@@ -55,6 +55,8 @@
             />
             <epargne :info="collectionInfo.epargne" />
             <credit-interne :info="collectionInfo.credit" />
+            <relation-instution :info="collectionInfo.relation" />
+            <entraide :info="collectionInfo.entraide" />
           </div>
         </v-col>
         <v-col cols="12" md="4">
@@ -80,6 +82,8 @@ import ActionsService from "@/services/actions.service";
 import Epargne from "@/components/view/Epargne.vue";
 import BasicInfo from "@/components/view/BasicInfo.vue";
 import Credit from "@/components/view/Credits.vue";
+import Relation from "@/components/view/Relation.vue";
+import Entraide from "@/components/view/Entraide.vue";
 export default {
   name: "single-collection",
   props: ["colid"],
@@ -88,6 +92,8 @@ export default {
     Epargne,
     "basic-info": BasicInfo,
     "credit-interne": Credit,
+    "relation-instution": Relation,
+    Entraide,
   },
 
   data() {

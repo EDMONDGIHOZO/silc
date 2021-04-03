@@ -309,8 +309,14 @@
   flex-direction: row;
 }
 
+.comp-data .special {
+  background-color: #20db6bd7;
+  text-align: center !important;
+  font-weight: bold;
+}
+
 .comp-data .ctitle {
-  font-size: 14px;
+  font-size: 12px;
 }
 
 .comp-data .cdata{
