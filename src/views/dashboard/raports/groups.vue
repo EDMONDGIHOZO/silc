@@ -49,8 +49,18 @@
               >
                 <td>{{ item.name }}</td>
                 <td>{{ item.group_code }}</td>
-                <td>{{ item.diocese.name }}</td>
-                <td>{{ item.paroisse.name }}</td>
+                <td>
+                  <strong v-if="item.diocese !== null">{{
+                    item.diocese.name
+                  }}</strong>
+                  <strong class="red--text" v-else>Introuvable</strong>
+                </td>
+                <td>
+                  <strong v-if="item.paroisse !== null">{{
+                    item.paroisse.name
+                  }}</strong>
+                  <strong class="red--text" v-else>Introuvable</strong>
+                </td>
                 <td>{{ item.Date_de_creation | formatDate }}</td>
               </tr>
             </tbody>
