@@ -37,12 +37,17 @@
           <h3 class="text-uppercase">
             résumé de la dernière collections pour tous les groupes
           </h3>
+          <v-icon small>mdi-information-outline</v-icon>
+          <small class="desc mx-3"
+            >ceux-ci sont calculés à partir des livres de caisses qui ne sont
+            pas modifiés après la collecte des données.</small
+          >
         </v-col>
         <v-col cols="12" md="4">
           <tiledCardItem
             v-if="loaded"
             :title="creditsActroyes.title"
-            :amount="creditsActroyes.amount"
+            :amount="entrees"
             :icon="creditsActroyes.icon"
           />
           <ContentLoader type="card" v-else />
@@ -51,7 +56,7 @@
           <tiledCardItem
             v-if="loaded"
             :title="epargnes.title"
-            :amount="epargnes.amount"
+            :amount="sorties"
             :icon="epargnes.icon"
           />
           <ContentLoader type="card" v-else />
@@ -60,7 +65,7 @@
           <tiledCardItem
             v-if="loaded"
             :title="grantedCapital.title"
-            :amount="grantedCapital.amount"
+            :amount="soldes"
             :icon="grantedCapital.icon"
           />
           <ContentLoader type="card" v-else />
@@ -88,6 +93,7 @@ import ContentLoader from "@/components/layouts/loaders.vue";
 import groups from "@/components/layouts/home/groups.vue";
 import attendence from "@/components/layouts/home/attendence.vue";
 import ActionsService from "@/services/actions.service";
+import _ from "lodash";
 
 export default {
   name: "homepage",
@@ -102,6 +108,7 @@ export default {
   data: () => ({
     loaded: true,
     dataIn: true,
+    caisses: [],
     // dioceses
     dioceses: {
       title: "Dioceses",
@@ -148,6 +155,55 @@ export default {
     console.log(allCookies);
     this.dpg();
     this.getGroups();
+    this.getCaises();
+  },
+
+  computed: {
+    // get entrees
+    entrees() {
+      var characteurs = ["total_entre"];
+
+      var sums = {};
+
+      _.each(this.caisses, function(item) {
+        _.each(characteurs, function(color) {
+          sums[color] = (sums[color] || 0) + item[color];
+        });
+      });
+
+      let total = _.sum(_.values(sums));
+      return total;
+    },
+    // get sorties
+    sorties() {
+      var characteurs = ["total_sortie"];
+
+      var sums = {};
+
+      _.each(this.caisses, function(item) {
+        _.each(characteurs, function(color) {
+          sums[color] = (sums[color] || 0) + item[color];
+        });
+      });
+
+      let total = _.sum(_.values(sums));
+      return total;
+    },
+    // get solde
+    soldes() {
+      var characteurs = ["solde_periode"];
+
+      var sums = {};
+
+      _.each(this.caisses, function(item) {
+        _.each(characteurs, function(color) {
+          sums[color] = (sums[color] || 0) + item[color];
+        });
+      });
+
+      let total = _.sum(_.values(sums));
+      return total;
+    },
   },
 
   methods: {
@@ -175,6 +231,14 @@ export default {
         }
       });
     },
+    getCaises() {
+      ActionsService.getCaises().then((response) => {
+        if (response.statusText === "OK") {
+          let data = response.data.data;
+          this.caisses = data;
+        }
+      });
+    },
 
     total(items) {
       const total_items = items.reduce((a, b) => a + b);
@@ -191,5 +255,10 @@ export default {
   justify-content: center;
   align-items: center;
   color: rgb(151, 151, 151);
+}
+
+.desc {
+  color: grey;
+  font-style: italic;
 }
 </style>

@@ -12,7 +12,7 @@
       >
     </div>
     <div class="card-item-content">
-      <p class="card-item-content-text">{{ amount }} FRW</p>
+      <p class="card-item-content-text">{{ amount | numberForm }} FRW</p>
     </div>
   </div>
 </template>

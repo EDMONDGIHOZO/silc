@@ -31,6 +31,12 @@ Vue.filter("formatDate", function(value) {
   }
 });
 
+Vue.filter("numberForm", function(value) {
+  if (value) {
+    return new Intl.NumberFormat().format(value);
+  }
+});
+
 Vue.filter("passedFormat", function(value) {
   if (value) {
     return moment(value).fromNow(true);

@@ -190,6 +190,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  getCaises() {
+    return axios.get(API_URL + `caisse`, {
+      headers: authHeader(),
+    });
+  }
   getCollection(colid) {
     return axios.get(API_URL + `collections/${colid}`, {
       headers: authHeader(),
