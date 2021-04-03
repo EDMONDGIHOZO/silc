@@ -7,6 +7,7 @@
           :name="groupe.name"
           :creationDate="groupe.Date_de_creation"
           :diocese="groupe.diocese.name"
+          :paroisse="groupe.paroisse.name"
           :totalMembers="totalMembers"
           :girls="groupe.initial_girls_number"
           :boys="groupe.initial_boys_number"

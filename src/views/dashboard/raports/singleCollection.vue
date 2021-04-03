@@ -29,7 +29,7 @@
       <!---------------------------------------------------------------- end of collection title -------------------------------------------->
       <!---------------------------------------------------------------- the adding the collection components -------------------------------------------->
       <v-row wrap>
-        <v-col cols="12" md="8">
+        <v-col cols="12">
           <div class="comps-container">
             <div class="main-title">
               <h2>EN DÉTAILS</h2>
@@ -53,6 +53,7 @@
               :tauxB="boysTaux"
               :tauxT="tauxTotal"
             />
+            
             <epargne
               v-if="collectionInfo.epargne !== null"
               :info="collectionInfo.epargne"
@@ -93,18 +94,7 @@
               :grantedCredit="collectionInfo.credit.granted_credit"
               :sortieSolidalite="collectionInfo.entraide.valeur_sorties"
             />
-          </div>
-        </v-col>
-        <v-col cols="12" md="4">
-          <div class="comps-container">
-            <div class="main-title">
-              <h2>ACTIONS</h2>
-            </div>
-            <p>action links</p>
-          </div>
-        </v-col>
-        <v-col cols="12">
-          <v-fab-transition>
+            <v-fab-transition>
             <v-btn
               color="primary"
               @click="goTop"
@@ -117,6 +107,18 @@
               <v-icon>mdi-arrow-up</v-icon>
             </v-btn>
           </v-fab-transition>
+          </div>
+        </v-col>
+        <!-- <v-col cols="12" md="4">
+          <div class="comps-container">
+            <div class="main-title">
+              <h2>ACTIONS</h2>
+            </div>
+            <p>action links</p>
+          </div>
+        </v-col> -->
+        <v-col cols="12">
+          
         </v-col>
       </v-row>
     </div>

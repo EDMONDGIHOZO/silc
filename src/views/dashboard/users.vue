@@ -3,7 +3,7 @@
     <v-row wrap class="pa-3">
       <v-col cols="12" class="titler">
         <h3 class="text-left">utilisateurs du système</h3>
-        <v-dialog v-model="dialog" persistent max-width="600px">
+        <v-dialog v-model="dialog" persistent max-width="600px" v-if="role === 'admin'">
           <template v-slot:activator="{ on, attrs }">
             <v-btn color="success" depressed rounded v-bind="attrs" v-on="on">
               <v-icon left>mdi-account-plus</v-icon>nouvel utilisateur</v-btn
@@ -91,17 +91,15 @@
               </div>
               <v-list-item-subtitle
                 class="text-left"
-                v-text="
-                  user.role.name === 'collector' ? 'collecteur' : 'admin'
-                "
-                />
+                v-text="user.role.name === 'collector' ? 'collecteur' : 'admin'"
+              />
             </v-list-item-content>
             <v-list-item-avatar color="secondary white--text">
               {{ user.__meta__.collections_count }}
             </v-list-item-avatar>
           </v-list-item>
 
-          <v-card-actions>
+          <v-card-actions v-if="role === 'admin'">
             <v-btn
               rounded
               text
@@ -146,6 +144,9 @@ export default {
     users: [],
     loaded: false,
     dialog: false,
+    role: "",
+    username: "",
+    avatarLetter: "",
     roles: [
       { id: 1, name: "admin" },
       { id: 2, name: "collector" },
@@ -163,12 +164,25 @@ export default {
   components: {
     loading,
   },
-
+  created() {
+    this.$store.dispatch("getUserInfo");
+    // fill in the user information
+    this.loaded = true;
+    let user = JSON.parse(localStorage.getItem("userInfo"));
+    if (user) {
+      this.addInfo(user);
+    }
+  },
   mounted() {
     this.getUsers();
   },
 
   methods: {
+    addInfo(user) {
+      this.username = user.username;
+      this.role = user.role.name;
+      this.avatarLetter = user.firstname + "+" + user.lastname;
+    },
     getUsers() {
       ActionsService.getUsers().then((response) => {
         if (response.statusText === "OK") {
