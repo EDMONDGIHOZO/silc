@@ -54,26 +54,32 @@
               :tauxT="tauxTotal"
             />
             <epargne
+              v-if="collectionInfo.epargne !== null"
               :info="collectionInfo.epargne"
               :collectionId="collectionInfo.id"
             />
             <credit-interne
+              v-if="collectionInfo.credit !== null"
               :info="collectionInfo.credit"
               :collectionId="collectionInfo.id"
             />
             <relation-instution
+              v-if="collectionInfo.relation !== null"
               :info="collectionInfo.relation"
               :collectionId="collectionInfo.id"
             />
             <entraide
+              v-if="collectionInfo.entaraide !== null"
               :info="collectionInfo.entraide"
               :collectionId="collectionInfo.id"
             />
             <penality-view
+              v-if="collectionInfo.penalites !== null"
               :info="collectionInfo.penalites"
               :collectionId="collectionInfo.id"
             />
             <caisse
+              v-if="collectionInfo.caisse !== null"
               :info="collectionInfo.caisse"
               :collectionId="collectionInfo.id"
               :epargneEntre="collectionInfo.epargne.period_released_amount"
@@ -81,7 +87,9 @@
                 collectionInfo.credit.rebursed_capital_interest
               "
               :entreSolidalite="collectionInfo.entraide.valeur_entrees"
-              :entrePenalite="collectionInfo.penalites.Montant_des_penalites_payees"
+              :entrePenalite="
+                collectionInfo.penalites.Montant_des_penalites_payees
+              "
               :grantedCredit="collectionInfo.credit.granted_credit"
               :sortieSolidalite="collectionInfo.entraide.valeur_sorties"
             />
@@ -97,7 +105,15 @@
         </v-col>
         <v-col cols="12">
           <v-fab-transition>
-            <v-btn color="primary" @click="goTop" sticky ref="fab" fab right absolute>
+            <v-btn
+              color="primary"
+              @click="goTop"
+              sticky
+              ref="fab"
+              fab
+              right
+              absolute
+            >
               <v-icon>mdi-arrow-up</v-icon>
             </v-btn>
           </v-fab-transition>

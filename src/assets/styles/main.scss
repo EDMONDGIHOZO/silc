@@ -299,7 +299,7 @@
   margin-top: 10px;
 }
 
-.comp-data :is(li){
+.comp-data :is(li) {
   padding: 12px;
   margin-left: -20px;
   border-top: solid rgb(236, 247, 234) 2px;
@@ -319,8 +319,15 @@
   font-size: 12px;
 }
 
-.comp-data .cdata{
+.comp-data .cdata {
   font-size: 18px;
   font-weight: bolder;
   color: #066726;
+}
+
+.collections {
+  border-radius: 10px;
+  border: #20db6b 1px solid;
+  background-color: #20db6b;
+  margin-top: 20px;
 }

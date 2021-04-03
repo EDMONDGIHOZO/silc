@@ -47,6 +47,7 @@ export default {
       ["mdi-church", "DIOCESES", "all-dioceses"],
       ["mdi-christianity-outline", "PAROISSES", "all-paroisses"],
       ["mdi-account-group", "GROUPES", "groups"],
+      ["mdi-database-check", "COLLECTIONS", "collections"],
       ["mdi-account-supervisor-circle", "USERS", "users"],
       // ["mdi-help", "AIDE", "help"],
     ],

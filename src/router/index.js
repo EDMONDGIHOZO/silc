@@ -7,6 +7,8 @@ import Paroisse from "../views/dashboard/raports/singleParoisse.vue";
 import SingleGroup from "../views/dashboard/raports/singleGroup.vue";
 import Collection from "../views/dashboard/raports/singleCollection.vue";
 import CollectionEdit from "../views/dashboard/editing/CollectionEdit.vue";
+import Collections from "../views/dashboard/raports/collections.vue";
+
 
 Vue.use(VueRouter);
 
@@ -142,6 +144,11 @@ const routes = [
         component: Paroisse,
         name: "paroisse",
         props: true,
+      },
+      {
+        path: "collections",
+        component: Collections,
+        name: "collections",
       },
       {
         path: "collections/:colid",

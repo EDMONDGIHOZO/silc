@@ -185,6 +185,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  getCollections() {
+    return axios.get(API_URL + `collections`, {
+      headers: authHeader(),
+    });
+  }
   getCollection(colid) {
     return axios.get(API_URL + `collections/${colid}`, {
       headers: authHeader(),

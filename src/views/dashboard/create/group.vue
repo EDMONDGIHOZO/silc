@@ -4,7 +4,7 @@
       <v-col cols="12">
         <div class="create-title">
           <p>créer un groupe</p>
-          <p>Total des membres:  {{ totalMembers }}</p>
+          <p>Total des membres: {{ totalMembers }}</p>
         </div>
       </v-col>
     </v-row>
@@ -28,7 +28,7 @@
             <v-autocomplete
               ref="diocese"
               v-model="diocese_id"
-              :rules="[() => !!diocese_id || 'This field is required']"
+              :rules="[rules.required]"
               :items="dioceses"
               item-value="id"
               item-text="name"
@@ -46,7 +46,7 @@
             <v-autocomplete
               ref="paroisse"
               v-model="paroisse_id"
-              :rules="[() => !!paroisse_id || 'This field is required']"
+              :rules="[rules.required]"
               :items="paroisses"
               item-value="id"
               item-text="name"
@@ -249,7 +249,7 @@ export default {
     },
     creationDate: "",
     diocese_id: "",
-    paroisse_id: 1,
+    paroisse_id: undefined,
     name: "",
     girls: 0,
     boys: 0,
@@ -264,7 +264,6 @@ export default {
     showProgress: null,
     groupCode: "",
     groupInfo: false,
-
     //  dates management
     showEnd: false,
     startMenu: false,
@@ -312,7 +311,7 @@ export default {
     },
 
     saveGroup() {
-      if (this.$refs.groupForm.validate()) {
+      if (this.$refs.groupForm.validate() & this.paroisse_id !== undefined) {
         const formData = {
           name: this.name,
           girls: this.girls,
