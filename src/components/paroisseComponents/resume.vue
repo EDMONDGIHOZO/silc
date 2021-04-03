@@ -13,7 +13,7 @@
             <v-list-item-action>
               <v-chip color="primary">
                 {{ res.value }}
-                 <strong v-if="res.id === 3"> RWF </strong>
+                 <strong v-if="res.id === 3"> FRW </strong>
               </v-chip>
             </v-list-item-action>
           </v-list-item>

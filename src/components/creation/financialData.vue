@@ -21,7 +21,7 @@
         ></v-text-field>
       </v-col>
       <v-col cols="12" md="6">
-        <h1 class="right grey--text">{{ amount }} - RWF</h1>
+        <h1 class="right grey--text">{{ amount }} - FRW</h1>
       </v-col>
       <div class="saveArea">
         <v-btn

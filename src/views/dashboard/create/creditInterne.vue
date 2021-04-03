@@ -105,7 +105,7 @@
                   :rules="[rules.required]"
                   clearable
                   type="number"
-                  prefix="RWF"
+                  prefix="FRW"
                   filled
                   dense
                   class="mx-2"
@@ -195,7 +195,7 @@
                     label="entre le nombre"
                     :rules="[rules.required]"
                     clearable
-                    prefix="RWF"
+                    prefix="FRW"
                     type="number"
                     filled
                     dense

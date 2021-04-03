@@ -13,7 +13,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               {{ info.period_released_amount }}
-              RWF
+              FRW
             </div>
           </li>
           <li>
@@ -23,7 +23,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               {{ info.monthly_max_amount }}
-              RWF
+              FRW
             </div>
           </li>
           <li>
@@ -33,7 +33,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               {{ info.monthly_max_amount }}
-              RWF
+              FRW
             </div>
           </li>
           <li>
@@ -43,7 +43,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               {{ info.epargne_per_member }}
-              RWF
+              FRW
             </div>
           </li>
         </ul>

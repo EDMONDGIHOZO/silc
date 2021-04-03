@@ -29,21 +29,21 @@
               <thead>
                 <tr>
                   <th><h1>Title</h1></th>
-                  <th><h1>Montant (RWF)</h1></th>
+                  <th><h1>Montant (FRW)</h1></th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
                   <td>Report du solde de la période /mois passé</td>
                   <td v-if="data.solde !== null">
-                    {{ data.solde.montant_solde | num }} RWF
+                    {{ data.solde.montant_solde | num }} FRW
                   </td>
                 </tr>
                 <tr>
                   <td>Entrées des épargnes au cours de la période /mois</td>
                   <td v-if="data.epargne !== null">
                     {{ data.epargne.valeur_total_epargne_realise_mois | num }}
-                    RWF
+                    FRW
                   </td>
                   <td v-else>no data</td>
                 </tr>
@@ -54,7 +54,7 @@
                   </td>
                   <td v-if="data.rebursed !== null">
                     {{ data.rebursed.valeur_de_credit_rembourse_capital | num }}
-                    RWF
+                    FRW
                   </td>
                 </tr>
                 <tr>
@@ -63,14 +63,14 @@
                     /mois
                   </td>
                   <td v-if="data.entraide !== null">
-                    {{ data.entraide.valeur_entrees }} RWF
+                    {{ data.entraide.valeur_entrees }} FRW
                   </td>
                   <td v-else>no data</td>
                 </tr>
                 <tr>
                   <td>Entrées des pénalités au cours de la période /mois</td>
                   <td v-if="data.penalites !== null">
-                    {{ data.penalites.Montant_des_penalites_payees }} RWF
+                    {{ data.penalites.Montant_des_penalites_payees }} FRW
                   </td>
                   <td v-else>no data</td>
                 </tr>
@@ -83,19 +83,19 @@
                     {{
                       data.relation.montant_de_credit_bancaire_contracte | num
                     }}
-                    RWF
+                    FRW
                   </td>
                   <td v-else>no data</td>
                 </tr>
                 <tr>
                   <td>Total des entrées</td>
-                  <td>{{ totalEntre | num }} RWF</td>
+                  <td>{{ totalEntre | num }} FRW</td>
                 </tr>
                 <tr>
                   <td>
                     Sorties pour crédits octroyés au cours de la période /mois
                   </td>
-                  <td v-if="data.credit !== null">{{data.credit.nombres_total_credit_actroyes}} RWF</td>
+                  <td v-if="data.credit !== null">{{data.credit.nombres_total_credit_actroyes}} FRW</td>
                   <td v-else>no data</td>
                 </tr>
                 <tr>
@@ -103,7 +103,7 @@
                     Sorties dans la caisse de solidarité au cours de la période
                     /mois
                   </td>
-                  <td v-if="data.entraide !== null">{{data.entraide.valeur_sorties | num}} RWF</td>
+                  <td v-if="data.entraide !== null">{{data.entraide.valeur_sorties | num}} FRW</td>
                 </tr>
               </tbody>
             </table>

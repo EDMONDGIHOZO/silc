@@ -53,10 +53,38 @@
               :tauxB="boysTaux"
               :tauxT="tauxTotal"
             />
-            <epargne :info="collectionInfo.epargne" />
-            <credit-interne :info="collectionInfo.credit" />
-            <relation-instution :info="collectionInfo.relation" />
-            <entraide :info="collectionInfo.entraide" />
+            <epargne
+              :info="collectionInfo.epargne"
+              :collectionId="collectionInfo.id"
+            />
+            <credit-interne
+              :info="collectionInfo.credit"
+              :collectionId="collectionInfo.id"
+            />
+            <relation-instution
+              :info="collectionInfo.relation"
+              :collectionId="collectionInfo.id"
+            />
+            <entraide
+              :info="collectionInfo.entraide"
+              :collectionId="collectionInfo.id"
+            />
+            <penality-view
+              :info="collectionInfo.penalites"
+              :collectionId="collectionInfo.id"
+            />
+            <caisse
+              :info="collectionInfo.caisse"
+              :collectionId="collectionInfo.id"
+              :epargneEntre="collectionInfo.epargne.period_released_amount"
+              :rebursedCapitalInterest="
+                collectionInfo.credit.rebursed_capital_interest
+              "
+              :entreSolidalite="collectionInfo.entraide.valeur_entrees"
+              :entrePenalite="collectionInfo.penalites.Montant_des_penalites_payees"
+              :grantedCredit="collectionInfo.credit.granted_credit"
+              :sortieSolidalite="collectionInfo.entraide.valeur_sorties"
+            />
           </div>
         </v-col>
         <v-col cols="12" md="4">
@@ -66,6 +94,13 @@
             </div>
             <p>action links</p>
           </div>
+        </v-col>
+        <v-col cols="12">
+          <v-fab-transition>
+            <v-btn color="primary" @click="goTop" sticky ref="fab" fab right absolute>
+              <v-icon>mdi-arrow-up</v-icon>
+            </v-btn>
+          </v-fab-transition>
         </v-col>
       </v-row>
     </div>
@@ -84,6 +119,9 @@ import BasicInfo from "@/components/view/BasicInfo.vue";
 import Credit from "@/components/view/Credits.vue";
 import Relation from "@/components/view/Relation.vue";
 import Entraide from "@/components/view/Entraide.vue";
+import Penality from "@/components/view/Penality.vue";
+import Caisse from "@/components/view/Caisse.vue";
+
 export default {
   name: "single-collection",
   props: ["colid"],
@@ -94,6 +132,8 @@ export default {
     "credit-interne": Credit,
     "relation-instution": Relation,
     Entraide,
+    "penality-view": Penality,
+    Caisse,
   },
 
   data() {
@@ -206,6 +246,10 @@ export default {
   },
 
   methods: {
+    goTop() {
+      let options = { top: 0, left: 0, behavior: "smooth" }; // left and top are coordinates
+      window.scroll(options);
+    },
     getCollection() {
       ActionsService.getCollection(this.colid).then((response) => {
         if (response.statusText === "OK") {

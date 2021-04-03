@@ -46,7 +46,7 @@
           <v-spacer></v-spacer>
           <div class="cdata">
             <v-chip color="primary" small label>
-              {{ info.granted_capital }} RWF</v-chip
+              {{ info.granted_capital }} FRW</v-chip
             >
           </div>
         </li>
@@ -57,7 +57,7 @@
           <v-spacer></v-spacer>
           <div class="cdata">
             <v-chip color="primary" small label>
-              {{ info.moyenne_amount_credit }} RWF</v-chip
+              {{ info.moyenne_amount_credit }} FRW</v-chip
             >
           </div>
         </li>
@@ -69,7 +69,7 @@
           <v-spacer></v-spacer>
           <div class="cdata">
             <v-chip color="primary" small label>
-              {{ info.interest_for_grants }} RWF</v-chip
+              {{ info.interest_for_grants }} FRW</v-chip
             >
           </div>
         </li>
@@ -82,7 +82,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.interest_for_grants + info.granted_capital }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -99,7 +99,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.rebursed_value_capital }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -112,7 +112,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.rebursed_interest_value }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -125,7 +125,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.rebursed_capital_interest }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -138,7 +138,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.remaining_credit_capital }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -151,7 +151,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.interest_remaining_credit }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -164,7 +164,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.credit_capital_interest_remaining }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>
@@ -176,7 +176,7 @@
           <div class="cdata">
             <v-chip color="primary" small label>
               {{ info.capital_credit_remaining }}
-              RWF</v-chip
+              FRW</v-chip
             >
           </div>
         </li>

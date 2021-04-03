@@ -14,7 +14,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               <v-chip color="primary" small label>
-                {{ info.valeur_entrees }} RWF
+                {{ info.valeur_entrees }} FRW
               </v-chip>
             </div>
           </li>
@@ -26,7 +26,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               <v-chip color="primary" small label>
-                {{ info.valeur_sorties }} RWF
+                {{ info.valeur_sorties }} FRW
               </v-chip>
             </div>
           </li>
@@ -37,7 +37,7 @@
             <v-spacer></v-spacer>
             <div class="cdata">
               <v-chip color="primary" small label>
-                {{ info.membres_soutenus }} RWF
+                {{ info.membres_soutenus }} FRW
               </v-chip>
             </div>
           </li>

@@ -86,7 +86,7 @@
                 <td>
                   <strong>Total des entrées (Frw)</strong>
                 </td>
-                <td>{{ totalEntre }} RWF</td>
+                <td>{{ totalEntre }} FRW</td>
               </tr>
               <tr>
                 <td>
@@ -123,7 +123,7 @@
                     >Total des sorties (Frw)
                   </strong>
                 </td>
-                <td>{{ totalSortie }} RWF</td>
+                <td>{{ totalSortie }} FRW</td>
               </tr>
               <tr>
                 <td>
@@ -131,7 +131,7 @@
                     Solde de la période / mois (Frw)
                   </strong>
                 </td>
-                <td>{{ soldePeriode }} RWF</td>
+                <td>{{ soldePeriode }} FRW</td>
               </tr>
               <tr>
                 <td colspan="2">
