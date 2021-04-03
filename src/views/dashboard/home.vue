@@ -71,8 +71,8 @@
           <ContentLoader type="card" v-else />
         </v-col>
       </v-row>
-
-      <!-- statistics information  -->
+     
+   <!-- statistics information  -->
       <v-row wrap class="my-5">
         <v-col cols="12" md="7">
           <groups :info="groups_info" />
@@ -109,6 +109,7 @@ export default {
     loaded: true,
     dataIn: true,
     caisses: [],
+    aec: [],
     // dioceses
     dioceses: {
       title: "Dioceses",
@@ -144,9 +145,7 @@ export default {
       amount: 23400,
       icon: "mdi-credit-card-minus",
     },
-    // attendence
 
-    attendence: [23, 45],
     groups_info: [],
   }),
 
@@ -156,6 +155,7 @@ export default {
     this.dpg();
     this.getGroups();
     this.getCaises();
+    this.getaec();
   },
 
   computed: {
@@ -204,6 +204,37 @@ export default {
       let total = _.sum(_.values(sums));
       return total;
     },
+    // get new and abandons
+    newMembers() {
+      var characteurs = ["new_boys", "new_girls"];
+      var sums = {};
+      _.each(this.aec, function(item) {
+        _.each(characteurs, function(color) {
+          sums[color] = (sums[color] || 0) + item[color];
+        });
+      });
+      let total = _.sum(_.values(sums));
+      return total;
+    },
+    abandonedMembers() {
+      var characteurs = ["abandoned_girls", "abandoned_boys"];
+      var sums = {};
+      _.each(this.aec, function(item) {
+        _.each(characteurs, function(color) {
+          sums[color] = (sums[color] || 0) + item[color];
+        });
+      });
+      let total = _.sum(_.values(sums));
+      return total;
+    },
+    // for stats
+    attendence() {
+      let arr = [];
+      let news = parseInt(this.newMembers);
+      let aban = parseInt(this.abandonedMembers);
+      arr.push(news, aban);
+      return arr;
+    },
   },
 
   methods: {
@@ -215,6 +246,16 @@ export default {
           this.dioceses.number = res.dioceses.total;
           this.paroisses.number = res.paroisses.total;
           this.groupes.number = res.groupes.total;
+        } else {
+          alert("an error occured");
+        }
+      });
+    },
+    getaec() {
+      ActionsService.getAec().then((response) => {
+        if (response.statusText === "OK") {
+          const res = response.data;
+          this.aec = res.data;
         } else {
           alert("an error occured");
         }
