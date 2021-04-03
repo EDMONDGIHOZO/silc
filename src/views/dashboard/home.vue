@@ -71,8 +71,7 @@
           <ContentLoader type="card" v-else />
         </v-col>
       </v-row>
-     
-   <!-- statistics information  -->
+      <!-- statistics information  -->
       <v-row wrap class="my-5">
         <v-col cols="12" md="7">
           <groups :info="groups_info" />
@@ -83,6 +82,9 @@
         </v-col>
       </v-row>
     </div>
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -109,6 +111,7 @@ export default {
     loaded: true,
     dataIn: true,
     caisses: [],
+    overlay: true,
     aec: [],
     // dioceses
     dioceses: {
@@ -277,6 +280,7 @@ export default {
         if (response.statusText === "OK") {
           let data = response.data.data;
           this.caisses = data;
+          this.overlay = false;
         }
       });
     },
