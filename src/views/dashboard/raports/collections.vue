@@ -31,9 +31,22 @@
               :key="item.id"
               @click="viewCollection(item.id)"
             >
-              <td>{{ item.collection_date | formatDate }}</td>
-              <td>{{ item.group.name }}</td>
-              <td>{{ item.group.group_code }}</td>
+              <td>
+                <p v-if="item.collection_date !== null">
+                  {{ item.collection_date | formatDate }}
+                </p>
+                <p v-else>-</p>
+              </td>
+              <td>
+                <p v-if="item.group !== null">
+                  {{ item.group.name }}
+                </p>
+                <p v-else>-</p>
+              </td>
+              <td>
+                <p v-if="item.group !== null">{{ item.group.group_code }}</p>
+                <p v-else>-</p>
+              </td>
               <td>
                 <v-btn
                   depressed
@@ -63,9 +76,9 @@
         </template>
       </v-simple-table>
     </div>
-     <div class="loading ma-5" v-else>
-        <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
-      </div>
+    <div class="loading ma-5" v-else>
+      <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
+    </div>
   </div>
 </template>
 
