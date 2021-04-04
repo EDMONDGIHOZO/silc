@@ -11,6 +11,10 @@
           :totalMembers="totalMembers"
           :girls="groupe.initial_girls_number"
           :boys="groupe.initial_boys_number"
+          :finDuCycle="groupe.end_date"
+          :startDuCycle="groupe.start_date"
+          :taux="groupe.monthly_interest"
+          :maxDuree="groupe.credit_group_max_time"
         />
 
         <Reference :collections="collections" />
