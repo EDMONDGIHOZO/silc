@@ -27,7 +27,7 @@ if (accessToken) {
 moment.updateLocale("fr", localization);
 Vue.filter("formatDate", function(value) {
   if (value) {
-    return moment(value).format("Do MMMM YYYY");
+    return moment(value).format("DD MMMM YYYY");
   }
 });
 

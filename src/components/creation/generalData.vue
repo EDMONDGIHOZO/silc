@@ -324,6 +324,7 @@
       <v-btn
         color="primary"
         type="submit"
+        :loading="loading"
         depressed
         rounded
         @click="saveGenInfo()"
@@ -341,6 +342,7 @@ export default {
   data: () => ({
     menu: false,
     overlay: false,
+    loading: false,
     groups: [],
     moisDe: "",
     stepy: 2,
