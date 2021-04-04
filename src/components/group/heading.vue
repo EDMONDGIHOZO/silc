@@ -46,7 +46,7 @@
             </li>
             <li class="detail">
               <strong> Taux d’intérêt mensuel du crédit </strong>
-              <p class="grey--text">{{ taux }}</p>
+              <p class="grey--text">{{ taux }} %</p>
             </li>
           </ul>
         </v-col>
