@@ -307,7 +307,7 @@ export default {
     },
 
     goToHome() {
-      this.$router.push({ name: "home" });
+      this.$router.push({ name: "groups" });
     },
 
     saveGroup() {
