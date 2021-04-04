@@ -5,6 +5,7 @@ import Auth from "../views/auth/AuthHolder.vue";
 import Creator from "../components/helpers/create.vue";
 import Paroisse from "../views/dashboard/raports/singleParoisse.vue";
 import SingleGroup from "../views/dashboard/raports/singleGroup.vue";
+import EditGroup from "../views/dashboard/editing/editGroup.vue";
 import Collection from "../views/dashboard/raports/singleCollection.vue";
 import CollectionEdit from "../views/dashboard/editing/CollectionEdit.vue";
 import Collections from "../views/dashboard/raports/collections.vue";
@@ -160,6 +161,12 @@ const routes = [
         path: "groupes/:groupId",
         component: SingleGroup,
         name: "group-view",
+        props: true,
+      },
+      {
+        path: "edit-groupe/:id",
+        component: EditGroup,
+        name: "group-edit",
         props: true,
       },
       {

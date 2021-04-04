@@ -67,7 +67,7 @@
                     @click="viewGroup(item.id)"
                     small
                     depressed
-                    class="white--text mx-3"
+                    class="white--text"
                   >
                     <v-icon left small>mdi-eye</v-icon>Ouvrir</v-btn
                   >
@@ -76,9 +76,18 @@
                     @click="deleteGroup(item.id)"
                     small
                     depressed
-                    class="white--text"
+                    class="white--text mx-3"
                   >
                     <v-icon left small>mdi-delete</v-icon> Suprimmer</v-btn
+                  >
+                  <v-btn
+                    color="orange"
+                    @click="editGroup(item.id)"
+                    small
+                    depressed
+                    class="white--text"
+                  >
+                    <v-icon left small>mdi-pencil</v-icon> Modifier</v-btn
                   >
                 </td>
               </tr>
@@ -138,6 +147,14 @@ export default {
         params: { groupId: groupId },
       });
     },
+    editGroup(groupId) {
+      const id = groupId;
+      return this.$router.push({
+        name: "group-edit",
+        params: { id: id },
+      });
+    },
+
     deleteGroup(id) {
       ActionsService.deleteGroup(id).then((response) => {
         if (response.data.message === "deleted group") {
