@@ -19,6 +19,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  updatePar(id, formData) {
+    return axios.put(API_URL + `paroisses/${id}`, formData, {
+      headers: authHeader(),
+    });
+  }
   updateCollection(id, formData) {
     return axios.put(API_URL + `collections/${id}`, formData, {
       headers: authHeader(),
