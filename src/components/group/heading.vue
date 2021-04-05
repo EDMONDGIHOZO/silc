@@ -2,6 +2,10 @@
   <div class="container">
     <div class="title-container">
       <h2 class="primary--text font-weight-bold">GROUPE | {{ name }}</h2>
+      <v-spacer></v-spacer>
+      <v-btn color="orange" depressed class="white--text" @click="editGroup(id)"
+        ><v-icon small left>mdi-pencil</v-icon> Modifier</v-btn
+      >
     </div>
     <div class="details-container">
       <v-row wrap>
@@ -60,9 +64,9 @@ export default {
   name: "grouphead",
   props: [
     "name",
-
     "creationDate",
     "diocese",
+    "id",
     "paroisse",
     "totalMembers",
     "girls",
@@ -72,6 +76,16 @@ export default {
     "maxDuree",
     "taux",
   ],
+
+  methods: {
+    editGroup(groupId) {
+      const id = groupId;
+      return this.$router.push({
+        name: "group-edit",
+        params: { id: id },
+      });
+    },
+  }
 };
 </script>
 
@@ -88,7 +102,6 @@ export default {
   flex-wrap: wrap;
 }
 
-
 .detail p {
   font-size: 14px;
   font-weight: bold;
@@ -96,5 +109,10 @@ export default {
 
 .detail strong {
   font-size: 14px;
+}
+
+.details :is(li){
+  list-style: none;
+  margin: 10px;
 }
 </style>

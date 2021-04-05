@@ -15,6 +15,7 @@
           :startDuCycle="groupe.start_date"
           :taux="groupe.monthly_interest"
           :maxDuree="groupe.credit_group_max_time"
+          :id="groupe.id"
         />
 
         <Reference :collections="collections" />

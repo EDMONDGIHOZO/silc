@@ -9,7 +9,8 @@
         color="green lighten-5"
       >
         <v-card-title>
-          MODIFIER LA GROUPE <span class=" mx-4 green--text text-uppercase">{{ groupName }}</span>
+          MODIFIER LA GROUPE
+          <span class=" mx-4 green--text text-uppercase">{{ groupName }}</span>
         </v-card-title>
         <v-divider></v-divider>
         <v-card-text>
@@ -155,16 +156,22 @@
           </v-form>
         </v-card-text>
         <v-card-actions>
-          <v-btn color="success" depressed block>Enregistre</v-btn>
+          <v-btn color="success" @click="saveUpdates" depressed block
+            >Enregistre</v-btn
+          >
         </v-card-actions>
       </v-card>
     </div>
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
 <script>
 import ActionsService from "@/services/actions.service";
 import Loading from "@/components/layouts/loaders.vue";
+import moment from "moment";
 export default {
   name: "single-group",
   props: ["id"],
@@ -174,6 +181,7 @@ export default {
 
   data() {
     return {
+      overlay: false,
       creationDate: "",
       groupe: null,
       collections: null,
@@ -183,6 +191,7 @@ export default {
       paroisse_id: undefined,
       dioceses: [],
       paroisses: [],
+      taux: "",
       girls: 0,
       boys: 0,
       monthlyInterest: 0,
@@ -216,6 +225,19 @@ export default {
         return 0;
       }
     },
+
+    end() {
+      let d = this.formatTime(this.endDate);
+      return d;
+    },
+    start() {
+      let d = this.formatTime(this.startDate);
+      return d;
+    },
+    creation() {
+      let d = this.formatTime(this.creationDate);
+      return d;
+    },
   },
 
   methods: {
@@ -239,12 +261,54 @@ export default {
       });
     },
 
+    formatTime(value) {
+      if (value) {
+        return moment(value).format("YYYY-MM-DD");
+      }
+    },
+
+    viewGroup() {
+      const groupId = this.id;
+      return this.$router.push({
+        name: "group-view",
+        params: { groupId: groupId },
+      });
+    },
+
     getDioPar() {
       try {
         ActionsService.getDioPar(this.diocese_id).then((response) => {
           this.paroisses = [];
           this.paroisses = response.data.data;
           this.hideParoisses = false;
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    // saving the updates
+    saveUpdates() {
+      const formData = {
+        name: this.groupName,
+        dioceseId: this.diocese_id,
+        paroisseId: this.paroisse_id,
+        boys: this.boys,
+        girls: this.monthlyInterest,
+        maxCredit: this.maxCredit,
+        startDate: this.start,
+        endDate: this.end,
+        creationDate: this.creation,
+        monthlyInterest: this.monthlyInterest,
+      };
+      this.overlay = true;
+      try {
+        ActionsService.editGroup(this.id, formData).then((response) => {
+          if (response.data.message === "updated") {
+            alert("saved the updates");
+            this.overlay = false;
+            this.viewGroup();
+          }
         });
       } catch (error) {
         console.log(error);
