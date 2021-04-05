@@ -3,12 +3,54 @@ $primary: #20db6b;
 $secondary: #119f4a;
 $accent: #edfff4;
 $lightPrimary: #b7f7d0;
-$mainFont: 'Poppins',
-sans-serif;
+$mainFont: "Poppins", sans-serif;
+$bp-small: 48em; // 768px
+$bp-medium: 64em; // 1024px
+$bp-large: 85.375em; // 1366px
+$bp-xlarge: 120em; // 1920px
+$bp-xxlarge: 160em; // 2560px
+
+// Media Queries
+$mq-small: "(min-width: #{$bp-small})";
+$mq-medium: "(min-width: #{$bp-medium})";
+$mq-large: "(min-width: #{$bp-large})";
+$mq-xlarge: "(min-width: #{$bp-xlarge})";
+$mq-xxlarge: "(min-width: #{$bp-xxlarge})";
+$mq-retina: "(-webkit-min-device-pixel-ratio: 2),(min-resolution: 192dpi)";
+
+// typo
+// Font-Size
+$base-font-size: 1em;
+
+// Line-Height
+$base-line-height: 1.5;
+$header-line-height: 1.25;
+
+// Spacing
+$base-spacing: $base-font-size;
 // end of common variables
 
+// Transition Settings
+$base-transition-duration: 0.3s;
+$base-transition-timing: ease-in-out;
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+
 body {
-    margin: auto;
-    overflow: hidden;
-    box-sizing: border-box;
+  margin: auto;
+  overflow: hidden;
+  box-sizing: border-box;
+  @media #{$mq-medium} {
+    font-size: $base-font-size * 1.2;
+    line-height:$base-line-height * 1.2;
+  }
+  @media #{$mq-large} {
+    font-size: $base-font-size * 1.3;
+  }
+  @media #{$mq-xxlarge} {
+    font-size: $base-font-size * 1.6;
+  }
 }
