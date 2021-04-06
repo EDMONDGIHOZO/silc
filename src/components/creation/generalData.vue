@@ -478,7 +478,7 @@ export default {
       const tot = (x + y) * 100;
       let ave = tot / z;
       if (ave > 0) {
-        return ave;
+        return ave.toFixed(1);
       } else {
         return 0;
       }

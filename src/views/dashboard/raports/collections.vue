@@ -15,7 +15,10 @@
                 Nom du groupe
               </th>
               <th class="text-left">
-                Code du groupe
+                Diocese
+              </th>
+              <th class="text-left">
+                Paroisse
               </th>
               <th class="text-left">
                 état de la collection
@@ -44,7 +47,11 @@
                 <p v-else>-</p>
               </td>
               <td>
-                <p v-if="item.group !== null">{{ item.group.group_code }}</p>
+                <p v-if="item.group !== null">{{ item.group.diocese.name }}</p>
+                <p v-else>-</p>
+              </td>
+              <td>
+                <p v-if="item.group !== null">{{ item.group.paroisse.name }}</p>
                 <p v-else>-</p>
               </td>
               <td>

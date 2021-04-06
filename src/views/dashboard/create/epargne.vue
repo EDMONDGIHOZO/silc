@@ -90,8 +90,8 @@ export default {
       if (this.$refs.form.validate()) {
         const formData = {
           collectionId: this.collection.id,
-          monthlyMinAmount: this.periodReleasedAmount,
-          periodReleasedAmount: this.monthlyMinAmount,
+          monthlyMinAmount: this.monthlyMinAmount,
+          periodReleasedAmount: this.periodReleasedAmount,
           monthlyMaxAmount: this.monthlyMaxAmount,
           epargnePerMember: this.moyenne,
         };
@@ -124,7 +124,7 @@ export default {
         let y = parseInt(this.collection.actual_boys);
         const membresActuelInscrit = x + y;
         // calculate moyenne
-        const moyenne = this.monthlyMinAmount / membresActuelInscrit;
+        const moyenne = this.periodReleasedAmount / membresActuelInscrit;
         return moyenne.toFixed(1);
       } else {
         return 0;

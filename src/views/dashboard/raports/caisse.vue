@@ -2,7 +2,7 @@
   <div class="container">
     <v-card v-if="savedAll" outlined>
       <v-card-text class="text-center pa-5">
-        <span class="display-3"
+        <span class="display-2"
           >félicitations, toutes les données sont enregistrées avec succès</span
         >
       </v-card-text>
@@ -13,6 +13,19 @@
       </v-card-actions>
     </v-card>
     <div class="caisse" v-else>
+      <div class="backer">
+        <v-btn
+          color="black"
+          dark
+          class="my-5"
+          small
+          depressed
+          rounded
+          @click="moveStep(6)"
+        >
+          <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
+        >
+      </div>
       <div class="title-bar">
         <h1>Livre de caisse/Banque</h1>
       </div>

@@ -60,7 +60,7 @@
             </div>
           </v-col>
           <v-col cols="12">
-            <v-btn color="success" depressed rounded @click="saveInfo"
+            <v-btn color="success" depressed rounded @click="saveInfo(7)"
               >continuer</v-btn
             >
           </v-col>

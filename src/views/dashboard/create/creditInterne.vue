@@ -442,7 +442,7 @@ export default {
     },
 
     risky() {
-      let retard = parseInt(this.capitalCreditRemaining);
+      let retard = parseInt(this.creditCapitalInterestRemaining);
       let restant = parseInt(this.remainingCreditCapitalValue);
 
       if (restant > 0 && retard > 0) {
