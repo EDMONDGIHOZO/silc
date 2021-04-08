@@ -5,7 +5,7 @@
     </v-overlay>
     <v-btn icon small
       ><v-icon
-        @click="editMode = !editMode"
+        @click="moveStep(2)"
         v-text="editMode === false ? 'mdi-pencil-outline' : 'mdi-close-outline'"
       ></v-icon
     ></v-btn>
@@ -181,6 +181,7 @@
 
 <script>
 import moment from "moment";
+import store from "@/store/index";
 
 export default {
   name: "basicInfoView",
@@ -231,6 +232,11 @@ export default {
   methods: {
     save(collectionDate) {
       this.$refs.menu.save(collectionDate);
+    },
+
+    moveStep(stepy) {
+      store.commit("updateSteps", stepy);
+      this.$router.push({ name: "data-collection" });
     },
 
     formatTime(value) {
