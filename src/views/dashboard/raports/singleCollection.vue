@@ -15,6 +15,16 @@
             depressed
             color="primary darken-2"
             rounded
+						class="mx-2"
+						@click="goToEdit"
+          >
+            <v-icon left>mdi-pencil</v-icon>
+            Modifier
+          </v-btn>
+          <v-btn
+            depressed
+            color="primary darken-2"
+            rounded
             v-if="collectionInfo.verified"
           >
             <v-icon left>mdi-checkbox-marked-circle</v-icon>
@@ -29,97 +39,117 @@
       <!---------------------------------------------------------------- end of collection title -------------------------------------------->
       <!---------------------------------------------------------------- the adding the collection components -------------------------------------------->
       <v-row wrap>
-        <v-col cols="12">
+        <v-col cols="12" md="8">
           <div class="comps-container">
-            <div class="main-title">
-              <h2>EN DÉTAILS</h2>
+            <div id="basic">
+              <basic-info
+                :prevRegG="collectionInfo.prev_registered_girls"
+                :prevRegB="collectionInfo.prev_registered_boys"
+                :abG="collectionInfo.abandoned_boys"
+                :abB="collectionInfo.abandoned_girls"
+                :abmB="abandonboysTaux"
+                :abmG="abandongirlsTaux"
+                :abmT="abandonTauxTotal"
+                :nmT="collectionInfo.new_girls + collectionInfo.new_boys"
+                :nmG="collectionInfo.new_girls"
+                :nmB="collectionInfo.new_boys"
+                :actG="collectionInfo.actual_girls"
+                :actB="collectionInfo.actual_boys"
+                :prB="collectionInfo.attended_boys"
+                :prG="collectionInfo.attended_girls"
+                :tauxG="girlsTaux"
+                :tauxB="boysTaux"
+                :tauxT="tauxTotal"
+              />
             </div>
-            <basic-info
-              :prevRegG="collectionInfo.prev_registered_girls"
-              :prevRegB="collectionInfo.prev_registered_boys"
-              :abG="collectionInfo.abandoned_boys"
-              :abB="collectionInfo.abandoned_girls"
-              :abmB="abandonboysTaux"
-              :abmG="abandongirlsTaux"
-              :abmT="abandonTauxTotal"
-              :nmT="collectionInfo.new_girls + collectionInfo.new_boys"
-              :nmG="collectionInfo.new_girls"
-              :nmB="collectionInfo.new_boys"
-              :actG="collectionInfo.actual_girls"
-              :actB="collectionInfo.actual_boys"
-              :prB="collectionInfo.attended_boys"
-              :prG="collectionInfo.attended_girls"
-              :tauxG="girlsTaux"
-              :tauxB="boysTaux"
-              :tauxT="tauxTotal"
-            />
-            
-            <epargne
-              v-if="collectionInfo.epargne !== null"
-              :info="collectionInfo.epargne"
-              :collectionId="collectionInfo.id"
-            />
-            <credit-interne
-              v-if="collectionInfo.credit !== null"
-              :info="collectionInfo.credit"
-              :collectionId="collectionInfo.id"
-            />
-            <relation-instution
-              v-if="collectionInfo.relation !== null"
-              :info="collectionInfo.relation"
-              :collectionId="collectionInfo.id"
-            />
-            <entraide
-              v-if="collectionInfo.entaraide !== null"
-              :info="collectionInfo.entraide"
-              :collectionId="collectionInfo.id"
-            />
-            <penality-view
-              v-if="collectionInfo.penalites !== null"
-              :info="collectionInfo.penalites"
-              :collectionId="collectionInfo.id"
-            />
-            <caisse
-              v-if="collectionInfo.caisse !== null"
-              :info="collectionInfo.caisse"
-              :collectionId="collectionInfo.id"
-              :epargneEntre="collectionInfo.epargne.period_released_amount"
-              :rebursedCapitalInterest="
-                collectionInfo.credit.rebursed_capital_interest
-              "
-              :entreSolidalite="collectionInfo.entraide.valeur_entrees"
-              :entrePenalite="
-                collectionInfo.penalites.Montant_des_penalites_payees
-              "
-              :grantedCredit="collectionInfo.credit.granted_credit"
-              :sortieSolidalite="collectionInfo.entraide.valeur_sorties"
-            />
+
+            <div class="epargne" id="epargne">
+              <epargne
+                v-if="collectionInfo.epargne !== null"
+                :info="collectionInfo.epargne"
+                :collectionId="collectionInfo.id"
+              />
+            </div>
+            <div class="credit" id="credits">
+              <credit-interne
+                v-if="collectionInfo.credit !== null"
+                :info="collectionInfo.credit"
+                :collectionId="collectionInfo.id"
+              />
+            </div>
+            <div id="relation">
+              <relation-instution
+                v-if="collectionInfo.relation !== null"
+                :info="collectionInfo.relation"
+                :collectionId="collectionInfo.id"
+              />
+            </div>
+            <div class="entraide" id="entraide">
+              <entraide
+                v-if="collectionInfo.entaraide !== null"
+                :info="collectionInfo.entraide"
+                :collectionId="collectionInfo.id"
+              />
+            </div>
+            <div class="penalites" id="penalite">
+              <penality-view
+                v-if="collectionInfo.penalites !== null"
+                :info="collectionInfo.penalites"
+                :collectionId="collectionInfo.id"
+              />
+            </div>
+            <div class="caisse" id="caisse">
+              <caisse
+                v-if="collectionInfo.caisse !== null"
+                :info="collectionInfo.caisse"
+                :collectionId="collectionInfo.id"
+                :epargneEntre="collectionInfo.epargne.period_released_amount"
+                :rebursedCapitalInterest="
+                  collectionInfo.credit.rebursed_capital_interest
+                "
+                :entreSolidalite="collectionInfo.entraide.valeur_entrees"
+                :entrePenalite="
+                  collectionInfo.penalites.Montant_des_penalites_payees
+                "
+                :grantedCredit="collectionInfo.credit.granted_credit"
+                :sortieSolidalite="collectionInfo.entraide.valeur_sorties"
+              />
+            </div>
+          </div>
+        </v-col>
+        <v-col cols="12" md="4">
+          <div class="liens">
+            <v-list flat id="liens">
+              <v-subheader>Liens rapides</v-subheader>
+              <v-list-item-group v-model="selectedItem" color="primary">
+                <v-list-item
+                  v-for="(item, i) in items"
+                  :key="i"
+                  v-scroll-to="`${item.ref}`"
+                >
+                  <v-list-item-content>
+                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                  </v-list-item-content>
+                </v-list-item>
+              </v-list-item-group>
+            </v-list>
             <v-fab-transition>
-            <v-btn
-              color="primary"
-              @click="goTop"
-              sticky
-              ref="fab"
-              fab
-              right
-              absolute
-            >
-              <v-icon>mdi-arrow-up</v-icon>
-            </v-btn>
-          </v-fab-transition>
+              <v-btn
+                color="primary"
+                @click="goTop"
+                class="topper"
+                sticky
+                ref="fab"
+                fab
+                right
+                absolute
+              >
+                <v-icon>mdi-arrow-up</v-icon>
+              </v-btn>
+            </v-fab-transition>
           </div>
         </v-col>
-        <!-- <v-col cols="12" md="4">
-          <div class="comps-container">
-            <div class="main-title">
-              <h2>ACTIONS</h2>
-            </div>
-            <p>action links</p>
-          </div>
-        </v-col> -->
-        <v-col cols="12">
-          
-        </v-col>
+        <v-col cols="12"> </v-col>
       </v-row>
     </div>
     <div class="loading ma-5" v-else>
@@ -151,7 +181,7 @@ export default {
     "relation-instution": Relation,
     Entraide,
     "penality-view": Penality,
-    Caisse,
+    Caisse
   },
 
   data() {
@@ -159,6 +189,19 @@ export default {
       collectionInfo: {},
       loaded: false,
       nulls: [],
+      selectedItem: {},
+      items: [
+        { text: "Membres du groupe", icon: "mdi-clock", ref: "#basic" },
+        { text: "Epargnes", icon: "mdi-account", ref: "#epargne" },
+        { text: "Crédits internes", icon: "mdi-flag", ref: "#credits" },
+        {
+          text: "Relations avec institutions financières",
+          ref: "#relation",
+          icon: "mdi-flag"
+        },
+        { text: "Caisse d’entraide", icon: "mdi-flag", ref: "#caisse" },
+        { text: "Pénalités / amandes", icon: "mdi-flag", ref: "#penalite" }
+      ]
     };
   },
 
@@ -260,16 +303,26 @@ export default {
       } else {
         return 0;
       }
-    },
+    }
   },
 
   methods: {
+    goto(refName) {
+      alert(refName);
+    },
+		goToEdit(){
+			this.$router.push({name: "data-collection"})
+		},
     goTop() {
-      let options = { top: 0, left: 0, behavior: "smooth" }; // left and top are coordinates
+      let options = {
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      }; // left and top are coordinates
       window.scroll(options);
     },
     getCollection() {
-      ActionsService.getCollection(this.colid).then((response) => {
+      ActionsService.getCollection(this.colid).then(response => {
         if (response.statusText === "OK") {
           this.collectionInfo = response.data.data;
           this.loaded = true;
@@ -291,8 +344,8 @@ export default {
       } else {
         return 0;
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
@@ -304,5 +357,13 @@ export default {
   border-radius: 6px;
   padding: 15px;
   margin-top: 20px;
+}
+
+.liens {
+  position: fixed;
+}
+
+.topper {
+  margin-top: 250px;
 }
 </style>
