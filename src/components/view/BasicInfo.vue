@@ -1,6 +1,58 @@
 <template>
   <div class="collection-component">
-    <div class="contents">
+    <v-btn icon small
+      ><v-icon
+        @click="editMode = !editMode"
+        v-text="editMode === false ? 'mdi-pencil-outline' : 'mdi-close-outline'"
+      ></v-icon
+    ></v-btn>
+    <div class="editView" v-if="editMode">
+      <!-- add the untaumatic fields -->
+
+      <strong>Modifier de données de base</strong>
+      <v-row wrap class="my-3">
+        <v-col cols="12">
+          <div class="fields">
+            <v-menu
+              ref="menu"
+              v-model="menu"
+              :close-on-content-click="false"
+              transition="scale-transition"
+              offset-y
+              min-width="290px"
+            >
+              <template v-slot:activator="{ on, attrs }">
+                <v-text-field
+                  v-model="formattedColDate"
+                  label="cliquez pour sélectionner la date"
+                  dense
+                  :rules="[rules.required]"
+                  filled
+                  v-bind="attrs"
+                  v-on="on"
+                ></v-text-field>
+              </template>
+              <v-date-picker
+                ref="picker"
+                v-model="formattedColDate"
+                @change="save"
+              ></v-date-picker>
+            </v-menu>
+            <v-text-field
+              v-model="moise_de"
+              label="Mois de"
+              :rules="[rules.required]"
+              clearable
+              type="text"
+              filled
+              dense
+              class="mx-2"
+            ></v-text-field>
+          </div>
+        </v-col>
+      </v-row>
+    </div>
+    <div class="contents" v-else>
       <div class="cont-title">
         <p>
           Membres du groupe
@@ -122,10 +174,13 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "basicInfoView",
   props: [
     "collectionId",
+    "collectionDate",
     "prevRegG",
     "prevRegB",
     "abG",
@@ -144,12 +199,56 @@ export default {
     "tauxG",
     "tauxB",
     "tauxT",
+    "moisDe"
   ],
+
+  computed: {
+    formattedColDate: {
+      get: function() {
+        let d = this.formatTime(this.colDate);
+        return d;
+      },
+
+      set: function(newValue) {
+        let dat = newValue;
+        this.colDate = dat;
+      }
+    }
+  },
+
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
+    }
+  },
+
+  methods: {
+    save(collectionDate) {
+      this.$refs.menu.save(collectionDate);
+    },
+
+    formatTime(value) {
+      if (value) {
+        return moment(value).format("YYYY-MM-DD");
+      }
+    }
+  },
+
+  mounted(){
+    this.colDate = this.collectionDate;
+    this.moise_de = this.moisDe;
+  },
 
   data() {
     return {
       editMode: false,
+      menu: false,
+      colDate: "",
+      moise_de:"",
+      rules: {
+        required: value => !!value || "obligatoire!"
+      }
     };
-  },
+  }
 };
 </script>

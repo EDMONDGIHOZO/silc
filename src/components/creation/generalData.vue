@@ -597,20 +597,8 @@ export default {
   font-weight: bold;
 }
 
-.form-col {
-  border-radius: 6px;
-  border: 1px dotted #066726;
-  margin: 2px;
-  padding: 5px;
-}
 
-.form-col .fields {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  justify-content: space-between;
-  align-items: flex-end;
-}
+
 .taux {
   font-size: 20px;
   text-transform: uppercase;

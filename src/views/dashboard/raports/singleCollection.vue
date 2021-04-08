@@ -10,17 +10,6 @@
           </v-toolbar-title>
 
           <v-spacer></v-spacer>
-
-          <v-btn
-            depressed
-            color="primary darken-2"
-            rounded
-						class="mx-2"
-						@click="goToEdit"
-          >
-            <v-icon left>mdi-pencil</v-icon>
-            Modifier
-          </v-btn>
           <v-btn
             depressed
             color="primary darken-2"
@@ -57,6 +46,8 @@
                 :actB="collectionInfo.actual_boys"
                 :prB="collectionInfo.attended_boys"
                 :prG="collectionInfo.attended_girls"
+                :collectionDate="collectionInfo.collection_date"
+                :moisDe="collectionInfo.mois_de"
                 :tauxG="girlsTaux"
                 :tauxB="boysTaux"
                 :tauxT="tauxTotal"
@@ -310,9 +301,9 @@ export default {
     goto(refName) {
       alert(refName);
     },
-		goToEdit(){
-			this.$router.push({name: "data-collection"})
-		},
+    goToEdit() {
+      this.$router.push({ name: "data-collection" });
+    },
     goTop() {
       let options = {
         top: 0,
@@ -351,7 +342,7 @@ export default {
 
 <style lang="scss" scoped>
 .comps-container {
-  background: rgb(236, 247, 234);
+  background: #119f4a;
   border: 1px solid #ececec;
   box-sizing: border-box;
   border-radius: 6px;
