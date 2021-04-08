@@ -48,6 +48,7 @@
                 :prG="collectionInfo.attended_girls"
                 :collectionDate="collectionInfo.collection_date"
                 :moisDe="collectionInfo.mois_de"
+    
                 :tauxG="girlsTaux"
                 :tauxB="boysTaux"
                 :tauxT="tauxTotal"

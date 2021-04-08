@@ -1,5 +1,8 @@
 <template>
   <div class="collection-component">
+    <v-overlay :value="overlay">
+      <v-progress-circular indeterminate size="64"></v-progress-circular>
+    </v-overlay>
     <v-btn icon small
       ><v-icon
         @click="editMode = !editMode"
@@ -12,6 +15,9 @@
       <strong>Modifier de données de base</strong>
       <v-row wrap class="my-3">
         <v-col cols="12">
+          <div class="col-title">
+            <p>Date de collection</p>
+          </div>
           <div class="fields">
             <v-menu
               ref="menu"
@@ -234,7 +240,7 @@ export default {
     }
   },
 
-  mounted(){
+  mounted() {
     this.colDate = this.collectionDate;
     this.moise_de = this.moisDe;
   },
@@ -244,10 +250,18 @@ export default {
       editMode: false,
       menu: false,
       colDate: "",
-      moise_de:"",
+      moise_de: "",
       rules: {
         required: value => !!value || "obligatoire!"
-      }
+      },
+      dioceses: [],
+      paroisses: [],
+      diocese_id: null,
+      paroisse_id: null,
+      overlay: false,
+      loading: false,
+      groups: [],
+      groupId: undefined
     };
   }
 };
