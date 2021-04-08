@@ -52,7 +52,7 @@
     <div class="nullInfo" v-else>
       <div class="notice">
         <strong>
-          cette collection n'a pas d'informations sur l'épargne
+          cette collection contient des informations incomplètes
         </strong>
         <v-btn color="primary" depressed rounded class="my-4">
           <v-icon left>mdi-pencil</v-icon> ajouter ces informations</v-btn
