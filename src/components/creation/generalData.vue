@@ -365,7 +365,6 @@ export default {
     rules: {
       required: (value) => !!value || "obligatoire!",
     },
-
     // frontend collections
     dioceses: [],
     paroisses: [],
@@ -384,6 +383,10 @@ export default {
     collection() {
       let collection = this.$store.state.collectionInfo;
       return collection;
+    },
+
+    editMode() {
+      return this.$store.state.editMode;
     },
 
     UserInfo() {
@@ -598,7 +601,8 @@ export default {
           moisDe: this.moisDe,
         };
 
-        ActionsService.SaveGenInfo(formData).then((response) => {
+        if(this.editMode === false){
+          ActionsService.SaveGenInfo(formData).then((response) => {
           // save collection id in localStorage,for later usage
           let collectionId = response.data.data.id;
           // save the current collection in memory
@@ -607,6 +611,14 @@ export default {
           this.$store.commit("setCurrentCollectionInfo", info);
           this.$store.commit("updateSteps", this.stepy);
         });
+        } else {
+          ActionsService.updateCollection(this.colid,formData).then((response) => {
+          // save collection id in localStorage,for later usage  
+          const info = response.data.data;
+          this.$store.commit("setCurrentCollectionInfo", info);
+          this.$store.commit("updateSteps", this.stepy);
+        });
+        }
       } else {
         alert("assurez-vous que, il n'y a pas de champ vide!");
       }

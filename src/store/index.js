@@ -16,6 +16,7 @@ export default new Vuex.Store({
     UserInfo: [],
     avatarChar: "N",
     step: 1,
+    editMode: false,
     collectionData: null,
     collectionInfo: null,
     colData: {
@@ -78,11 +79,15 @@ export default new Vuex.Store({
 
     setCurrentCollectionInfo(state, collectionInfo) {
       state.collectionInfo = collectionInfo;
-      console.log(collectionInfo);
     },
 
     updateSteps(state, step) {
       state.step = step;
+    },
+
+    updateEditMode(state, type) {
+      console.log("what the hell");
+      state.editMode = type;
     },
 
     keepCollectionInfo(state, payload) {
@@ -92,14 +97,11 @@ export default new Vuex.Store({
       const nulls = response;
       console.log(nulls);
 
-      const total_members =
-        response.actual_girls +
-        response.actual_boys;
+      const total_members = response.actual_girls + response.actual_boys;
 
       const epargne = response.epargne.period_released_amount;
 
-      const credMoy =
-        response.credit.moyenne_amount_credit;
+      const credMoy = response.credit.moyenne_amount_credit;
 
       function numelize(number) {
         return numeral(number).format("0,0");

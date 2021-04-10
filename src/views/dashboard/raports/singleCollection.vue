@@ -346,7 +346,9 @@ export default {
 
     editCollection() {
       let stepy = 1;
+      let mode = true;
       store.commit("setCurrentCollectionInfo", this.collectionInfo);
+      store.commit("updateEditMode", mode);
       this.$router.push({ name: "data-collection" });
       store.commit("updateSteps", stepy);
     },
