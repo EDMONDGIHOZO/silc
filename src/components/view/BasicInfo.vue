@@ -3,12 +3,12 @@
     <v-overlay :value="overlay">
       <v-progress-circular indeterminate size="64"></v-progress-circular>
     </v-overlay>
-    <v-btn icon small
+    <!-- <v-btn icon small
       ><v-icon
         @click="moveStep(2)"
         v-text="editMode === false ? 'mdi-pencil-outline' : 'mdi-close-outline'"
       ></v-icon
-    ></v-btn>
+    ></v-btn> -->
     <div class="editView" v-if="editMode">
       <!-- add the untaumatic fields -->
 
@@ -234,6 +234,7 @@ export default {
       this.$refs.menu.save(collectionDate);
     },
 
+
     moveStep(stepy) {
       store.commit("updateSteps", stepy);
       this.$router.push({ name: "data-collection" });
@@ -249,6 +250,7 @@ export default {
   mounted() {
     this.colDate = this.collectionDate;
     this.moise_de = this.moisDe;
+    
   },
 
   data() {

@@ -12,6 +12,17 @@
           <v-spacer></v-spacer>
           <v-btn
             depressed
+            color="orange darken-2"
+            @click="editCollection"
+            dark
+            class="mx-3"
+            rounded
+          >
+            <v-icon left>mdi-pencil-circle</v-icon>
+            Modifier
+          </v-btn>
+          <v-btn
+            depressed
             color="primary darken-2"
             rounded
             v-if="collectionInfo.verified"
@@ -48,7 +59,6 @@
                 :prG="collectionInfo.attended_girls"
                 :collectionDate="collectionInfo.collection_date"
                 :moisDe="collectionInfo.mois_de"
-    
                 :tauxG="girlsTaux"
                 :tauxB="boysTaux"
                 :tauxT="tauxTotal"
@@ -152,6 +162,7 @@
 
 <script>
 import ActionsService from "@/services/actions.service";
+import store from "@/store/index";
 
 // views
 import Epargne from "@/components/view/Epargne.vue";
@@ -173,7 +184,7 @@ export default {
     "relation-instution": Relation,
     Entraide,
     "penality-view": Penality,
-    Caisse
+    Caisse,
   },
 
   data() {
@@ -189,16 +200,17 @@ export default {
         {
           text: "Relations avec institutions financières",
           ref: "#relation",
-          icon: "mdi-flag"
+          icon: "mdi-flag",
         },
         { text: "Caisse d’entraide", icon: "mdi-flag", ref: "#caisse" },
-        { text: "Pénalités / amandes", icon: "mdi-flag", ref: "#penalite" }
-      ]
+        { text: "Pénalités / amandes", icon: "mdi-flag", ref: "#penalite" },
+      ],
     };
   },
 
   mounted() {
     this.getCollection();
+    this.fillInfo();
   },
 
   computed: {
@@ -295,7 +307,7 @@ export default {
       } else {
         return 0;
       }
-    }
+    },
   },
 
   methods: {
@@ -309,12 +321,12 @@ export default {
       let options = {
         top: 0,
         left: 0,
-        behavior: "smooth"
+        behavior: "smooth",
       }; // left and top are coordinates
       window.scroll(options);
     },
     getCollection() {
-      ActionsService.getCollection(this.colid).then(response => {
+      ActionsService.getCollection(this.colid).then((response) => {
         if (response.statusText === "OK") {
           this.collectionInfo = response.data.data;
           this.loaded = true;
@@ -322,6 +334,21 @@ export default {
           alert("data not found");
         }
       });
+    },
+
+    // when we want to edit
+    fillInfo() {
+      let data = this.collectionInfo;
+      if (data !== null) {
+        console.log(data);
+      }
+    },
+
+    editCollection() {
+      let stepy = 1;
+      store.commit("setCurrentCollectionInfo", this.collectionInfo);
+      this.$router.push({ name: "data-collection" });
+      store.commit("updateSteps", stepy);
     },
 
     percentager(percent, total) {
@@ -336,8 +363,8 @@ export default {
       } else {
         return 0;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

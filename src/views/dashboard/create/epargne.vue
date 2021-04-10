@@ -9,14 +9,17 @@
         depressed
         rounded
         @click="moveStep(1)"
-        > <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
+      >
+        <v-icon left>mdi-arrow-left-circle</v-icon> étape précédente</v-btn
       >
     </div>
     <div class="data-create-container">
       <v-form @submit.prevent="saveInfo" ref="form">
         <v-row wrap class="main-form">
           <v-col cols="12" md="6" lg="4">
-            <label class="label">Montant minimum épargné chaque mois dans le groupe (Frw)</label>
+            <label class="label"
+              >Montant minimum épargné chaque mois dans le groupe (Frw)</label
+            >
             <v-text-field
               v-model="monthlyMinAmount"
               :rules="[rules.required]"
@@ -27,7 +30,9 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" lg="4">
-            <label class="label">Montant maximal épargné chaque mois dans le groupe (Frw)</label>
+            <label class="label"
+              >Montant maximal épargné chaque mois dans le groupe (Frw)</label
+            >
             <v-text-field
               v-model="monthlyMaxAmount"
               :rules="[rules.required]"
@@ -38,7 +43,10 @@
             ></v-text-field>
           </v-col>
           <v-col cols="12" md="6" lg="4">
-            <label class="label">Valeur totale de l’épargne réalisée au cours de la période/mois (Frw)</label>
+            <label class="label"
+              >Valeur totale de l’épargne réalisée au cours de la période/mois
+              (Frw)</label
+            >
             <v-text-field
               v-model="periodReleasedAmount"
               :rules="[rules.required]"
@@ -61,6 +69,9 @@
           <v-col cols="12">
             <v-btn color="success" depressed rounded @click="saveInfo(3)"
               >continuer</v-btn
+            >
+            <v-btn color="success" depressed rounded @click="saveInfo(3)"
+              >only save</v-btn
             >
           </v-col>
         </v-row>
@@ -86,6 +97,17 @@ export default {
   }),
 
   methods: {
+    // fill the fields
+    fill() {
+      if (this.collection !== null) {
+        if (this.collection.epargne !== null) {
+          let data = this.collection.epargne;
+          this.monthlyMinAmount = data.monthly_min_amount;
+          this.periodReleasedAmount = data.period_released_amount;
+          this.monthlyMaxAmount = data.monthly_max_amount;
+        }
+      }
+    },
     saveInfo(step) {
       if (this.$refs.form.validate()) {
         const formData = {
@@ -132,8 +154,8 @@ export default {
     },
   },
 
-  mounted() {
-    this.collectionId = localStorage.getItem("collectionId");
+  created() {
+    this.fill();
   },
 };
 </script>

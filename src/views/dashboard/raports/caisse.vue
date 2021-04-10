@@ -170,6 +170,7 @@
 <script>
 import store from "@/store/index";
 import ActionsService from "@/services/actions.service";
+
 export default {
   name: "verification",
   data() {
@@ -319,6 +320,7 @@ export default {
         ActionsService.saveCaisse(formData).then((response) => {
           if (response.statusText === "OK") {
             this.savedAll = true;
+            store.commit("setCurrentCollectionInfo", null);
           }
         });
       } else {

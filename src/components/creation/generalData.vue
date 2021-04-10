@@ -338,6 +338,7 @@
 <script>
 import store from "@/store/index";
 import ActionsService from "@/services/actions.service";
+import moment from "moment";
 export default {
   data: () => ({
     menu: false,
@@ -377,6 +378,13 @@ export default {
     },
   },
   computed: {
+    // get the collection from vuex
+
+    collection() {
+      let collection = this.$store.state.collectionInfo;
+      return collection;
+    },
+
     UserInfo() {
       return this.$store.state.UserInfo;
     },
@@ -542,6 +550,30 @@ export default {
       localStorage.setItem(keyname, value);
     },
 
+    fillFields() {
+      console.log("start");
+
+      let data = this.collection;
+      if (data !== null) {
+        this.collectionDate = this.formatTime(data.collection_date);
+        this.groupId = data.group_id;
+        this.newBoys = data.new_boys;
+        this.newGirls = data.new_girls;
+        this.prevRegisteredBoys = data.prev_registered_boys;
+        this.prevRegisteredGirls = data.prev_registered_girls;
+        this.abandonedGirls = data.abandoned_girls;
+        this.abandonedBoys = data.abandoned_boys;
+        this.attendedBoys = data.attended_boys;
+        this.attendedGirls = data.attended_girls;
+        this.collectorName = data.collector_name;
+        this.moisDe = data.mois_de;
+
+        // get diocese na paroisse
+        this.getDiocese();
+        this.getParoisse();
+      }
+    },
+
     saveGenInfo() {
       // do validation first
       if (this.$refs.dataForm.validate()) {
@@ -577,6 +609,12 @@ export default {
       }
     },
 
+    formatTime(value) {
+      if (value) {
+        return moment(value).format("YYYY-MM-DD");
+      }
+    },
+
     moveStep(stepy) {
       store.commit("updateSteps", stepy);
     },
@@ -584,6 +622,10 @@ export default {
     clear() {
       this.collectionDate = null;
     },
+  },
+
+  created() {
+    this.fillFields();
   },
 };
 </script>
@@ -596,8 +638,6 @@ export default {
   text-align: center;
   font-weight: bold;
 }
-
-
 
 .taux {
   font-size: 20px;
