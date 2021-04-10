@@ -329,7 +329,7 @@
         rounded
         @click="saveGenInfo()"
       >
-        Continue
+        Continuer
       </v-btn>
     </v-form>
   </div>
@@ -360,6 +360,7 @@ export default {
     attendedBoys: 0,
     attendedGirls: 0,
     collectorName: "",
+    colid: null,
     // validation rules
     rules: {
       required: (value) => !!value || "obligatoire!",
@@ -555,6 +556,7 @@ export default {
 
       let data = this.collection;
       if (data !== null) {
+        this.colid = data.id;
         this.collectionDate = this.formatTime(data.collection_date);
         this.groupId = data.group_id;
         this.newBoys = data.new_boys;
@@ -580,6 +582,7 @@ export default {
         const formData = {
           //  to be added soon
           collectionDate: this.collectionDate,
+          colid: this.colid,
           groupId: this.groupId,
           newBoys: this.newBoys,
           newGirls: this.newGirls,
