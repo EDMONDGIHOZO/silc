@@ -82,6 +82,23 @@
           </tbody>
         </template>
       </v-simple-table>
+      <!-- <div class="text-center">
+        <v-pagination v-model="page" :length="lastPage" circle></v-pagination>
+      </div> -->
+      <!-- <v-data-table
+        :headers="headers"
+        :items="collections"
+        :items-per-page="perPage"
+        :page.sync="page"
+        @page-count="pageCount = $event"
+        :total-visible="totalVisible"
+        item-key="id"
+        class="elevation-1"
+      >
+        <template v-slot:[`item.collection_date`]="{ item }">
+          {{ item.collection_date | formatDate }}
+        </template>
+      </v-data-table> -->
     </div>
     <div class="loading ma-5" v-else>
       <v-skeleton-loader class="mx-auto" type="table"></v-skeleton-loader>
@@ -98,7 +115,53 @@ export default {
       calories: "",
       collections: [],
       loaded: false,
+      page: 1,
+      lastPage: 1,
+      perPage: 10,
+      pageCount: 0,
+      totalVisible: 10,
+      headers: [
+        {
+          text: "date de collection",
+          align: "start",
+          sortable: false,
+          value: "collection_date",
+        },
+        {
+          text: " Nom du groupe",
+          align: "left",
+          value: "group.name",
+          sortable: true,
+        },
+        {
+          text: "Diocese",
+          align: "left",
+          value: "group.diocese.name",
+          sortable: true,
+        },
+        {
+          text: "Paroisse",
+          align: "left",
+          value: "group.paroisse.name",
+          sortable: true,
+        },
+        {
+          text: "Nom du collecteur",
+          align: "left",
+          value: "collector_name",
+          sortable: true,
+        },
+      ],
     };
+  },
+
+  watch: {
+    options: {
+      handler() {
+        this.getCollections();
+      },
+      deep: true,
+    },
   },
 
   mounted() {
@@ -125,9 +188,13 @@ export default {
     },
 
     getCollections() {
-      ActionsService.getCollections().then((response) => {
+      ActionsService.getCollections(this.pageCount).then((response) => {
         if (response.statusText === "OK") {
           this.collections = response.data.data.data;
+          this.page = response.data.data.page;
+          this.lastPage = response.data.data.lastPage;
+          this.perPage = response.data.data.perPage;
+          this.totalVisible = response.data.data.total;
           this.loaded = true;
         } else {
           alert("data not found");

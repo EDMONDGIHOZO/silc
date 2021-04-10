@@ -23,16 +23,15 @@
           </v-btn>
           <v-btn
             depressed
+            download
+            :loading="downloading"
             color="primary darken-2"
+            @click="downloadCol"
             rounded
             v-if="collectionInfo.verified"
           >
-            <v-icon left>mdi-checkbox-marked-circle</v-icon>
-            vérifié
-          </v-btn>
-          <v-btn depressed color="primary darken-2" rounded v-else>
-            <v-icon left>mdi-checkbox-blank-circle</v-icon>
-            marquer comme vérifié
+            <v-icon left>mdi-download-circle</v-icon>
+            Telecharge la livre de caisse
           </v-btn>
         </v-toolbar>
       </v-card>
@@ -163,6 +162,7 @@
 <script>
 import ActionsService from "@/services/actions.service";
 import store from "@/store/index";
+import moment from "moment";
 
 // views
 import Epargne from "@/components/view/Epargne.vue";
@@ -190,6 +190,7 @@ export default {
   data() {
     return {
       collectionInfo: {},
+      downloading: false,
       loaded: false,
       nulls: [],
       selectedItem: {},
@@ -314,6 +315,11 @@ export default {
     goto(refName) {
       alert(refName);
     },
+    formatTime(value) {
+      if (value) {
+        return moment(value).format("YYYY-MM-DD");
+      }
+    },
     goToEdit() {
       this.$router.push({ name: "data-collection" });
     },
@@ -332,6 +338,21 @@ export default {
           this.loaded = true;
         } else {
           alert("data not found");
+        }
+      });
+    },
+    downloadCol() {
+      this.downloading = true;
+      let format = "xlsx";
+      let date = this.formatTime(this.collectionInfo.collection_date);
+      let id = this.collectionInfo.id;
+      let code = this.collectionInfo.group.group_code;
+
+      ActionsService.downloadCol(id, format, date, code).then((response) => {
+        if (response.statusText === "OK") {
+          this.downloading = false;
+          let url = response.config.url;
+          window.location.assign(url);
         }
       });
     },

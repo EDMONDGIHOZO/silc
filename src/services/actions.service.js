@@ -41,6 +41,11 @@ class ActionsService {
       headers: authHeader(),
     });
   }
+  downloadCol(id, format, date, code) {
+    return axios.get(API_URL + `caisse-download/${id}/${format}/${date}/${code}`, {
+      headers: authHeader(),
+    });
+  }
 
   deleteParoisse(pid) {
     return axios.delete(API_URL + `paroisses/${pid}`, {
@@ -190,8 +195,8 @@ class ActionsService {
       headers: authHeader(),
     });
   }
-  getCollections() {
-    return axios.get(API_URL + `collections`, {
+  getCollections(currentPage) {
+    return axios.get(API_URL + `collections?page${currentPage}`, {
       headers: authHeader(),
     });
   }

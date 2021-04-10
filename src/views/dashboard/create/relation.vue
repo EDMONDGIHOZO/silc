@@ -189,6 +189,21 @@ export default {
   },
 
   methods: {
+    // fill the fields
+    fill() {
+      if (this.collection !== null) {
+        if (this.collection.relation !== null) {
+          let data = this.collection.relation;
+          this.membersOpenedAccounts = data.membres_ouvert_compte_bancaire;
+          this.membersCredited = data.membres_contracte_credit_bancaire;
+          this.creditedAmount = data.montant_de_credit_bancaire_contracte;
+          this.groupCreditAmount =
+            data.montant_de_credit_bancaire_contracte_groupe;
+          this.groupBankCredit = data.groupe_ayant_contracte_credit_bancaire;
+        }
+      }
+    },
+
     saveInfo() {
       // show completion animation
       if (this.$refs.relationForm.validate()) {
@@ -199,6 +214,7 @@ export default {
           creditedAmount: this.creditedAmount,
           groupBankAccount: this.groupBankAccount,
           groupBankCredit: this.groupBankCredit,
+          groupCreditAmount: this.groupCreditAmount,
         };
 
         ActionsService.SaveRelations(formData).then((response) => {

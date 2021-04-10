@@ -11,6 +11,9 @@
         </h3>
       </div>
       <div class="comp-data" v-if="loaded">
+        <div class="main-title">
+          <h2>Groupes</h2>
+        </div>
         <v-simple-table>
           <template v-slot:default>
             <thead>
